@@ -1,0 +1,3 @@
+module QuoVadis
+  # Your code goes here...
+end
