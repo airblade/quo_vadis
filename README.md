@@ -17,6 +17,7 @@ Forthcoming features:
 * Let you choose the identification field (currently `username`).
 * Remember authenticated user across browser sessions.
 * HTTP basic/digest authentication (probably).
+* Generate (User) model plus migration if it doesn't exist.
 
 What it doesn't and won't do:
 

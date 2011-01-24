@@ -1,0 +1,7 @@
+en:
+  quo_vadis:
+    flash:
+      before_sign_in: 'Please sign in first.'
+      after_sign_in: 'You have successfully signed in.'
+      failed_sign_in: 'Sorry, we did not recognise you.'
+      sign_out: 'You have successfully signed out.'
