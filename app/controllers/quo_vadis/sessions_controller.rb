@@ -9,8 +9,7 @@ class QuoVadis::SessionsController < ApplicationController
   def create
     if user = User.authenticate(params[:username], params[:password])
       self.current_user = user
-      #redirect_to root_url, :notice => t('quo_vadis.flash.after_sign_in')
-      redirect_to QuoVadis.signed_in_url, :notice => t('quo_vadis.flash.after_sign_in')
+      redirect_to QuoVadis.signed_in_url(user), :notice => t('quo_vadis.flash.after_sign_in')
     else
       flash.now[:alert] = t('quo_vadis.flash.failed_sign_in')
       render 'sessions/new'
