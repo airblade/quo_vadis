@@ -8,6 +8,19 @@
 </head>
 <body>
 
+  <div id='topnav'>
+    <% if current_user %>
+      You are signed in as <%= current_user.name %>.
+      <%= link_to 'Sign out', sign_out_path %>
+    <% else %>
+      <%= link_to 'Sign in', sign_in_path %>
+    <% end %>
+  </div>
+
+  <% flash.each do |key, value| %>
+    <div class='flash <%= key %>'><%= value %></div>
+  <% end %>
+
 <%= yield %>
 
 </body>
