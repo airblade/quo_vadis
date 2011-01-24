@@ -34,6 +34,8 @@ What it doesn't and won't do:
 
 Add `gem 'quo_vadis'` to your Gemfile.
 
+Run `rails generate quo_vadis:install`.
+
 
 ## Quick start guide
 
@@ -53,7 +55,7 @@ Assuming you already have a User model, add `authenticates`:
       authenticates
     end
 
-Generate, edit and run migration to add authentication columns: `rails generate quo_vadis && rake db:migrate`.
+Edit and run migration to add authentication columns: `rake db:migrate`.
 
 
 
@@ -74,6 +76,8 @@ Your sign-in form must:
 * post the parameters `:username` and `:password` to `sign_in_url`
 
 3.  Set the URLs to which to redirect the user upon successful sign in, sign out, and reminder.
+
+In `config/initializers/quo_vadis.rb`.
 
 By default when a user signs in successfully they are redirected to `root_url`.  To change this, create a sessions controller of your own and override the `signed_in_url` method.  For example:
 
