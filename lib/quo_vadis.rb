@@ -1,3 +1,4 @@
+require 'quo_vadis/engine'
+
 module QuoVadis
-  # Your code goes here...
 end

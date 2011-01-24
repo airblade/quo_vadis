@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Andy Stewart']
   s.email       = ['boss@airbladesoftware.com']
   s.homepage    = ''
-  s.summary     = %q{Simple authentication for Rails 3.}
+  s.summary     = 'Simple authentication for Rails 3.'
   s.description = s.summary
 
   s.rubyforge_project = 'quo_vadis'
@@ -18,4 +18,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
+
+  s.add_dependency 'rails',       '~>3.0'
+  s.add_dependency 'bcrypt-ruby', '~>2.1.4'
 end
