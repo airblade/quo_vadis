@@ -1,4 +1,5 @@
 class QuoVadis::SessionsController < ApplicationController
+  layout 'sessions'
 
   # sign in
   def new
