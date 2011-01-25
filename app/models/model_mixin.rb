@@ -8,40 +8,36 @@ module ModelMixin
 
   module ClassMethods
     def authenticates
-      send :include, InstanceMethods
+      send :include, InstanceMethodsOnActivation
 
-      validates      :password, :on => :create, :presence => true
-      attr_protected :password_hash, :password_salt
-      attr_accessor  :password
-      before_save    :prepare_password
+      attr_reader    :password
+      attr_protected :password_hash
 
-      validates      :username, :presence => true, :uniqueness => true
+      validates      :username,      :presence => true, :uniqueness => true
+      validates      :password,      :on => :create, :presence => true
+      validates      :password_hash, :presence => true
 
       instance_eval <<-END
-        def authenticate(username, password)
+        def authenticate(username, plain_text_password)
           user = where(:username => username).first
-          return user if user && user.matching_password?(password)
+          if user && user.has_matching_password?(plain_text_password)
+            user
+          else
+            nil
+          end
         end
       END
     end
   end
 
-  module InstanceMethods
-    def matching_password?(passwd)
-      self.password_hash == encrypt_password(passwd)
+  module InstanceMethodsOnActivation
+    def password=(plain_text_password)
+      @password = plain_text_password
+      self.password_hash = BCrypt::Password.create plain_text_password
     end
 
-    private  # TODO: does this work once mixed in?
-
-    def encrypt_password(passwd)
-      BCrypt::Engine.hash_secret(passwd, password_salt)
-    end
-
-    def prepare_password
-      unless password.blank?
-        self.password_salt = BCrypt::Engine.generate_salt
-        self.password_hash = encrypt_password(password)
-      end
+    def has_matching_password?(plain_text_password)
+      BCrypt::Password.new(password_hash) == plain_text_password
     end
   end
 
