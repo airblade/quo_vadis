@@ -32,7 +32,7 @@ module QuoVadis
   end
 
   # Code to run when someone has tried but failed to sign in.
-  mattr_accessor :failed_sign_hook
+  mattr_accessor :failed_sign_in_hook
   @@failed_sign_in_hook = nil
 
   def self.failed_sign_in_hook(request)
