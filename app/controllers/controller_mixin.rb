@@ -14,6 +14,7 @@ module ControllerMixin
   end
 
   def authenticate
+    session[:quo_vadis_original_url] = request.fullpath
     redirect_to sign_in_url, :notice => t('quo_vadis.flash.before_sign_in') unless current_user
   end
 end

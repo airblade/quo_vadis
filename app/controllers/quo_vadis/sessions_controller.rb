@@ -10,7 +10,7 @@ class QuoVadis::SessionsController < ApplicationController
     if user = User.authenticate(params[:username], params[:password])
       self.current_user = user
       QuoVadis.signed_in_hook user, request
-      redirect_to QuoVadis.signed_in_url(user), :notice => t('quo_vadis.flash.after_sign_in')
+      redirect_to QuoVadis.signed_in_url(user, original_url), :notice => t('quo_vadis.flash.after_sign_in')
     else
       QuoVadis.failed_sign_in_hook request
       flash.now[:alert] = t('quo_vadis.flash.failed_sign_in')
@@ -23,6 +23,14 @@ class QuoVadis::SessionsController < ApplicationController
     QuoVadis.signed_out_hook current_user, request
     self.current_user = nil
     redirect_to QuoVadis.signed_out_url, :notice => t('quo_vadis.flash.sign_out')
+  end
+
+  private
+
+  def original_url
+    url = session[:quo_vadis_original_url]
+    session[:quo_vadis_original_url] = nil
+    url
   end
 
 end

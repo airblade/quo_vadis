@@ -13,6 +13,10 @@ QuoVadis.configure do |config|
   #
   config.signed_in_url = :root
 
+  # Whether the `:signed_in_url` should override the URL the user was trying
+  # to reach when they were made to authenticate.
+  config.override_original_url = false
+
   # The URL to redirect the user to after s/he signs out.
   config.signed_out_url = :root
 

@@ -10,8 +10,17 @@ module QuoVadis
   mattr_accessor :signed_in_url
   @@signed_in_url = :root
 
-  def self.signed_in_url(user)
-    @@signed_in_url.respond_to?(:call) ?  @@signed_in_url.call(user) : @@signed_in_url
+  # Whether the `:signed_in_url` should override the URL the user was trying
+  # to reach when they were made to authenticate.
+  mattr_accessor :override_original_url
+  @@override_original_url = false
+
+  def self.signed_in_url(user, original_url)
+    if original_url && !@@override_original_url
+      original_url
+    else
+      @@signed_in_url.respond_to?(:call) ?  @@signed_in_url.call(user) : @@signed_in_url
+    end
   end
 
   # The URL to redirect the user to after s/he signs out.
