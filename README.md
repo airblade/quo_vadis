@@ -33,6 +33,8 @@ What it doesn't and won't do:
 
 ## Quick Start
 
+If this takes you more than 5 minutes, you can have your money back ;)
+
 Install and run the generator: add `gem 'quo_vadis'` to your Gemfile and run `rails generate quo_vadis:install`.
 
 Edit and run the generated migration to add authentication columns: `rake db:migrate`.  Note the migration (currently) assumes you already have a `User` model.
@@ -55,6 +57,8 @@ Write the sign-in view.  Your sign-in form must:
 
 * be in `app/views/sessions/new.html.:format`
 * post the parameters `:username` and `:password` to `sign_in_url`
+
+You have to write the view yourself because you'd inevitably want to change whatever markup I generated for you.
 
 In your layout, use `current_user` to retrieve the signed-in user, and `sign_in_path` and `sign_out_path` as appropriate.
 
