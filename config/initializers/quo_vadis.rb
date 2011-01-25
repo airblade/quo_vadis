@@ -11,6 +11,7 @@ QuoVadis.configure do |config|
   #   user.admin? ? :admin : :root
   # end
   #
+  # See also `:override_original_url`.
   config.signed_in_url = :root
 
   # Whether the `:signed_in_url` should override the URL the user was trying
