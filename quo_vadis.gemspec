@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Andy Stewart']
   s.email       = ['boss@airbladesoftware.com']
-  s.homepage    = ''
-  s.summary     = 'Simple authentication for Rails 3.'
+  s.homepage    = 'https://github.com/airblade/quo_vadis'
+  s.summary     = 'Simple username/password authentication for Rails 3.'
   s.description = s.summary
 
   s.rubyforge_project = 'quo_vadis'
