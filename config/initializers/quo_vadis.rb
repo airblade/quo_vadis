@@ -28,22 +28,22 @@ QuoVadis.configure do |config|
 
   # Code to run when the user has signed in.  E.g.:
   #
-  # config.signed_in_hook = Proc.new do |user, request|
+  # config.signed_in_hook = Proc.new do |user, controller|
   #   user.increment! :sign_in_count  # assuming this attribute exists
   # end
   config.signed_in_hook = nil
 
   # Code to run when someone has tried but failed to sign in.  E.g.:
   #
-  # config.failed_sign_in_hook = Proc.new do |request|
-  #   logger.info "Failed sign in from #{request.remote_ip}"
+  # config.failed_sign_in_hook = Proc.new do |controller|
+  #   logger.info "Failed sign in from #{controller.request.remote_ip}"
   # end
   config.failed_sign_in_hook = nil
 
   # Code to run just before the user has signed out.  E.g.:
   #
-  # config.signed_out_hook = Proc.new do |user, request|
-  #   session.reset
+  # config.signed_out_hook = Proc.new do |user, controller|
+  #   controller.session.reset
   # end
   config.signed_out_hook = nil
 

@@ -36,24 +36,24 @@ module QuoVadis
   mattr_accessor :signed_in_hook
   @@signed_in_hook = nil
 
-  def self.signed_in_hook(user, request)
-    @@signed_in_hook.call(user, request) if @@signed_in_hook
+  def self.signed_in_hook(user, controller)
+    @@signed_in_hook.call(user, controller) if @@signed_in_hook
   end
 
   # Code to run when someone has tried but failed to sign in.
   mattr_accessor :failed_sign_in_hook
   @@failed_sign_in_hook = nil
 
-  def self.failed_sign_in_hook(request)
-    @@failed_sign_in_hook.call(request) if @@failed_sign_in_hook
+  def self.failed_sign_in_hook(controller)
+    @@failed_sign_in_hook.call(controller) if @@failed_sign_in_hook
   end
 
   # Code to run just before the user has signed out.
   mattr_accessor :signed_out_hook
   @@signed_out_hook = nil
 
-  def self.signed_out_hook(user, request)
-    @@signed_out_hook.call(user, request) if @@signed_out_hook
+  def self.signed_out_hook(user, controller)
+    @@signed_out_hook.call(user, controller) if @@signed_out_hook
   end
 
 
