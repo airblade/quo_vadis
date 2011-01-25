@@ -18,6 +18,7 @@ Forthcoming features:
 * Remember authenticated user across browser sessions.
 * HTTP basic/digest authentication (probably).
 * Generate (User) model plus migration if it doesn't exist.
+* Detect presence of `has_secure_password` (see below) and adapt appropriately.
 
 What it doesn't and won't do:
 
@@ -41,6 +42,8 @@ In your `User` model, add `authenticates`:
     class User < ActiveRecord::Base
       authenticates
     end
+
+Note Quo Vadis validates the presence of the password, but it's up to you to add any other validations you want.
 
 Use `:authenticate` in a `before_filter` to protect your controllers' actions.  For example:
 
@@ -67,10 +70,10 @@ If you want to add other session management type features, go right ahead: creat
 
 ## See also
 
-* Rails 3 edge's [ActiveModel::SecurePassword](https://github.com/rails/rails/commit/bd9dc4ff23ab1e185df6ccf35d6058c0a3d234ce).  It's `has_secure_password` class method is similar to Quo Vadis's `authenticates` class method.
+* Rails 3 edge's [ActiveModel::SecurePassword](https://github.com/rails/rails/blob/master/activemodel/lib/active_model/secure_password.rb).  It's `has_secure_password` class method is similar to Quo Vadis's `authenticates` class method.
 * [RailsCast 250: Authentication from Scratch](http://railscasts.com/episodes/250-authentication-from-scratch).
 
 
 ## What's up with the name?
 
-Roman sentries used to challenge intruders with, "Halt!  Who goes there?"; quo vadis is Latin for "Who goes there?".  At least that's what my Latin teacher told us, but I was 8yr old then so I may not be remembering this entirely accurately.
+Roman sentries used to challenge intruders with, "Halt!  Who goes there?"; quo vadis is Latin for "Who goes there?".  At least that's what my Latin teacher told us, but I was 8 years old then so I may not be remembering this entirely accurately.
