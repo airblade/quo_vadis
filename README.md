@@ -4,7 +4,7 @@ Quo Vadis adds simple username/password authentication to Rails 3 applications.
 
 Features:
 
-* Minimal effort to add authentication to your app.
+* Minimal effort to add authentication to your app: get up and running in 5 minutes.
 * No surprises: it does what you expect.
 * Easy to customise.
 * Uses BCrypt to encrypt passwords.
@@ -30,16 +30,17 @@ What it doesn't and won't do:
 * Offer so much flexibility that it takes more than 10 minutes to wrap your head around it (cf Devise, Authlogic).
 
 
-## Installation
+## Quick Start
 
-Add `gem 'quo_vadis'` to your Gemfile.
+Install and run the generator: add `gem 'quo_vadis'` to your Gemfile and run `rails generate quo_vadis:install`.
 
-Run `rails generate quo_vadis:install`.
+Edit and run the generated migration to add authentication columns: `rake db:migrate`.  Note the migration (currently) assumes you already have a `User` model.
 
+In your `User` model, add `authenticates`:
 
-## Quick start guide
-
-Install.
+    class User < ActiveRecord::Base
+      authenticates
+    end
 
 Use `:authenticate` in a `before_filter` to protect your controllers' actions.  For example:
 
@@ -47,80 +48,29 @@ Use `:authenticate` in a `before_filter` to protect your controllers' actions.  
       before_filter :authenticate, :except => [:index, :show]
     end
 
-Write sign in view.  See below.
+Write the sign-in view.  Your sign-in form must:
 
-Assuming you already have a User model, add `authenticates`:
-
-    class User < ActiveRecord::Base
-      authenticates
-    end
-
-Edit and run migration to add authentication columns: `rake db:migrate`.
-
-
-
-## Detailed usage
-
-1.  Add gem to Gemfile.
-
-This adds to your `ApplicationController` a `current_user` helper method and makes available an `authenticate` method which you can use to protect actions requiring authentication.  For example:
-
-    class ArticleController < ApplicationController
-      before_filter :authenticate, :except => [:index, :show]
-    end
-
-2.  Create views for your sign-in form and your fogotten-sign-in-details form.  Writing them yourself doesn't take long and ensures they use the markup you want, not the markup I like.
-
-Your sign-in form must:
-* be in `app/views/sessions/new.html.{haml|erb}`
+* be in `app/views/sessions/new.html.:format`
 * post the parameters `:username` and `:password` to `sign_in_url`
 
-3.  Set the URLs to which to redirect the user upon successful sign in, sign out, and reminder.
+In your layout, use `current_user` to retrieve the signed-in user, and `sign_in_path` and `sign_out_path` as appropriate.
 
-In `config/initializers/quo_vadis.rb`.
 
-By default when a user signs in successfully they are redirected to `root_url`.  To change this, create a sessions controller of your own and override the `signed_in_url` method.  For example:
+## Customisation
 
-    class SessionsController < ActionController::Base
+You can customise the flash messages in `config/locales/quo_vadis.en.yml`.
 
-      private
+You can customise the sign-in and sign-out redirects in `config/initializers/quo_vadis.rb`; they both default to the root route.  You can also hook into the sign-in and sign-out process if you need to run any other code.
 
-      # Returns the path to redirect the user to after successful sign-in.
-      def signed_in_url
-        user.admin? ? admin_url : root_url
-      end
-    end
+If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
 
-Do the same for `signed_out_url` (which defaults to `root_url`) and `reminded_url` (same default).
 
-You can also hook into the sign in/out process to run arbitrary code.  Just define any of the following methods: `on_successful_sign_in`, `on_failed_sign_in`, `on_sign_out`, `on_forgotten_details`.  For example:
+## See also
 
-    class SessionsController < ActionController::Base
-
-      private
-
-      def on_failed_sign_in
-        # log IP address
-      end
-    end
-
-4.  Customise the flash mesages displayed on sign in, sign out, etc.
-
-TODO: can we generate the locales file automatically?
-
-See `config/locales/quo_vadis.en.yml`.
-
-5.  In your user model, `authenticates`.
-
-    class User < ActiveRecord::Base
-      authenticates
-    end
-
-TODO: description
-
-TODO: migration
+* Rails 3 edge's [ActiveModel::SecurePassword](https://github.com/rails/rails/commit/bd9dc4ff23ab1e185df6ccf35d6058c0a3d234ce).  It's `has_secure_password` class method is similar to Quo Vadis's `authenticates` class method.
+* [RailsCast 250: Authentication from Scratch](http://railscasts.com/episodes/250-authentication-from-scratch).
 
 
 ## What's up with the name?
 
-According to my Latin teacher, Roman sentries used to challenge intruders with, "Halt!  Who goes there?".  Quo vadis is Latin for "Who goes there?".  But I was 8 when we had that lesson so I may have got all this completely wrong.
+Roman sentries used to challenge intruders with, "Halt!  Who goes there?"; quo vadis is Latin for "Who goes there?".  At least that's what my Latin teacher told us, but I was 8yr old then so I may not be remembering this entirely accurately.
