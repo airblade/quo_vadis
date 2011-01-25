@@ -2,6 +2,10 @@ require 'test_helper'
 
 class SignOutTest < ActiveSupport::IntegrationCase
 
+  teardown do
+    Capybara.reset_sessions!
+  end
+
   test 'sign out' do
     user_factory 'Bob', 'bob', 'secret'
     sign_in_as 'bob', 'secret'

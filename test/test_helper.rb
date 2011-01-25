@@ -26,7 +26,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 #
 
 def sign_in_as(username, password)
-  visit sign_out_path
   visit sign_in_path
   fill_in 'username', :with => username
   fill_in 'password', :with => password

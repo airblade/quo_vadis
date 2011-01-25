@@ -2,6 +2,10 @@ require 'test_helper'
 
 class AuthenticationTest < ActiveSupport::IntegrationCase
 
+  teardown do
+    Capybara.reset_sessions!
+  end
+
   test 'action not requiring authentication' do
     visit articles_path
 
