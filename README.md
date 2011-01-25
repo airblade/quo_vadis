@@ -47,7 +47,7 @@ Note Quo Vadis validates the presence of the password, but it's up to you to add
 
 Use `:authenticate` in a `before_filter` to protect your controllers' actions.  For example:
 
-    class ArticleController < ActionController::Base
+    class ArticlesController < ActionController::Base
       before_filter :authenticate, :except => [:index, :show]
     end
 
