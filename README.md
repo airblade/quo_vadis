@@ -60,6 +60,8 @@ Write the sign-in view.  Your sign-in form must:
 
 You have to write the view yourself because you'd inevitably want to change whatever markup I generated for you.
 
+Remember to serve your sign in form over HTTPS -- to avoid [the credentials being stolen](http://blog.jgc.org/2011/01/code-injected-to-steal-passwords-in.html).
+
 In your layout, use `current_user` to retrieve the signed-in user, and `sign_in_path` and `sign_out_path` as appropriate.
 
 
