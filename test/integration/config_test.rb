@@ -93,4 +93,10 @@ class ConfigTest < ActiveSupport::IntegrationCase
     end
   end
 
+  test 'layout config' do
+    QuoVadis.layout = 'sessions'
+    visit sign_in_path
+    assert page.has_content?('Sessions layout')
+  end
+
 end

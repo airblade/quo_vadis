@@ -47,4 +47,12 @@ QuoVadis.configure do |config|
   # end
   config.signed_out_hook = nil
 
+
+  #
+  # Miscellaneous
+  #
+
+  # Layout for the sign-in view.  Pass a string or a symbol.
+  config.layout = 'application'
+
 end

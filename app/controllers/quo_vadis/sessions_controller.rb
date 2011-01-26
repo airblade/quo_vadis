@@ -1,4 +1,5 @@
 class QuoVadis::SessionsController < ApplicationController
+  layout :quo_vadis_layout
 
   # sign in
   def new
@@ -31,6 +32,10 @@ class QuoVadis::SessionsController < ApplicationController
     url = session[:quo_vadis_original_url]
     session[:quo_vadis_original_url] = nil
     url
+  end
+
+  def quo_vadis_layout
+    QuoVadis.layout
   end
 
 end

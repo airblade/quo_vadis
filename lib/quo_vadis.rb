@@ -57,6 +57,15 @@ module QuoVadis
   end
 
 
+  #
+  # Miscellaneous
+  #
+
+  # Layout for the sign-in view.
+  mattr_accessor :layout
+  @@layout = nil
+
+
   # Configure from the initializer.
   def self.configure
     yield self

@@ -37,10 +37,11 @@ def user_factory(name, username, password)
 end
 
 def reset_quo_vadis_configuration
-  QuoVadis.signed_in_url = :root
+  QuoVadis.signed_in_url         = :root
   QuoVadis.override_original_url = false
-  QuoVadis.signed_out_url = :root
-  QuoVadis.signed_in_hook = nil
-  QuoVadis.failed_sign_in_hook = nil
-  QuoVadis.signed_out_hook = nil
+  QuoVadis.signed_out_url        = :root
+  QuoVadis.signed_in_hook        = nil
+  QuoVadis.failed_sign_in_hook   = nil
+  QuoVadis.signed_out_hook       = nil
+  QuoVadis.layout                = 'application'
 end
