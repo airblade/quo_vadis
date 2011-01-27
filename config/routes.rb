@@ -1,4 +1,4 @@
-Rails.application.routes.draw do |map|
+Rails.application.routes.draw do
   scope :module => 'quo_vadis' do
     get  'sign-in'  => 'sessions#new',     :as => 'sign_in'
     post 'sign-in'  => 'sessions#create',  :as => 'sign_in'
