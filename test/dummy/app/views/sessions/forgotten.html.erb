@@ -1,0 +1,13 @@
+<h1>Forgotten your password?</h1>
+
+<p>Don't worry, it happens to the best of us.  Just tell us who you are, and we'll send you an email explaining how to change your password.</p>
+
+<%= form_tag forgotten_sign_in_path do %>
+  <p>
+    <%= label_tag :username %>
+    <%= text_field_tag :username %>
+  </p>
+  <p>
+    <%= submit_tag 'Send me that email' %>
+  </p>
+<% end %>

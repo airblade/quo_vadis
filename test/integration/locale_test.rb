@@ -6,14 +6,14 @@ class LocaleTest < ActiveSupport::IntegrationCase
     Capybara.reset_sessions!
   end
 
-  test 'before_sign_in flash' do
+  test 'sign_in.before flash' do
     visit new_article_path
     within '.flash' do
       assert page.has_content?('Please sign in first.')
     end
   end
 
-  test 'after_sign_in flash' do
+  test 'sign_in.after flash' do
     user_factory 'Bob', 'bob', 'secret'
     sign_in_as 'bob', 'secret'
     within '.flash' do
@@ -21,7 +21,7 @@ class LocaleTest < ActiveSupport::IntegrationCase
     end
   end
 
-  test 'failed_sign_in flash' do
+  test 'sign_in.failed flash' do
     sign_in_as 'bob', 'secret'
     within '.flash' do
       assert page.has_content?('Sorry, we did not recognise you.')
@@ -35,9 +35,9 @@ class LocaleTest < ActiveSupport::IntegrationCase
     end
   end
 
-  test 'before_sign_in flash is optional' do
+  test 'sign_in.before flash is optional' do
     begin
-      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:before_sign_in => ''}}}
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:sign_in => {:before => ''}}}}
       visit new_article_path
       assert page.has_no_css?('div.flash')
     ensure
@@ -45,10 +45,10 @@ class LocaleTest < ActiveSupport::IntegrationCase
     end
   end
 
-  test 'after_sign_in flash is optional' do
+  test 'sign_in.after flash is optional' do
     user_factory 'Bob', 'bob', 'secret'
     begin
-      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:after_sign_in => ''}}}
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:sign_in => {:after => ''}}}}
       sign_in_as 'bob', 'secret'
       assert page.has_no_css?('div.flash')
     ensure
@@ -56,9 +56,9 @@ class LocaleTest < ActiveSupport::IntegrationCase
     end
   end
 
-  test 'failed_sign_in flash is optional' do
+  test 'sign_in.failed flash is optional' do
     begin
-      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:failed_sign_in => ''}}}
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:sign_in => {:failed => ''}}}}
       sign_in_as 'bob', 'secret'
       assert page.has_no_css?('div.flash')
     ensure
@@ -75,4 +75,102 @@ class LocaleTest < ActiveSupport::IntegrationCase
       I18n.reload!
     end
   end
+
+  test 'forgotten.unknown flash' do
+    submit_forgotten_details 'bob'
+    within '.flash.alert' do
+      assert page.has_content?('Sorry, we did not recognise you.')
+    end
+  end
+
+  test 'forgotten.unknown flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:unknown => ''}}}}
+      submit_forgotten_details 'bob'
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
+  test 'forgotten.no_email flash' do
+    user_factory 'Bob', 'bob', 'secret'
+    submit_forgotten_details 'bob'
+    within '.flash.alert' do
+      assert page.has_content?("Sorry, we don't have an email address for you.")
+    end
+  end
+
+  test 'forgotten.no_email flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:no_email => ''}}}}
+      user_factory 'Bob', 'bob', 'secret'
+      submit_forgotten_details 'bob'
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
+  test 'forgotten.sent_email flash' do
+    user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
+    submit_forgotten_details 'bob'
+    within '.flash.notice' do
+      assert page.has_content?("We've emailed you a link where you can change your password.")
+    end
+  end
+
+  test 'forgotten.sent_email flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:sent_email => ''}}}}
+      user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
+      submit_forgotten_details 'bob'
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
+  test 'forgotten.invalid_token flash' do
+    visit change_password_path('123')
+    within '.flash.alert' do
+      assert page.has_content?("Sorry, this link isn't valid anymore.")
+    end
+  end
+
+  test 'forgotten.invalid_token flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:invalid_token => ''}}}}
+      visit change_password_path('123')
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
+  test 'forgotten.password_changed flash' do
+    user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
+    User.last.generate_token
+    visit change_password_path(User.last.token)
+    fill_in :password, :with => 'topsecret'
+    click_button 'Change my password'
+    within '.flash.notice' do
+      assert page.has_content?("You have successfully changed your password and you're now signed in.")
+    end
+  end
+
+  test 'forgotten.password_changed flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:password_changed => ''}}}}
+      user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
+      User.last.generate_token
+      visit change_password_path(User.last.token)
+      fill_in :password, :with => 'topsecret'
+      click_button 'Change my password'
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
 end

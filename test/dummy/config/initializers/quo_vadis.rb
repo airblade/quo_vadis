@@ -49,17 +49,6 @@ QuoVadis.configure do |config|
 
 
   #
-  # Forgotten-password Mailer
-  #
-
-  # From whom the forgotten-password email should be sent.
-  config.from = 'noreply@example.com'
-
-  # Subject of the forgotten-password email.
-  config.subject = 'Change your password'
-
-
-  #
   # Miscellaneous
   #
 

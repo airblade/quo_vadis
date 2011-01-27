@@ -58,6 +58,19 @@ module QuoVadis
 
 
   #
+  # Forgotten-password Mailer
+  #
+
+  # From whom the forgotten-password email should be sent.
+  mattr_accessor :from
+  @@from = 'noreply@example.com'
+
+  # Subject of the forgotten-password email.
+  mattr_accessor :subject
+  @@subject = 'Change your password.'
+
+
+  #
   # Miscellaneous
   #
 

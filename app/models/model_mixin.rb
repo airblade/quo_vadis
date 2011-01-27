@@ -13,9 +13,11 @@ module ModelMixin
       attr_reader    :password
       attr_protected :password_digest
 
-      validates      :username,        :presence => true, :uniqueness => true
-      validates      :password,        :on => :create, :presence => true
-      validates      :password_digest, :presence => true
+      validates :username,        :presence => true, :uniqueness => true
+      validates :password,        :presence => true, :if => Proc.new { |u| u.changed.include?('password_digest') }
+      validates :password_digest, :presence => true
+
+      scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 3.hours.ago) }
 
       instance_eval <<-END
         def authenticate(username, plain_text_password)
@@ -36,8 +38,26 @@ module ModelMixin
       self.password_digest = BCrypt::Password.create plain_text_password
     end
 
+    def generate_token
+      begin
+        self.token = url_friendly_token
+      end while self.class.exists?(:token => token)
+      self.token_created_at = Time.now.utc
+      save
+    end
+
+    def clear_token
+      update_attributes :token => nil, :token_created_at => nil
+    end
+
     def has_matching_password?(plain_text_password)
       BCrypt::Password.new(password_digest) == plain_text_password
+    end
+
+    private
+
+    def url_friendly_token
+      ActiveSupport::SecureRandom.base64(10).tr('+/=', 'xyz')
     end
   end
 
