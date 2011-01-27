@@ -3,7 +3,7 @@ module ControllerMixin
     base.helper_method :current_user
   end
 
-  private  # TODO: does this mark them as private once mixed in?
+  private
 
   def current_user=(user)
     session[:current_user_id] = user ? user.id : nil
