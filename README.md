@@ -122,3 +122,15 @@ If you want to add other session management type features, go right ahead: creat
 ## What's up with the name?
 
 Roman sentries used to challenge intruders with, "Halt!  Who goes there?"; quo vadis is Latin for "Who goes there?".  At least that's what my Latin teacher told us, but I was 8 years old then so I may not be remembering this entirely accurately.
+
+
+## Questions, Problems, Feedback
+
+Please use the GitHub [issue tracker](https://github.com/airblade/quo_vadis/issues) or email me.
+
+
+## Intellectual property
+
+Copyright 2011 Andy Stewart (boss@airbladesofware.com).
+
+Released under the MIT licence.
