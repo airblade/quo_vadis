@@ -106,11 +106,32 @@ Finally, write the change-password page ([example](<test/dummy/apps/views/sessio
 
 ## Customisation
 
-You can customise the flash messages in `config/locales/quo_vadis.en.yml`.
+You can customise the flash messages and mailer from/subject in `config/locales/quo_vadis.en.yml`.
 
 You can customise the sign-in and sign-out redirects in `config/initializers/quo_vadis.rb`; they both default to the root route.  You can also hook into the sign-in and sign-out process if you need to run any other code.
 
 If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
+
+
+## Sign up
+
+Quo Vadis doesn't offer sign-up because that's user management, not authentication.
+
+However if you have implemented user sign-up yourself, you need to be able to sign in a newly created user.  Do this by calling `sign_in(user)` in your controller.  For example:
+
+    # In your app
+    class UsersController < ApplicationController
+      def create
+        @user = User.new params[:user]
+        if @user.save
+          sign_in @user    # <-- NOTE: sign in your user here
+        else
+          render 'new'
+        end
+      end
+    end
+
+The `sign_in(user)` method will redirect the user appropriately (you can configure this in `config/initializers/quo_vadis.rb`), as well as running any sign-in hook you may have defined in the initializer.
 
 
 ## See also
