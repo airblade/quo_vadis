@@ -12,7 +12,7 @@ Features:
 
 Forthcoming features:
 
-* Generate the views for you.
+* Generate the views for you (for now, copy the examples given below).
 * Let you choose which model(s) to authenticate (currently `User`).
 * Let you choose the identification field (currently `username`).
 * Remember authenticated user across browser sessions.
@@ -58,7 +58,7 @@ Write the sign-in view.  Your sign-in form must:
 * be in `app/views/sessions/new.html.:format`
 * POST the parameters `:username` and `:password` to `sign_in_url`
 
-You have to write the view yourself because you'd inevitably want to change whatever markup I generated for you.  You can find an example in the [test app](<test/dummy/app/views/sessions/new.html.erb>).
+You have to write the view yourself because you'd inevitably want to change whatever markup I generated for you.  You can find an example in the [test app](<./test/dummy/app/views/sessions/new.html.erb/).
 
 Remember to serve your sign in form over HTTPS -- to avoid [the credentials being stolen](http://blog.jgc.org/2011/01/code-injected-to-steal-passwords-in.html).
 
@@ -80,12 +80,12 @@ It'll take you about 5 minutes to implement this.
 
 On your sign-in page, link to the forgotten-password view at `forgotten_sign_in_url`.
 
-Write the forgotten-password view ([example](<test/dummy/apps/views/sessions/forgotten.html.erb>)).  The form must:
+Write the forgotten-password view ([example](/./test/dummy/apps/views/sessions/forgotten.html.erb/)).  The form must:
 
 * be in `app/views/sessions/forgotten.html.:format`
 * POST the parameter `:username` to `forgotten_sign_in_url`
 
-Now write the mailer view, i.e. the email which will be sent to your forgetful users ([example](<test/dummy/apps/views/quo_vadis/notifier/change_password.text.erb>)).  The view must:
+Now write the mailer view, i.e. the email which will be sent to your forgetful users ([example](/./test/dummy/apps/views/quo_vadis/notifier/change_password.text.erb/)).  The view must:
 
 * be at `app/views/quo_vadis/notifier/change_password.text.erb`
 * render `@url` somewhere (this is the link the user clicks to go to the change-password page)
@@ -98,7 +98,7 @@ Configure the default host so ActionMailer can generate the URL.  In `config/env
 
     config.action_mailer.default_url_options = {:host => 'yourdomain.com'}
 
-Finally, write the change-password page ([example](<test/dummy/apps/views/sessions/edit.html.erb>)).  The form must:
+Finally, write the change-password page ([example](/./test/dummy/apps/views/sessions/edit.html.erb/)).  The form must:
 
 * be in `app/views/sessions/edit.html.:format`
 * PUT the parameter `:password` to `change_password_url(params[:token])`
