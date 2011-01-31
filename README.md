@@ -152,6 +152,6 @@ Please use the GitHub [issue tracker](https://github.com/airblade/quo_vadis/issu
 
 ## Intellectual property
 
-Copyright 2011 Andy Stewart (boss@airbladesofware.com).
+Copyright 2011 Andy Stewart (boss@airbladesoftware.com).
 
 Released under the MIT licence.
