@@ -113,7 +113,7 @@ You can customise the sign-in and sign-out redirects in `config/initializers/quo
 If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
 
 
-## Sign up
+## Sign up / user registration
 
 Quo Vadis doesn't offer sign-up because that's user management, not authentication.
 
