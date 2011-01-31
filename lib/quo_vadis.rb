@@ -15,7 +15,7 @@ module QuoVadis
   mattr_accessor :override_original_url
   @@override_original_url = false
 
-  def self.signed_in_url(user, original_url)
+  def self.signed_in_url(user, original_url) # :nodoc:
     if original_url && !@@override_original_url
       original_url
     else
@@ -36,7 +36,7 @@ module QuoVadis
   mattr_accessor :signed_in_hook
   @@signed_in_hook = nil
 
-  def self.signed_in_hook(user, controller)
+  def self.signed_in_hook(user, controller) # :nodoc:
     @@signed_in_hook.call(user, controller) if @@signed_in_hook
   end
 
@@ -44,7 +44,7 @@ module QuoVadis
   mattr_accessor :failed_sign_in_hook
   @@failed_sign_in_hook = nil
 
-  def self.failed_sign_in_hook(controller)
+  def self.failed_sign_in_hook(controller) # :nodoc:
     @@failed_sign_in_hook.call(controller) if @@failed_sign_in_hook
   end
 
@@ -52,7 +52,7 @@ module QuoVadis
   mattr_accessor :signed_out_hook
   @@signed_out_hook = nil
 
-  def self.signed_out_hook(user, controller)
+  def self.signed_out_hook(user, controller) # :nodoc:
     @@signed_out_hook.call(user, controller) if @@signed_out_hook
   end
 

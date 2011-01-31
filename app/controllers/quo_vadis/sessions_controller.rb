@@ -74,26 +74,35 @@ class QuoVadis::SessionsController < ApplicationController
     end
   end
 
-  private
+  protected
 
+  # Signs in a user, i.e. remembers them in the session, runs the sign-in hook,
+  # and redirects appropriately.
+  #
+  # This method should be called when you have just authenticated <tt>user</tt>
+  # and you need to sign them in.  For example, if a new user has just signed up,
+  # you should call this method to sign them in.
   def sign_in(user)
     self.current_user = user
     QuoVadis.signed_in_hook user, self
     redirect_to QuoVadis.signed_in_url(user, original_url)
   end
 
+  private
+
+  # Returns the URL if any which the user tried to visit before being forced to authenticate.
   def original_url
     url = session[:quo_vadis_original_url]
     session[:quo_vadis_original_url] = nil
     url
   end
 
-  def invalid_token
+  def invalid_token # :nodoc:
     flash[:alert] = t('quo_vadis.flash.forgotten.invalid_token') unless t('quo_vadis.flash.forgotten.invalid_token').blank?
     redirect_to forgotten_sign_in_url
   end
 
-  def quo_vadis_layout
+  def quo_vadis_layout # :nodoc:
     QuoVadis.layout
   end
 
