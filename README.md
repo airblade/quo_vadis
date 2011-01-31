@@ -80,12 +80,12 @@ It'll take you about 5 minutes to implement this.
 
 On your sign-in page, link to the forgotten-password view at `forgotten_sign_in_url`.
 
-Write the forgotten-password view ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/apps/views/sessions/forgotten.html.erb)).  The form must:
+Write the forgotten-password view ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/app/views/sessions/forgotten.html.erb)).  The form must:
 
 * be in `app/views/sessions/forgotten.html.:format`
 * POST the parameter `:username` to `forgotten_sign_in_url`
 
-Now write the mailer view, i.e. the email which will be sent to your forgetful users ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/apps/views/quo_vadis/notifier/change_password.text.erb)).  The view must:
+Now write the mailer view, i.e. the email which will be sent to your forgetful users ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/app/views/quo_vadis/notifier/change_password.text.erb)).  The view must:
 
 * be at `app/views/quo_vadis/notifier/change_password.text.erb`
 * render `@url` somewhere (this is the link the user clicks to go to the change-password page)
@@ -98,7 +98,7 @@ Configure the default host so ActionMailer can generate the URL.  In `config/env
 
     config.action_mailer.default_url_options = {:host => 'yourdomain.com'}
 
-Finally, write the change-password page ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/apps/views/sessions/edit.html.erb)).  The form must:
+Finally, write the change-password page ([example](https://github.com/airblade/quo_vadis/tree/master/test/dummy/app/views/sessions/edit.html.erb)).  The form must:
 
 * be in `app/views/sessions/edit.html.:format`
 * PUT the parameter `:password` to `change_password_url(params[:token])`
