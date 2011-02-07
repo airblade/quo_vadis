@@ -1,7 +1,7 @@
 QuoVadis.configure do |config|
 
   #
-  # Redirection URLs
+  # Sign in
   #
 
   # The URL to redirect the user to after s/he signs in.
@@ -18,14 +18,6 @@ QuoVadis.configure do |config|
   # to reach when they were made to authenticate.
   config.override_original_url = false
 
-  # The URL to redirect the user to after s/he signs out.
-  config.signed_out_url = :root
-
-
-  #
-  # Hooks
-  #
-
   # Code to run when the user has signed in.  E.g.:
   #
   # config.signed_in_hook = Proc.new do |user, controller|
@@ -39,6 +31,18 @@ QuoVadis.configure do |config|
   #   logger.info "Failed sign in from #{controller.request.remote_ip}"
   # end
   config.failed_sign_in_hook = nil
+
+  # How long to remember user across browser sessions.
+  # Set to <tt>nil</tt> to never remember user.
+  config.remember_for = 2.weeks
+
+
+  #
+  # Sign out
+  #
+
+  # The URL to redirect the user to after s/he signs out.
+  config.signed_out_url = :root
 
   # Code to run just before the user has signed out.  E.g.:
   #
@@ -58,14 +62,6 @@ QuoVadis.configure do |config|
   # Subject of the forgotten-password email.
   config.subject = 'Change your password'
 
-
-  #
-  # Remember user across browser sessions
-  #
-
-  # How long to remember user across browser sessions.
-  # Set to <tt>nil</tt> to never remember user.
-  config.remember_for = 2.weeks
 
   #
   # Miscellaneous

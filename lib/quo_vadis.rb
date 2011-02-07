@@ -4,7 +4,7 @@ require 'active_support/core_ext/numeric/time'
 module QuoVadis
 
   #
-  # Redirection URLs
+  # Sign in
   #
 
   # The URL to redirect the user to after s/he signs in.
@@ -24,15 +24,6 @@ module QuoVadis
     end
   end
 
-  # The URL to redirect the user to after s/he signs out.
-  mattr_accessor :signed_out_url
-  @@signed_in_url = :root
-
-
-  #
-  # Hooks
-  #
-
   # Code to run when the user has signed in.
   mattr_accessor :signed_in_hook
   @@signed_in_hook = nil
@@ -48,6 +39,20 @@ module QuoVadis
   def self.failed_sign_in_hook(controller) # :nodoc:
     @@failed_sign_in_hook.call(controller) if @@failed_sign_in_hook
   end
+
+  # How long to remember user across browser sessions.
+  mattr_accessor :remember_for
+  @@remember_for = 2.weeks
+
+
+  #
+  # Sign out
+  #
+
+  # The URL to redirect the user to after s/he signs out.
+  mattr_accessor :signed_out_url
+  @@signed_in_url = :root
+
 
   # Code to run just before the user has signed out.
   mattr_accessor :signed_out_hook
@@ -70,14 +75,6 @@ module QuoVadis
   mattr_accessor :subject
   @@subject = 'Change your password.'
 
-
-  #
-  # Remember user across browser sessions
-  #
-
-  # How long to remember user.
-  mattr_accessor :remember_for
-  @@remember_for = 2.weeks
 
 
   #
