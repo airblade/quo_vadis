@@ -33,6 +33,15 @@ module ModelMixin
             nil
           end
         end
+
+        def find_by_salt(id, salt) # :nodoc:
+          user = User.find_by_id id
+          if user && user.has_matching_salt?(salt)
+            user
+          else
+            nil
+          end
+        end
       END
     end
   end
@@ -45,7 +54,7 @@ module ModelMixin
 
     # Generates a unique, timestamped token which can be used in URLs, and
     # saves the record.  This is part of the forgotten-password workflow.
-    def generate_token
+    def generate_token # :nodoc:
       begin
         self.token = url_friendly_token
       end while self.class.exists?(:token => token)
@@ -55,14 +64,24 @@ module ModelMixin
 
     # Clears the user's timestamped token and saves the record.
     # This is part of the forgotten-password workflow.
-    def clear_token
+    def clear_token # :nodoc:
       update_attributes :token => nil, :token_created_at => nil
     end
 
     # Returns true if the given <tt>plain_text_password</tt> is the user's
     # password, and false otherwise.
-    def has_matching_password?(plain_text_password)
+    def has_matching_password?(plain_text_password) # :nodoc:
       BCrypt::Password.new(password_digest) == plain_text_password
+    end
+
+    # Returns true if the given <tt>salt</tt> is the user's salt,
+    # and false otherwise.
+    def has_matching_salt?(salt) # :nodoc:
+      password_salt == salt
+    end
+
+    def password_salt # :nodoc:
+      BCrypt::Password.new(password_digest).salt
     end
 
     private

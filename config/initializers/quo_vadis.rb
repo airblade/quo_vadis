@@ -60,6 +60,14 @@ QuoVadis.configure do |config|
 
 
   #
+  # Remember user across browser sessions
+  #
+
+  # How long to remember user across browser sessions.
+  # Set to <tt>nil</tt> to never remember user.
+  config.remember_for = 2.weeks
+
+  #
   # Miscellaneous
   #
 

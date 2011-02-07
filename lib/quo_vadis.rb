@@ -1,4 +1,5 @@
 require 'quo_vadis/engine'
+require 'active_support/core_ext/numeric/time'
 
 module QuoVadis
 
@@ -68,6 +69,15 @@ module QuoVadis
   # Subject of the forgotten-password email.
   mattr_accessor :subject
   @@subject = 'Change your password.'
+
+
+  #
+  # Remember user across browser sessions
+  #
+
+  # How long to remember user.
+  mattr_accessor :remember_for
+  @@remember_for = 2.weeks
 
 
   #

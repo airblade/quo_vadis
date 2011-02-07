@@ -8,14 +8,13 @@ Features:
 * No surprises: it does what you expect.
 * Easy to customise.
 * Uses BCrypt to encrypt passwords.
-* Sign in, sign out, forgotten password, authenticate actions.
+* Sign in, sign out, forgotten password, authenticate actions, remember user between browser sessions.
 
 Forthcoming features:
 
 * Generate the views for you (for now, copy the examples given below).
 * Let you choose which model(s) to authenticate (currently `User`).
 * Let you choose the identification field (currently `username`).
-* Remember authenticated user across browser sessions.
 * HTTP basic/digest authentication (probably).
 * Generate (User) model plus migration if it doesn't exist.
 * Detect presence of `has_secure_password` (see below) and adapt appropriately.
