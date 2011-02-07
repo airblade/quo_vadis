@@ -2,6 +2,8 @@
 
 Quo Vadis adds simple username/password authentication to Rails 3 applications.
 
+Why bother with yet another authentication gem?  Well, I find all the others over-engineered.  Code should be easy to use and easy to read.  As far as I'm concerned, none of the others ticks both boxes.
+
 Features:
 
 * Minimal effort to add authentication to your app: get up and running in 5 minutes.
