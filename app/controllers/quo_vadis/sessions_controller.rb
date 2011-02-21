@@ -83,6 +83,7 @@ class QuoVadis::SessionsController < ApplicationController
   # and you need to sign them in.  For example, if a new user has just signed up,
   # you should call this method to sign them in.
   def sign_in(user)
+    prevent_session_fixation
     self.current_user = user
     QuoVadis.signed_in_hook user, self
     redirect_to QuoVadis.signed_in_url(user, original_url)
@@ -104,6 +105,16 @@ class QuoVadis::SessionsController < ApplicationController
 
   def quo_vadis_layout # :nodoc:
     QuoVadis.layout
+  end
+
+  def prevent_session_fixation # :nodoc:
+    original_flash = flash.inject({}) { |hsh, (k,v)| hsh[k] = v; hsh }
+    original_url = session[:quo_vadis_original_url]
+
+    reset_session
+
+    original_flash.each { |k,v| flash[k] = v }
+    session[:quo_vadis_original_url] = original_url
   end
 
 end
