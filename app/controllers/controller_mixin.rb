@@ -3,6 +3,11 @@ module ControllerMixin
     base.helper_method :current_user
   end
 
+  def handle_unverified_request
+    super
+    cookies.delete :remember_me
+  end
+
   private
 
   # Remembers the authenticated <tt>user</tt> (in this session and future sessions).

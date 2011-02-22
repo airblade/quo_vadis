@@ -54,3 +54,28 @@ def reset_quo_vadis_configuration
   QuoVadis.subject               = 'Change your password'
   QuoVadis.remember_for          = 2.weeks
 end
+
+
+#
+# Code below from https://github.com/nruth/show_me_the_cookies
+#
+
+def delete_cookie(cookie_name)
+  cookie_jar.instance_variable_get(:@cookies).reject! do |existing_cookie|
+    existing_cookie.name.downcase == cookie_name
+  end
+end
+
+def get_cookie(cookie_name)
+  cookie_jar.instance_variable_get(:@cookies).select do |existing_cookie|
+    existing_cookie.name.downcase == cookie_name
+  end.first
+end
+
+def cookie_jar
+  Capybara.current_session.driver.current_session.instance_variable_get(:@rack_mock_session).cookie_jar
+end
+
+def close_browser
+  delete_cookie Rails.application.config.session_options[:key]
+end

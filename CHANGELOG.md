@@ -1,8 +1,9 @@
 # CHANGELOG
 
 
-## HEAD
+## 1.0.4 (22 February 2011)
 
+* Work with Rails' improved CSRF protection.
 * Prevent session fixation attacks.
 
 
