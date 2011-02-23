@@ -28,7 +28,7 @@ QuoVadis.configure do |config|
   # Code to run when someone has tried but failed to sign in.  E.g.:
   #
   # config.failed_sign_in_hook = Proc.new do |controller|
-  #   logger.info "Failed sign in from #{controller.request.remote_ip}"
+  #   Rails.logger.info "Failed sign in from #{controller.request.remote_ip}"
   # end
   config.failed_sign_in_hook = nil
 
