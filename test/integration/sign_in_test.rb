@@ -2,10 +2,6 @@ require 'test_helper'
 
 class SignInTest < ActiveSupport::IntegrationCase
 
-  teardown do
-    Capybara.reset_sessions!
-  end
-
   test 'failed sign in' do
     sign_in_as 'bob', 'secret'
 
