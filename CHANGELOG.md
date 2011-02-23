@@ -1,6 +1,10 @@
 # CHANGELOG
 
 
+## 1.0.5 (23 February 2011)
+
+* Support blocking of sign-in process.
+
 ## 1.0.4 (22 February 2011)
 
 * Work with Rails' improved CSRF protection.
