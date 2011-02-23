@@ -45,6 +45,15 @@ module QuoVadis
   @@remember_for = 2.weeks
 
 
+  # Whether the sign-in process is blocked to the user.
+  mattr_writer :blocked
+  @@blocked = false
+
+  def self.blocked?(controller) # :nodoc:
+    @@blocked.respond_to?(:call) ? @@blocked.call(controller) : @@blocked
+  end
+
+
   #
   # Sign out
   #

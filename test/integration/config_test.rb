@@ -6,11 +6,6 @@ class ConfigTest < ActiveSupport::IntegrationCase
     user_factory 'Bob', 'bob', 'secret'
   end
 
-  teardown do
-    Capybara.reset_sessions!
-    reset_quo_vadis_configuration
-  end
-
   test 'signed_in_url config' do
     sign_in_as 'bob', 'secret'
     assert_equal root_path, current_path
@@ -49,6 +44,20 @@ class ConfigTest < ActiveSupport::IntegrationCase
     assert_equal sign_in_path, current_path
     sign_in_as 'bob', 'secret'
     assert_equal root_path, current_path
+  end
+
+  test 'blocked config' do
+    QuoVadis.blocked = Proc.new do |controller|
+      controller.params[:username] == 'bob'
+    end
+    sign_in_as 'bob', 'secret'
+    within '.flash' do
+      assert page.has_content?('Sorry, your account is blocked.')
+    end
+    sign_in_as 'jim', 'secret'
+    within '.flash' do
+      assert page.has_no_content?('Sorry, your account is blocked.')
+    end
   end
 
   test 'signed_out_url config' do

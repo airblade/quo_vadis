@@ -10,6 +10,11 @@ module ControllerMixin
 
   private
 
+  # Returns true if the sign-in process is blocked to the user, false otherwise.
+  def blocked?
+    QuoVadis.blocked?(self)
+  end
+
   # Remembers the authenticated <tt>user</tt> (in this session and future sessions).
   #
   # If you want to sign in a <tt>user</tt>, call <tt>QuoVadis::SessionsController#sign_in</tt>

@@ -53,6 +53,7 @@ def reset_quo_vadis_configuration
   QuoVadis.from                  = 'noreply@example.com'
   QuoVadis.subject               = 'Change your password'
   QuoVadis.remember_for          = 2.weeks
+  QuoVadis.blocked               = false
 end
 
 

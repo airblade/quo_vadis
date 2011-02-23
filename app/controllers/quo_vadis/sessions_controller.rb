@@ -8,7 +8,10 @@ class QuoVadis::SessionsController < ApplicationController
 
   # POST sign_in_path
   def create
-    if user = User.authenticate(params[:username], params[:password])
+    if blocked?
+      flash.now[:alert] = t('quo_vadis.flash.sign_in.blocked') unless t('quo_vadis.flash.sign_in.blocked').blank?
+      render 'sessions/new'
+    elsif user = User.authenticate(params[:username], params[:password])
       flash[:notice] = t('quo_vadis.flash.sign_in.after') unless t('quo_vadis.flash.sign_in.after').blank?
       sign_in user
     else

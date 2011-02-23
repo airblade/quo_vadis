@@ -5,4 +5,13 @@ en:
         before: 'Please sign in first.'
         after: 'You have successfully signed in.'
         failed: 'Sorry, we did not recognise you.'
+        blocked: 'Sorry, your account is blocked.'
+
       sign_out: 'You have successfully signed out.'
+
+      forgotten:
+        unknown: "Sorry, we did not recognise you."
+        no_email: "Sorry, we don't have an email address for you."
+        sent_email: "We've emailed you a link where you can change your password."
+        invalid_token: "Sorry, this link isn't valid anymore."
+        password_changed: "You have successfully changed your password and you're now signed in."

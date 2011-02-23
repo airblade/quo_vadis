@@ -5,6 +5,7 @@ en:
         before: 'Please sign in first.'
         after: 'You have successfully signed in.'
         failed: 'Sorry, we did not recognise you.'
+        blocked: 'Sorry, your account is blocked.'
 
       sign_out: 'You have successfully signed out.'
 

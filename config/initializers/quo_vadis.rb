@@ -36,6 +36,14 @@ QuoVadis.configure do |config|
   # Set to <tt>nil</tt> to never remember user.
   config.remember_for = 2.weeks
 
+  # Code to run to determine whether the sign-in process is blocked to the user.  E.g.:
+  #
+  # config.blocked = Proc.new do |controller|
+  #   # Assuming a SignIn model with scopes for `failed`, `last_day`, `for_ip`.
+  #   SignIn.failed.last_day.for_ip(controller.request.remote_ip) >= 5
+  # end
+  config.blocked = false
+
 
   #
   # Sign out

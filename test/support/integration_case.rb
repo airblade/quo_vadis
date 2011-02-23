@@ -2,4 +2,10 @@
 class ActiveSupport::IntegrationCase < ActiveSupport::TestCase
   include Capybara
   include Rails.application.routes.url_helpers
+
+  teardown do
+    Capybara.reset_sessions!
+    reset_quo_vadis_configuration
+  end
+
 end

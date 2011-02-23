@@ -11,6 +11,7 @@ Features:
 * Easy to customise.
 * Uses BCrypt to encrypt passwords.
 * Sign in, sign out, forgotten password, authenticate actions, remember user between browser sessions.
+* Block accounts.
 
 Forthcoming features:
 

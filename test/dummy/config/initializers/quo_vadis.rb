@@ -1,7 +1,7 @@
 QuoVadis.configure do |config|
 
   #
-  # Redirection URLs
+  # Sign in
   #
 
   # The URL to redirect the user to after s/he signs in.
@@ -18,14 +18,6 @@ QuoVadis.configure do |config|
   # to reach when they were made to authenticate.
   config.override_original_url = false
 
-  # The URL to redirect the user to after s/he signs out.
-  config.signed_out_url = :root
-
-
-  #
-  # Hooks
-  #
-
   # Code to run when the user has signed in.  E.g.:
   #
   # config.signed_in_hook = Proc.new do |user, controller|
@@ -36,9 +28,29 @@ QuoVadis.configure do |config|
   # Code to run when someone has tried but failed to sign in.  E.g.:
   #
   # config.failed_sign_in_hook = Proc.new do |controller|
-  #   logger.info "Failed sign in from #{controller.request.remote_ip}"
+  #   Rails.logger.info "Failed sign in from #{controller.request.remote_ip}"
   # end
   config.failed_sign_in_hook = nil
+
+  # How long to remember user across browser sessions.
+  # Set to <tt>nil</tt> to never remember user.
+  config.remember_for = 2.weeks
+
+  # Code to run to determine whether the sign-in process is blocked to the user.  E.g.:
+  #
+  # config.blocked = Proc.new do |controller|
+  #   # Assuming a SignIn model with scopes for `failed`, `last_day`, `for_ip`.
+  #   SignIn.failed.last_day.for_ip(controller.request.remote_ip) >= 5
+  # end
+  config.blocked = false
+
+
+  #
+  # Sign out
+  #
+
+  # The URL to redirect the user to after s/he signs out.
+  config.signed_out_url = :root
 
   # Code to run just before the user has signed out.  E.g.:
   #
@@ -46,6 +58,17 @@ QuoVadis.configure do |config|
   #   controller.session.reset
   # end
   config.signed_out_hook = nil
+
+
+  #
+  # Forgotten-password Mailer
+  #
+
+  # From whom the forgotten-password email should be sent.
+  config.from = 'noreply@example.com'
+
+  # Subject of the forgotten-password email.
+  config.subject = 'Change your password'
 
 
   #

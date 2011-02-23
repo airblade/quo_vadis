@@ -66,6 +66,27 @@ class LocaleTest < ActiveSupport::IntegrationCase
     end
   end
 
+  test 'sign_in.blocked flash' do
+    QuoVadis.blocked = true
+    user_factory 'Bob', 'bob', 'secret'
+    sign_in_as 'bob', 'secret'
+    within '.flash' do
+      assert page.has_content?('Sorry, your account is blocked.')
+    end
+  end
+
+  test 'sign_in.blocked flash is optional' do
+    begin
+      I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:sign_in => {:blocked => ''}}}}
+      QuoVadis.blocked = true
+      user_factory 'Bob', 'bob', 'secret'
+      sign_in_as 'bob', 'secret'
+      assert page.has_no_css?('div.flash')
+    ensure
+      I18n.reload!
+    end
+  end
+
   test 'sign_out flash is optional' do
     begin
       I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:sign_out => ''}}}
