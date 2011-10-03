@@ -1,5 +1,6 @@
 pkg/*
 *.gem
+Gemfile.lock
 .bundle
 test/dummy/log/*
 test/dummy/tmp/*
