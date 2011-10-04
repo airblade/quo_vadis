@@ -1,5 +1,9 @@
 QuoVadis.configure do |config|
 
+  # The model we want to authenticate.
+  config.model = '<%= model_name.pluralize.classify %>'
+
+
   #
   # Sign in
   #

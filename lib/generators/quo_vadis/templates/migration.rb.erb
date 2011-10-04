@@ -1,0 +1,18 @@
+class AddAuthenticationTo<%= model_name.pluralize.camelize %> < ActiveRecord::Migration
+  def self.up
+    add_column :<%= model_name.tableize %>, :username,         :string  # for user identification
+    add_column :<%= model_name.tableize %>, :password_digest,  :string
+
+    add_column :<%= model_name.tableize %>, :email,            :string  # for forgotten-credentials
+    add_column :<%= model_name.tableize %>, :token,            :string  # for forgotten-credentials
+    add_column :<%= model_name.tableize %>, :token_created_at, :string  # for forgotten-credentials
+  end
+
+  def self.down
+    remove_column :<%= model_name.tableize %>, :username
+    remove_column :<%= model_name.tableize %>, :password_digest
+    remove_column :<%= model_name.tableize %>, :email
+    remove_column :<%= model_name.tableize %>, :token
+    remove_column :<%= model_name.tableize %>, :token_created_at
+  end
+end
