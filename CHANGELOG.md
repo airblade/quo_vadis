@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## HEAD
+
+* Allow authentication of any model.
+
+
 ## 1.0.7 (4 October 2011)
 
 * Allow more recent bcrypt-ruby versions.

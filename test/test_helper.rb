@@ -42,6 +42,10 @@ def user_factory(name, username, password, email = nil)
   User.create! :name => name, :username => username, :password => password, :email => email
 end
 
+def person_factory(name, username, password, email = nil)
+  Person.create! :name => name, :username => username, :password => password, :email => email
+end
+
 def reset_quo_vadis_configuration
   QuoVadis.signed_in_url         = :root
   QuoVadis.override_original_url = false

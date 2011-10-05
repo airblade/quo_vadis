@@ -12,11 +12,11 @@ Features:
 * Uses BCrypt to encrypt passwords.
 * Sign in, sign out, forgotten password, authenticate actions, remember user between browser sessions.
 * Block accounts.
+* Let you choose which model(s) to authenticate (defaults to `User`).
 
 Forthcoming features:
 
 * Generate the views for you (for now, copy the examples given below).
-* Let you choose which model(s) to authenticate (currently `User`).
 * Let you choose the identification field (currently `username`).
 * HTTP basic/digest authentication (probably).
 * Generate (User) model plus migration if it doesn't exist.
@@ -37,11 +37,11 @@ What it doesn't and won't do:
 
 If this takes you more than 5 minutes, you can have your money back ;)
 
-Install and run the generator: add `gem 'quo_vadis'` to your Gemfile, run `bundle install`, then `rails generate quo_vadis:install`.
+Install and run the generator: add `gem 'quo_vadis'` to your Gemfile, run `bundle install`, then `rails generate quo_vadis:install [MODEL_NAME]` (where model name is optional and defaults to `User`).
 
-Edit and run the generated migration to add the authentication columns: `rake db:migrate`.  Note the migration (currently) assumes you already have a `User` model.
+Edit and run the generated migration to add the authentication columns: `rake db:migrate`.  Note the migration (currently) assumes you already have a table for your model.
 
-In your `User` model, add `authenticates`:
+In your `User` (or whichever) model, add `authenticates`:
 
     class User < ActiveRecord::Base
       authenticates

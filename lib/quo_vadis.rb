@@ -3,6 +3,19 @@ require 'active_support/core_ext/numeric/time'
 
 module QuoVadis
 
+  # The model we want to authenticate.
+  mattr_accessor :model # :nodoc:
+  @@model = 'User'
+
+  def self.model_class # :nodoc
+    @@model.constantize
+  end
+
+  def self.model_instance_name # :nodoc
+    @@model.tableize.singularize  # e.g. 'user'
+  end
+
+
   #
   # Sign in
   #

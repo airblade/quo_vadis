@@ -9,23 +9,23 @@ class QuoVadis::SessionsController < ApplicationController
   # POST sign_in_path
   def create
     if blocked?
-      flash.now[:alert] = t('quo_vadis.flash.sign_in.blocked') unless t('quo_vadis.flash.sign_in.blocked').blank?
+      flash_if_present :alert, 'quo_vadis.flash.sign_in.blocked', :now
       render 'sessions/new'
-    elsif user = User.authenticate(params[:username], params[:password])
-      flash[:notice] = t('quo_vadis.flash.sign_in.after') unless t('quo_vadis.flash.sign_in.after').blank?
+    elsif user = QuoVadis.model_class.authenticate(params[:username], params[:password])
+      flash_if_present :notice, 'quo_vadis.flash.sign_in.after'
       sign_in user
     else
       QuoVadis.failed_sign_in_hook self
-      flash.now[:alert] = t('quo_vadis.flash.sign_in.failed') unless t('quo_vadis.flash.sign_in.failed').blank?
+      flash_if_present :alert, 'quo_vadis.flash.sign_in.failed', :now
       render 'sessions/new'
     end
   end
 
   # GET sign_out_path
   def destroy
-    QuoVadis.signed_out_hook current_user, self
-    self.current_user = nil
-    flash[:notice] = t('quo_vadis.flash.sign_out') unless t('quo_vadis.flash.sign_out').blank?
+    QuoVadis.signed_out_hook send(:"current_#{QuoVadis.model_instance_name}"), self
+    send :"current_#{QuoVadis.model_instance_name}=", nil
+    flash_if_present :notice, 'quo_vadis.flash.sign_out'
     redirect_to QuoVadis.signed_out_url
   end
 
@@ -35,18 +35,18 @@ class QuoVadis::SessionsController < ApplicationController
     if request.get?
       render 'sessions/forgotten'
     elsif request.post?
-      if (user = User.where(:username => params[:username]).first)
+      if (user = QuoVadis.model_class.where(:username => params[:username]).first)
         if user.email.present?
           user.generate_token
           QuoVadis::Notifier.change_password(user).deliver
-          flash[:notice] = t('quo_vadis.flash.forgotten.sent_email') unless t('quo_vadis.flash.forgotten.sent_email').blank?
+          flash_if_present :notice, 'quo_vadis.flash.forgotten.sent_email'
           redirect_to :root
         else
-          flash.now[:alert] = t('quo_vadis.flash.forgotten.no_email') unless t('quo_vadis.flash.forgotten.no_email').blank?
+          flash_if_present :alert, 'quo_vadis.flash.forgotten.no_email', :now
           render 'sessions/forgotten'
         end
       else
-        flash.now[:alert] = t('quo_vadis.flash.forgotten.unknown') unless t('quo_vadis.flash.forgotten.unknown').blank?
+        flash_if_present :alert, 'quo_vadis.flash.forgotten.unknown', :now
         render 'sessions/forgotten'
       end
     end
@@ -54,7 +54,7 @@ class QuoVadis::SessionsController < ApplicationController
 
   # GET change_password_path /sign-in/change-password/:token
   def edit
-    if User.valid_token(params[:token]).first
+    if QuoVadis.model_class.valid_token(params[:token]).first
       render 'sessions/edit'
     else
       invalid_token
@@ -63,11 +63,11 @@ class QuoVadis::SessionsController < ApplicationController
 
   # PUT change_password_path /sign-in/change-password/:token
   def update
-    if (user = User.valid_token(params[:token]).first)
+    if (user = QuoVadis.model_class.valid_token(params[:token]).first)
       user.password = params[:password]
       if user.save
         user.clear_token
-        flash[:notice] = t('quo_vadis.flash.forgotten.password_changed') unless t('quo_vadis.flash.forgotten.password_changed').blank?
+        flash_if_present :notice, 'quo_vadis.flash.forgotten.password_changed'
         sign_in user
       else
         render 'sessions/edit'
@@ -80,12 +80,20 @@ class QuoVadis::SessionsController < ApplicationController
   private
 
   def invalid_token # :nodoc:
-    flash[:alert] = t('quo_vadis.flash.forgotten.invalid_token') unless t('quo_vadis.flash.forgotten.invalid_token').blank?
+    flash_if_present :alert, 'quo_vadis.flash.forgotten.invalid_token'
     redirect_to forgotten_sign_in_url
   end
 
   def quo_vadis_layout # :nodoc:
     QuoVadis.layout
+  end
+
+  def flash_if_present(key, i18n_key, now = false)
+    if now
+      flash.now[key] = t(i18n_key) if t(i18n_key).present?
+    else
+      flash[key] = t(i18n_key) if t(i18n_key).present?
+    end
   end
 
 end

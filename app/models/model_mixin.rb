@@ -35,7 +35,7 @@ module ModelMixin
         end
 
         def find_by_salt(id, salt) # :nodoc:
-          user = User.find_by_id id
+          user = find_by_id id
           if user && user.has_matching_salt?(salt)
             user
           else
