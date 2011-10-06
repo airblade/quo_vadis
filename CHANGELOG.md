@@ -1,9 +1,19 @@
 # CHANGELOG
 
+## 1.0.7 (4 October 2011)
+
+* Allow more recent bcrypt-ruby versions.
+
+
+## 1.0.6 (4 October 2011)
+
+* Fix sign-in hook when called outside Quo Vadis.
+
 
 ## 1.0.5 (23 February 2011)
 
 * Support blocking of sign-in process.
+
 
 ## 1.0.4 (22 February 2011)
 
