@@ -19,7 +19,7 @@ Forthcoming features:
 * Generate the views for you (for now, copy the examples given below).
 * Let you choose the identification field (currently `username`).
 * HTTP basic/digest authentication (probably).
-* Generate (User) model plus migration if it doesn't exist.
+* Generate model plus migration if it doesn't exist.
 * Detect presence of `has_secure_password` (see below) and adapt appropriately.
 
 What it doesn't and won't do:
@@ -113,6 +113,8 @@ You can customise the flash messages and mailer from/subject in `config/locales/
 You can customise the sign-in and sign-out redirects in `config/initializers/quo_vadis.rb`; they both default to the root route.  You can also hook into the sign-in and sign-out process if you need to run any other code.
 
 If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
+
+You can skip the validation of authentication attributes (password etc) by overriding `should_authenticate?` in your model.  Perhaps only some of the users should be able to sign in, so you don't want to force them to have a password.
 
 
 ## Sign up / user registration

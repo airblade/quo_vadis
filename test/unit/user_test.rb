@@ -28,4 +28,21 @@ class UserTest < ActiveSupport::TestCase
     assert user.has_matching_password?('secret')
   end
 
+  test 'conditional validation' do
+    user = User.new
+    user.class_eval <<-END
+      def should_authenticate?
+        username == 'bob'
+      end
+    END
+    user.username = 'bob'
+    assert !user.valid?
+
+    user.username = 'robert'
+    assert user.valid?
+
+    user.username = nil
+    assert user.valid?
+  end
+
 end

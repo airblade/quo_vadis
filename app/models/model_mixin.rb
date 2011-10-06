@@ -16,9 +16,9 @@ module ModelMixin
       attr_reader    :password
       attr_protected :password_digest
 
-      validates :username,        :presence => true, :uniqueness => true
-      validates :password,        :presence => true, :if => Proc.new { |u| u.changed.include?('password_digest') }
-      validates :password_digest, :presence => true
+      validates :username,        :presence => true, :uniqueness => true, :if => :should_authenticate?
+      validates :password,        :presence => true, :if => Proc.new { |u| u.should_authenticate? && u.changed.include?('password_digest') }
+      validates :password_digest, :presence => true, :if => :should_authenticate?
 
       scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 3.hours.ago) }
 
@@ -47,6 +47,11 @@ module ModelMixin
   end
 
   module InstanceMethodsOnActivation
+    # Override this in your model if you need to bypass the Quo Vadis validations.
+    def should_authenticate?
+      true
+    end
+
     def password=(plain_text_password) # :nodoc:
       @password = plain_text_password
       self.password_digest = BCrypt::Password.create plain_text_password

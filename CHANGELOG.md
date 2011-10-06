@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Allow conditional validation of authentication attributes.
 * Allow authentication of any model.
 
 
