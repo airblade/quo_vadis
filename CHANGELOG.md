@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Harmonise bcrypt-ruby dependency with ActiveModel::SecurePassword.
 * Allow conditional validation of authentication attributes.
 * Allow authentication of any model.
 
