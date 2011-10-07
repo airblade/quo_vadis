@@ -73,7 +73,7 @@ module QuoVadis
 
   # The URL to redirect the user to after s/he signs out.
   mattr_accessor :signed_out_url
-  @@signed_in_url = :root
+  @@signed_out_url = :root
 
 
   # Code to run just before the user has signed out.

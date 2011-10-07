@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Fix bug where `signed_in_url` config setting was overwritten.
 * Harmonise bcrypt-ruby dependency with ActiveModel::SecurePassword.
 * Allow conditional validation of authentication attributes.
 * Allow authentication of any model.
