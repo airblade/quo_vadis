@@ -22,7 +22,7 @@ module ModelMixin
 
       scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 3.hours.ago) }
 
-      instance_eval <<-END
+      instance_eval <<-END, __FILE__, __LINE__ + 1
         # Returns the user with the given <tt>username</tt> if the given password is
         # correct, and <tt>nil</tt> otherwise.
         def authenticate(username, plain_text_password)
