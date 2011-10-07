@@ -6,6 +6,16 @@ class ForgottenTest < ActiveSupport::IntegrationCase
     Capybara.reset_sessions!
   end
 
+  test 'user fills in forgotten-password form with blank username' do
+    u = user_factory 'Bob', 'bob', 'secret'
+    u.update_attribute :username, ''
+    submit_forgotten_details ''
+    assert_equal forgotten_sign_in_path, current_path
+    within '.flash.alert' do
+      assert page.has_content?("Sorry, we did not recognise you.")
+    end
+  end
+
   test 'user fills in forgotten-password form with invalid username' do
     submit_forgotten_details 'bob'
     assert_equal forgotten_sign_in_path, current_path

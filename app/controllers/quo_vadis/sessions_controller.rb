@@ -36,7 +36,8 @@ class QuoVadis::SessionsController < ApplicationController
     if request.get?
       render 'sessions/forgotten'
     elsif request.post?
-      if (user = QuoVadis.model_class.where(:username => params[:username]).first)
+      if params[:username].present? &&
+          (user = QuoVadis.model_class.where(:username => params[:username]).first)
         if user.email.present?
           user.generate_token
           QuoVadis::Notifier.change_password(user).deliver
