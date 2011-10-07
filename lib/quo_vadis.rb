@@ -57,6 +57,10 @@ module QuoVadis
   mattr_accessor :remember_for
   @@remember_for = 2.weeks
 
+  # The domain to use for remember-me cookies.
+  mattr_accessor :cookie_domain
+  @@cookie_domain = :all
+
 
   # Whether the sign-in process is blocked to the user.
   mattr_writer :blocked

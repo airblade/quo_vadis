@@ -48,6 +48,7 @@ end
 
 def reset_quo_vadis_configuration
   QuoVadis.signed_in_url         = :root
+  QuoVadis.cookie_domain         = :all
   QuoVadis.override_original_url = false
   QuoVadis.signed_out_url        = :root
   QuoVadis.signed_in_hook        = nil

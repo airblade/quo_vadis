@@ -7,7 +7,7 @@ module ControllerMixin
 
   def handle_unverified_request
     super
-    cookies.delete :remember_me
+    cookies.delete :remember_me, :domain => QuoVadis.cookie_domain
   end
 
   private
@@ -73,10 +73,11 @@ module ControllerMixin
       cookies.signed[:remember_me] = {
         :value    => [user.id, user.password_salt],
         :expires  => QuoVadis.remember_for.from_now,
-        :httponly => true
+        :httponly => true,
+        :domain   => QuoVadis.cookie_domain
       }
     else
-      cookies.delete :remember_me
+      cookies.delete :remember_me, :domain => QuoVadis.cookie_domain
     end
   end
 

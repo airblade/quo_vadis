@@ -40,6 +40,9 @@ QuoVadis.configure do |config|
   # Set to <tt>nil</tt> to never remember user.
   config.remember_for = 2.weeks
 
+  # The domain to use for remember-me cookies.
+  config.cookie_domain = :all
+
   # Code to run to determine whether the sign-in process is blocked to the user.  E.g.:
   #
   # config.blocked = Proc.new do |controller|
