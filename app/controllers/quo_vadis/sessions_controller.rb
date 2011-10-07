@@ -1,4 +1,5 @@
 class QuoVadis::SessionsController < ApplicationController
+  skip_filter :authenticate, :except => [:destroy]
   layout :quo_vadis_layout
 
   # GET sign_in_path
