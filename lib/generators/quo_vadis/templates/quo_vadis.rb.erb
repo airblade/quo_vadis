@@ -9,9 +9,9 @@ QuoVadis.configure do |config|
   #
 
   # The URL to redirect the user to after s/he signs in.
-  # Use a proc if the URL depends on the user.  E.g.:
+  # Use a proc if the URL depends on the user on controller.  E.g.:
   #
-  # config.signed_in_url = Proc.new do |user|
+  # config.signed_in_url = Proc.new do |user, controller|
   #   user.admin? ? :admin : :root
   # end
   #
@@ -54,6 +54,11 @@ QuoVadis.configure do |config|
   #
 
   # The URL to redirect the user to after s/he signs out.
+  # Use a proc if the URL depends on the controller.  E.g.:
+  #
+  # config.signed_out_url = Proc.new do |controller|
+  #   controller.root_url(:subdomain => nil)
+  # end
   config.signed_out_url = :root
 
   # Code to run just before the user has signed out.  E.g.:

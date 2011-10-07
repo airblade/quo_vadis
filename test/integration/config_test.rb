@@ -18,13 +18,13 @@ class ConfigTest < ActiveSupport::IntegrationCase
   end
 
   test 'signed_in_url proc config' do
-    QuoVadis.signed_in_url = Proc.new do |user|
+    QuoVadis.signed_in_url = Proc.new do |user, controller|
       user.name == 'Bob' ? :articles : :root
     end
     sign_in_as 'bob', 'secret'
     assert_equal articles_path, current_path
 
-    QuoVadis.signed_in_url = Proc.new do |user|
+    QuoVadis.signed_in_url = Proc.new do |user, controller|
       user.name != 'Bob' ? :articles : :root
     end
     sign_in_as 'bob', 'secret'

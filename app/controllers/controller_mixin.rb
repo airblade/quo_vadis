@@ -47,7 +47,7 @@ module ControllerMixin
       prevent_session_fixation
       self.current_#{QuoVadis.model_instance_name} = user
       QuoVadis.signed_in_hook user, self
-      redirect_to QuoVadis.signed_in_url(user, original_url)
+      redirect_to QuoVadis.signed_in_url(user, original_url, self)
     end
 
     def remember_user_in_session(user) # :nodoc:

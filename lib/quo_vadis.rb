@@ -29,11 +29,11 @@ module QuoVadis
   mattr_accessor :override_original_url
   @@override_original_url = false
 
-  def self.signed_in_url(user, original_url) # :nodoc:
+  def self.signed_in_url(user, original_url, controller) # :nodoc:
     if original_url && !@@override_original_url
       original_url
     else
-      @@signed_in_url.respond_to?(:call) ?  @@signed_in_url.call(user) : @@signed_in_url
+      @@signed_in_url.respond_to?(:call) ?  @@signed_in_url.call(user, controller) : @@signed_in_url
     end
   end
 
@@ -74,6 +74,10 @@ module QuoVadis
   # The URL to redirect the user to after s/he signs out.
   mattr_accessor :signed_out_url
   @@signed_out_url = :root
+
+  def self.signed_out_url(controller) # :nodoc:
+    @@signed_out_url.respond_to?(:call) ? @@signed_out_url.call(controller) : @@signed_out_url
+  end
 
 
   # Code to run just before the user has signed out.

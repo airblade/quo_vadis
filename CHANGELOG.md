@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Pass controller to signed_{in,out}_url to allow routes with options/parameters.
 * Fix bug where `signed_in_url` config setting was overwritten.
 * Harmonise bcrypt-ruby dependency with ActiveModel::SecurePassword.
 * Allow conditional validation of authentication attributes.

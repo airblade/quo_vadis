@@ -26,7 +26,7 @@ class QuoVadis::SessionsController < ApplicationController
     QuoVadis.signed_out_hook send(:"current_#{QuoVadis.model_instance_name}"), self
     send :"current_#{QuoVadis.model_instance_name}=", nil
     flash_if_present :notice, 'quo_vadis.flash.sign_out'
-    redirect_to QuoVadis.signed_out_url
+    redirect_to QuoVadis.signed_out_url(self)
   end
 
   # GET forgotten_sign_in_path
