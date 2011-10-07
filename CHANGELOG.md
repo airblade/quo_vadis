@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## HEAD
+## 1.1.0 (7 October 2011)
 
 * Correctly handle blank username in password reset.
 * Allow configuration of cookie domain.
