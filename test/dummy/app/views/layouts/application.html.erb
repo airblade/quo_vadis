@@ -9,17 +9,16 @@
 <body>
 
   <div id='topnav'>
-    <% if defined?(current_user) && current_user %>
-      You are signed in as <%= current_user.name %>.
+    <% if authenticated? %>
+      You are signed in as
+      <% if defined?(current_user) %>
+        <%= current_user.name %>.
+      <% elsif defined?(current_person) %>
+        <%= current_person.name %>.
+      <% end %>
       <%= link_to 'Sign out', sign_out_path %>
-
-    <% elsif defined?(current_person) && current_person %>
-      You are signed in as <%= current_person.name %>.
-      <%= link_to 'Sign out', sign_out_path %>
-
     <% else %>
       <%= link_to 'Sign in', sign_in_path %>
-
     <% end %>
   </div>
 

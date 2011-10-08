@@ -1,6 +1,6 @@
 module ControllerMixin
   def self.included(base)
-    base.helper_method :"current_#{QuoVadis.model_instance_name}"
+    base.helper_method :"current_#{QuoVadis.model_instance_name}", :authenticated?
   end
 
   protected
@@ -13,6 +13,11 @@ module ControllerMixin
   private
 
   class_eval <<-END, __FILE__, __LINE__ + 1
+    # Returns `true` if we have an authenticated user, `false` otherwise.
+    def authenticated?
+      !!current_#{QuoVadis.model_instance_name}
+    end
+
     # Remembers the authenticated <tt>user</tt> (in this session and future sessions).
     #
     # If you want to sign in a <tt>user</tt> you have just created, call <tt>sign_in</tt>
@@ -30,7 +35,7 @@ module ControllerMixin
     # Does nothing if we already have an authenticated user.  If we don't have an
     # authenticated user, it stores the desired URL and redirects to the sign in URL.
     def authenticate
-      unless current_#{QuoVadis.model_instance_name}
+      unless authenticated?
         session[:quo_vadis_original_url] = request.fullpath
         flash[:notice] = t('quo_vadis.flash.sign_in.before') unless t('quo_vadis.flash.sign_in.before').blank?
         redirect_to sign_in_url
