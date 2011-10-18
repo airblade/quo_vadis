@@ -2,6 +2,11 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
+  test 'user must have a unique username' do
+    User.create :username => 'bob', :password => 'secret'
+    assert User.new(:username => 'bob', :password => 'secret').invalid?
+  end
+
   test 'user must have a valid password on create' do
     assert !User.create(:username => 'bob', :password => nil).valid?
     assert !User.create(:username => 'bob', :password => '').valid?
