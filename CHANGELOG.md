@@ -1,6 +1,7 @@
 # CHANGELOG
 
-## HEAD
+
+## 1.1.1 (18 October 2011)
 
 * Only change password when a non-blank value is given.
 * Add `authenticated?` helper method.
