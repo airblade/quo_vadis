@@ -13,13 +13,14 @@ class UserTest < ActiveSupport::TestCase
     user = User.last  # reload from database so password is nil
     assert_nil user.password
     assert user.update_attributes(:username => 'Robert')
+    assert user.update_attributes(:username => 'Robert', :password => nil)
+    assert user.update_attributes(:username => 'Robert', :password => '')
+    assert User.last.has_matching_password?('secret')
   end
 
   test 'user must have a valid password when updating password' do
     user = User.create :username => 'bob', :password => 'secret'
-    assert !user.update_attributes(:password => '')
-    assert !user.update_attributes(:password => nil)
-    assert  user.update_attributes(:password => 'topsecret')
+    assert user.update_attributes(:password => 'topsecret')
   end
 
   test 'has_matching_password?' do

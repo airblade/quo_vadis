@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Only change password when a non-blank value is given.
 * Add `authenticated?` helper method.
 
 

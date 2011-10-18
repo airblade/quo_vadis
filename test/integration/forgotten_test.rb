@@ -53,7 +53,7 @@ class ForgottenTest < ActiveSupport::IntegrationCase
   test 'user can follow emailed link while valid to change password' do
     user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
     submit_forgotten_details 'bob'
-    
+
     link_in_email = ActionMailer::Base.deliveries.last.encoded[%r{http://.*}].strip
     visit link_in_email
     fill_in :password, :with => 'topsecret'
@@ -69,7 +69,7 @@ class ForgottenTest < ActiveSupport::IntegrationCase
   test 'user cannot change password to an invalid one' do
     user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
     submit_forgotten_details 'bob'
-    
+
     link_in_email = ActionMailer::Base.deliveries.last.encoded[%r{http://.*}].strip
     visit link_in_email
     fill_in :password, :with => ''
@@ -81,7 +81,7 @@ class ForgottenTest < ActiveSupport::IntegrationCase
     user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
     submit_forgotten_details 'bob'
     User.last.update_attributes :token_created_at => 1.day.ago
-    
+
     link_in_email = ActionMailer::Base.deliveries.last.encoded[%r{http://.*}].strip
     visit link_in_email
     assert_equal forgotten_sign_in_path, current_path

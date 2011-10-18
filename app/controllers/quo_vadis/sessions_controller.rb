@@ -66,11 +66,15 @@ class QuoVadis::SessionsController < ApplicationController
   # PUT change_password_path /sign-in/change-password/:token
   def update
     if (user = QuoVadis.model_class.valid_token(params[:token]).first)
-      user.password = params[:password]
-      if user.save
-        user.clear_token
-        flash_if_present :notice, 'quo_vadis.flash.forgotten.password_changed'
-        sign_in user
+      if params[:password].present?
+        user.password = params[:password]
+        if user.save
+          user.clear_token
+          flash_if_present :notice, 'quo_vadis.flash.forgotten.password_changed'
+          sign_in user
+        else
+          render 'sessions/edit'
+        end
       else
         render 'sessions/edit'
       end

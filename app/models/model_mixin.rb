@@ -10,6 +10,9 @@ module ModelMixin
     # Adds methods to set and authenticate against a password stored encrypted by BCrypt.
     # Also adds methods to generate and clear a token, used to retrieve the record of a
     # user who has forgotten their password.
+    #
+    # Note that if a password isn't supplied when creating a user, the error will be on
+    # the `password_digest` attribute.
     def authenticates
       send :include, InstanceMethodsOnActivation
 
@@ -17,7 +20,6 @@ module ModelMixin
       attr_protected :password_digest
 
       validates :username,        :presence => true, :uniqueness => true, :if => :should_authenticate?
-      validates :password,        :presence => true, :if => Proc.new { |u| u.should_authenticate? && u.changed.include?('password_digest') }
       validates :password_digest, :presence => true, :if => :should_authenticate?
 
       scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 3.hours.ago) }
@@ -54,7 +56,9 @@ module ModelMixin
 
     def password=(plain_text_password) # :nodoc:
       @password = plain_text_password
-      self.password_digest = BCrypt::Password.create plain_text_password
+      unless @password.blank?
+        self.password_digest = BCrypt::Password.create plain_text_password
+      end
     end
 
     # Generates a unique, timestamped token which can be used in URLs, and
