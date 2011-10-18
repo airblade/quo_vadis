@@ -8,9 +8,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user must have a valid password on create' do
-    assert !User.create(:username => 'bob', :password => nil).valid?
-    assert !User.create(:username => 'bob', :password => '').valid?
-    assert  User.create(:username => 'bob', :password => 'secret').valid?
+    assert User.create(:username => 'bob', :password => nil).invalid?
+    assert User.create(:username => 'bob', :password => '').invalid?
+    assert User.create(:username => 'bob', :password => 'secret').valid?
   end
 
   test 'user need not supply password when updating other attributes' do
@@ -42,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
       end
     END
     user.username = 'bob'
-    assert !user.valid?
+    assert user.invalid?
 
     user.username = 'robert'
     assert user.valid?
