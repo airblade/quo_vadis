@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## 1.1.2 (7 February 2012)
+
+* Replace ActiveSupport::SecureRandom with SecureRandom.
+
+
 ## 1.1.1 (18 October 2011)
 
 * Only change password when a non-blank value is given.
