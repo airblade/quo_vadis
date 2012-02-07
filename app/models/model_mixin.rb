@@ -96,7 +96,7 @@ module ModelMixin
     private
 
     def url_friendly_token # :nodoc:
-      ActiveSupport::SecureRandom.base64(10).tr('+/=', 'xyz')
+      SecureRandom.base64(10).tr('+/=', 'xyz')
     end
   end
 
