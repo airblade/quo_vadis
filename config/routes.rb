@@ -6,8 +6,10 @@ Rails.application.routes.draw do
     get  'sign-in/forgotten'       => 'sessions#forgotten', :as => 'forgotten_sign_in'
     post 'sign-in/forgotten'       => 'sessions#forgotten', :as => 'forgotten_sign_in'
     constraints :token => /.+/ do
-      get 'sign-in/change-password/:token' => 'sessions#edit',   :as => 'change_password'
-      put 'sign-in/change-password/:token' => 'sessions#update', :as => 'change_password'
+      get  'sign-in/change-password/:token' => 'sessions#edit',   :as => 'change_password'
+      put  'sign-in/change-password/:token' => 'sessions#update', :as => 'change_password'
+      get  'sign-in/invite/:token'          => 'sessions#invite', :as => 'invitation'
+      post 'sign-in/accept/:token'          => 'sessions#accept', :as => 'activation'
     end
   end
 end

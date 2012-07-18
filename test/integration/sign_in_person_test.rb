@@ -14,13 +14,13 @@ class SignInPersonTest < ActiveSupport::IntegrationCase
 
     END
 
-    # person_factory 'James', 'jim', 'secret'
-    # sign_in_as 'jim', 'secret'
+    person_factory 'James', 'jim', 'secret'
+    sign_in_as 'jim', 'secret'
 
-    # assert_equal root_path, current_path
-    # within '.flash.notice' do
-    #   assert page.has_content?('You have successfully signed in.')
-    # end
+    assert_equal root_path, current_path
+    within '.flash.notice' do
+      assert page.has_content?('You have successfully signed in.')
+    end
   end
 
 end

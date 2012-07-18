@@ -51,4 +51,14 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?
   end
 
+  test 'create for activation' do
+    user = User.new_for_activation :name => 'Bob'
+    assert user.valid?
+
+    user = User.new_for_activation :name => 'John', :username => 'john', :password => 'secret'
+    assert user.valid?
+    assert_not_equal 'john', user.username
+    assert_not_equal 'secret', user.password
+  end
+
 end

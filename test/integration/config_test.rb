@@ -108,18 +108,25 @@ class ConfigTest < ActiveSupport::IntegrationCase
     assert page.has_content?('Sessions layout')
   end
 
-  test 'mailer from config' do
+  test 'change-password mailer from config' do
     QuoVadis.from = 'jim@example.com'
     (user = User.last).generate_token
     email = QuoVadis::Notifier.change_password(user)
     assert_equal ['jim@example.com'], email.from
   end
 
-  test 'mailer subject config' do
-    QuoVadis.subject = 'You idiot!'
+  test 'change-password mailer subject config' do
+    QuoVadis.subject_change_password = 'You idiot!'
     (user = User.last).generate_token
     email = QuoVadis::Notifier.change_password(user)
     assert_equal 'You idiot!', email.subject
+  end
+
+  test 'invitation mailer subject config' do
+    QuoVadis.subject_invitation = 'Wooha'
+    (user = User.last).generate_token
+    email = QuoVadis::Notifier.invite(user)
+    assert_equal 'Wooha', email.subject
   end
 
 end

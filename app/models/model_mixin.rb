@@ -44,6 +44,17 @@ module ModelMixin
             nil
           end
         end
+
+        # Instantiates a user suitable for user-activation.
+        def new_for_activation(attributes = nil)
+          user = new attributes
+          # Satisfy username and password validations by setting to random values.
+          begin
+            user.username = SecureRandom.base64(10)
+          end while exists?(:username => user.username)
+          user.password = SecureRandom.base64(10)
+          user
+        end
       END
     end
   end
@@ -61,13 +72,18 @@ module ModelMixin
       end
     end
 
-    # Generates a unique, timestamped token which can be used in URLs, and
-    # saves the record.  This is part of the forgotten-password workflow.
+    # Generates a unique, timestamped token.
     def generate_token # :nodoc:
       begin
         self.token = url_friendly_token
       end while self.class.exists?(:token => token)
       self.token_created_at = Time.now.utc
+    end
+
+    # Generates a unique, timestamped token which can be used in URLs, and
+    # saves the record.  This is part of the forgotten-password workflow.
+    def generate_token! # :nodoc:
+      generate_token
       save
     end
 

@@ -3,9 +3,9 @@ class AddAuthenticationTo<%= model_name.pluralize.camelize %> < ActiveRecord::Mi
     add_column :<%= model_name.tableize %>, :username,         :string  # for user identification
     add_column :<%= model_name.tableize %>, :password_digest,  :string
 
-    add_column :<%= model_name.tableize %>, :email,            :string  # for forgotten-credentials
-    add_column :<%= model_name.tableize %>, :token,            :string  # for forgotten-credentials
-    add_column :<%= model_name.tableize %>, :token_created_at, :string  # for forgotten-credentials
+    add_column :<%= model_name.tableize %>, :email,            :string  # for forgotten-credentials / activation
+    add_column :<%= model_name.tableize %>, :token,            :string  # for forgotten-credentials / activation
+    add_column :<%= model_name.tableize %>, :token_created_at, :string  # for forgotten-credentials / activation
   end
 
   def self.down

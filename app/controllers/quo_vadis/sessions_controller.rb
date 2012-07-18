@@ -39,7 +39,7 @@ class QuoVadis::SessionsController < ApplicationController
       if params[:username].present? &&
           (user = QuoVadis.model_class.where(:username => params[:username]).first)
         if user.email.present?
-          user.generate_token
+          user.generate_token!
           QuoVadis::Notifier.change_password(user).deliver
           flash_if_present :notice, 'quo_vadis.flash.forgotten.sent_email'
           redirect_to :root
@@ -59,7 +59,7 @@ class QuoVadis::SessionsController < ApplicationController
     if QuoVadis.model_class.valid_token(params[:token]).first
       render 'sessions/edit'
     else
-      invalid_token
+      invalid_token :forgotten
     end
   end
 
@@ -79,15 +79,58 @@ class QuoVadis::SessionsController < ApplicationController
         render 'sessions/edit'
       end
     else
-      invalid_token
+      invalid_token :forgotten
     end
   end
 
+  # GET invitation_path /sign-in/invite/:token
+  def invite
+    if (user = QuoVadis.model_class.valid_token(params[:token]).first)
+      render 'sessions/invite'
+    else
+      invalid_token :activation
+    end
+  end
+
+  # POST activation_path /sign-in/accept/:token
+  def accept
+    if (user = QuoVadis.model_class.valid_token(params[:token]).first)
+      user.username, user.password = params[:username], params[:password]
+      # When we create a user who must activate their account, we give them
+      # a random username and password.  However we want to treat them as if
+      # they weren't set at all.
+      user.password_digest = nil if params[:password].blank?
+      if user.save
+        user.clear_token
+        flash_if_present :notice, 'quo_vadis.flash.activation.accepted'
+        sign_in user
+      else
+        render 'sessions/invite'
+      end
+    else
+      invalid_token :activation
+    end
+  end
+
+  # Invites a user to set up their sign-in credentials.
+  def invite_to_activate(user, data = {})
+    return false if user.email.blank?
+    user.generate_token!
+    QuoVadis::Notifier.invite(user, data).deliver
+    true
+  end
+  hide_action :send_invitation
+
   private
 
-  def invalid_token # :nodoc:
-    flash_if_present :alert, 'quo_vadis.flash.forgotten.invalid_token'
-    redirect_to forgotten_sign_in_url
+  def invalid_token(workflow) # :nodoc:
+    if workflow == :activation
+      flash_if_present :alert, 'quo_vadis.flash.activation.invalid_token'
+      redirect_to root_path
+    else
+      flash_if_present :alert, 'quo_vadis.flash.forgotten.invalid_token'
+      redirect_to forgotten_sign_in_url
+    end
   end
 
   def quo_vadis_layout # :nodoc:

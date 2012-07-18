@@ -10,7 +10,7 @@ Features:
 * No surprises: it does what you expect.
 * Easy to customise.
 * Uses BCrypt to encrypt passwords.
-* Sign in, sign out, forgotten password, authenticate actions, remember user between browser sessions.
+* Sign in, sign out, forgotten password, authenticate actions, remember user between browser sessions, user activation.
 * Block accounts.
 * Let you choose which model(s) to authenticate (defaults to `User`).
 
@@ -25,7 +25,6 @@ Forthcoming features:
 What it doesn't and won't do:
 
 * Authorisation.
-* Sign up; that's user management, not authentication.
 * Work outside Rails 3.
 * OpenID, OAuth, LDAP, CAS, etc.
 * Separate identity from authentication services (cf OmniAuth).
@@ -106,22 +105,9 @@ Finally, write the change-password page ([example](https://github.com/airblade/q
 * PUT the parameter `:password` to `change_password_url(params[:token])`
 
 
-## Customisation
+## Sign up (directly, without activation)
 
-You can customise the flash messages and mailer from/subject in `config/locales/quo_vadis.en.yml`.
-
-You can customise the sign-in and sign-out redirects in `config/initializers/quo_vadis.rb`; they both default to the root route.  You can also hook into the sign-in and sign-out process if you need to run any other code.
-
-If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
-
-You can skip the validation of authentication attributes (password etc) by overriding `should_authenticate?` in your model.  Perhaps only some of the users should be able to sign in, so you don't want to force them to have a password.
-
-
-## Sign up / user registration
-
-Quo Vadis doesn't offer sign-up because that's user management, not authentication.
-
-However if you have implemented user sign-up yourself, you need to be able to sign in a newly created user.  Do this by calling `sign_in(user)` in your controller.  For example:
+When you create a user, you need to sign them in.  Do this by calling `sign_in(user)` in your controller.  For example:
 
     # In your app
     class UsersController < ApplicationController
@@ -136,6 +122,70 @@ However if you have implemented user sign-up yourself, you need to be able to si
     end
 
 The `sign_in(user)` method will redirect the user appropriately (you can configure this in `config/initializers/quo_vadis.rb`), as well as running any sign-in hook you may have defined in the initializer.
+
+
+## Sign up (with activation)
+
+To create a user who must activate their account (via email) before they can sign in, do this:
+
+    # In your app
+    class UsersController < ApplicationController
+      def create
+        @user = User.new_for_activation params[:user]    # <-- NOTE: different constructor
+        if @user.save
+          QuoVadis::SessionsController.new.invite_to_activate @user    # <-- NOTE: email user here
+          redirect_to root_path, notice: "Emailed sign-in instructions to #{@user.name}"  # or whatever
+        else
+          render 'new'
+        end
+      end
+    end
+
+The user will receive an email with a link which takes them to a page (which you must write) where they can choose a username and password for themselves.  When they submit the form their new credentials are stored and they are signed in.
+
+Here's the workflow:
+
+1. [New user page, without username/password fields] You or user fills in and submits form.
+2. [Users controller] Create user and invite to activate.  See code snippet above.
+3. Quo Vadis emails the user a message with an invitation link.  The link is valid for 3 hours.
+4. [The email] The user clicks the link.
+5. [Invitation page] The user fills in their new username and password.
+6. Quo Vadis sets the user's username and password and signs the user in.
+
+It'll take you about 3 minutes to implement this.
+
+Update your user controller's `create` action as above.
+
+Write the mailer view, i.e. the email which will be sent to your new users ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/notifier/invite.text.erb)).  The view must:
+
+* be at `app/views/quo_vadis/notifier/invite.text.erb`
+* render `@url` somewhere (this is the link the user clicks to go to the invitation page)
+
+You can also refer to `@user` in the email view, as well as any other data you pass to `invite_to_activate`.
+
+Configure the email's from address in `config/initializers/quo_vadis.rb`.
+
+Configure the default host so ActionMailer can generate the URL.  In `config/environments/<env>.rb`:
+
+    config.action_mailer.default_url_options = {:host => 'yourdomain.com'}
+
+Finally, write the invitation page ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/sessions/invite.html.erb)).  The form must:
+
+* be in `app/views/sessions/invite.html.:format`
+* POST the parameters `:username` and `:password` to `activation_url(params[:token])`
+
+If the token expires and you need to generate a new one, re-invite the user with: `invite_to_activate @user`.
+
+
+## Customisation
+
+You can customise the flash messages and mailer from/subject in `config/locales/quo_vadis.en.yml`.
+
+You can customise the sign-in and sign-out redirects in `config/initializers/quo_vadis.rb`; they both default to the root route.  You can also hook into the sign-in and sign-out process if you need to run any other code.
+
+If you want to add other session management type features, go right ahead: create a `SessionsController` as normal and carry on.
+
+You can skip the validation of authentication attributes (password etc) by overriding `should_authenticate?` in your model.  Perhaps only some of the users should be able to sign in, so you don't want to force them to have a password.
 
 
 ## See also

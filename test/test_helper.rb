@@ -56,7 +56,8 @@ def reset_quo_vadis_configuration
   QuoVadis.signed_out_hook       = nil
   QuoVadis.layout                = 'application'
   QuoVadis.from                  = 'noreply@example.com'
-  QuoVadis.subject               = 'Change your password'
+  QuoVadis.subject_change_password = 'Change your password'
+  QuoVadis.subject_invitation    = 'Activate your account'
   QuoVadis.remember_for          = 2.weeks
   QuoVadis.blocked               = false
 end

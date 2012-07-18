@@ -15,3 +15,7 @@ en:
         sent_email: "We've emailed you a link where you can change your password."
         invalid_token: "Sorry, this link isn't valid anymore."
         password_changed: "You have successfully changed your password and you're now signed in."
+
+      activation:
+        accepted: "Your account is active and you're now signed in."
+        invalid_token: "Sorry, this link isn't valid anymore."

@@ -94,7 +94,7 @@ module QuoVadis
 
 
   #
-  # Forgotten-password Mailer
+  # Forgotten-password and activation Mailer
   #
 
   # From whom the forgotten-password email should be sent.
@@ -102,9 +102,12 @@ module QuoVadis
   @@from = 'noreply@example.com'
 
   # Subject of the forgotten-password email.
-  mattr_accessor :subject
-  @@subject = 'Change your password.'
+  mattr_accessor :subject_change_password
+  @@subject_change_password = 'Change your password.'
 
+  # Subject of the invitation email.
+  mattr_accessor :subject_invitation
+  @@subject_invitation = 'Activate your account'
 
 
   #

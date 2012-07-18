@@ -171,7 +171,7 @@ class LocaleTest < ActiveSupport::IntegrationCase
 
   test 'forgotten.password_changed flash' do
     user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
-    User.last.generate_token
+    User.last.generate_token!
     visit change_password_path(User.last.token)
     fill_in :password, :with => 'topsecret'
     click_button 'Change my password'
@@ -184,7 +184,7 @@ class LocaleTest < ActiveSupport::IntegrationCase
     begin
       I18n.backend.store_translations :en, {:quo_vadis => {:flash => {:forgotten => {:password_changed => ''}}}}
       user_factory 'Bob', 'bob', 'secret', 'bob@example.com'
-      User.last.generate_token
+      User.last.generate_token!
       visit change_password_path(User.last.token)
       fill_in :password, :with => 'topsecret'
       click_button 'Change my password'
