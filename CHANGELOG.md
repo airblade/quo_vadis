@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## HEAD
+## 1.2.0 (18 July 2012)
 
 * User activation.
 
