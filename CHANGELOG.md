@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## HEAD
+
+* User activation.
+
+
 ## 1.1.2 (7 February 2012)
 
 * Replace ActiveSupport::SecureRandom with SecureRandom.
