@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## HEAD
+
+* Ignore blank usenames when authenticating.
+
+
 ## 1.2.0 (18 July 2012)
 
 * User activation.

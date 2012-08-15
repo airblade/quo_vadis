@@ -61,4 +61,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not_equal 'secret', user.password
   end
 
+  test 'ignore blank usernames when authenticating' do
+    user = User.new :username => '', :password => ''
+    user.class_eval <<-END
+      def should_authenticate?; false end
+    END
+    user.save!
+
+    assert_equal nil, User.authenticate('', '')
+  end
+
 end

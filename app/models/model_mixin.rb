@@ -28,6 +28,7 @@ module ModelMixin
         # Returns the user with the given <tt>username</tt> if the given password is
         # correct, and <tt>nil</tt> otherwise.
         def authenticate(username, plain_text_password)
+          return nil unless username.present?
           user = where(:username => username).first
           if user && user.has_matching_password?(plain_text_password)
             user
