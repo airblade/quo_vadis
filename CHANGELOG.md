@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## HEAD
+## 1.2.1 (15 August 2012)
 
 * Ignore blank usenames when authenticating.
 
