@@ -22,7 +22,7 @@ module ModelMixin
       validates :username,        :presence => true, :uniqueness => true, :if => :should_authenticate?
       validates :password_digest, :presence => true, :if => :should_authenticate?
 
-      scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 3.hours.ago) }
+      scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 24.hours.ago) }
 
       instance_eval <<-END, __FILE__, __LINE__ + 1
         # Returns the user with the given <tt>username</tt> if the given password is
