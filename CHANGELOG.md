@@ -1,6 +1,12 @@
 # CHANGELOG
 
 
+## 1.2.2 (20 March 2013)
+
+* Enable form validation errors in activation form.
+* Increase time limit for password reset / activation to 24hr.
+
+
 ## 1.2.1 (15 August 2012)
 
 * Ignore blank usenames when authenticating.
