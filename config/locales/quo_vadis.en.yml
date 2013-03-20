@@ -19,3 +19,4 @@ en:
       activation:
         accepted: "Your account is active and you're now signed in."
         invalid_token: "Sorry, this link isn't valid anymore."
+        invalid_credentials: "Sorry, we couldn't accept that username and/or password."

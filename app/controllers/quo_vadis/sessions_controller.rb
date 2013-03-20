@@ -85,7 +85,11 @@ class QuoVadis::SessionsController < ApplicationController
 
   # GET invitation_path /sign-in/invite/:token
   def invite
-    if (user = QuoVadis.model_class.valid_token(params[:token]).first)
+    if (@user = QuoVadis.model_class.valid_token(params[:token]).first)
+      # When we create a user who must activate their account, we give them
+      # a random username and password.  However we want to treat them as if
+      # they weren't set at all.
+      @user.username = nil
       render 'sessions/invite'
     else
       invalid_token :activation
@@ -94,17 +98,18 @@ class QuoVadis::SessionsController < ApplicationController
 
   # POST activation_path /sign-in/accept/:token
   def accept
-    if (user = QuoVadis.model_class.valid_token(params[:token]).first)
-      user.username, user.password = params[:username], params[:password]
+    if (@user = QuoVadis.model_class.valid_token(params[:token]).first)
+      @user.username, @user.password = params[:username], params[:password]
       # When we create a user who must activate their account, we give them
       # a random username and password.  However we want to treat them as if
       # they weren't set at all.
-      user.password_digest = nil if params[:password].blank?
-      if user.save
-        user.clear_token
+      @user.password_digest = nil if params[:password].blank?
+      if @user.save
+        @user.clear_token
         flash_if_present :notice, 'quo_vadis.flash.activation.accepted'
-        sign_in user
+        sign_in @user
       else
+        flash_if_present :alert, 'quo_vadis.flash.activation.invalid_credentials', :now
         render 'sessions/invite'
       end
     else

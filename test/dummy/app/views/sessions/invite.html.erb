@@ -13,3 +13,19 @@
     <%= submit_tag 'Save my details' %>
   </p>
 <% end %>
+
+<!-- OR, to use Rails' form validation helpers:
+<%= form_for @user, url: activation_path(params[:token]), html: {method: :post} do |f| %>
+  <p>
+    <%= label_tag :password %>
+    <%= f.text_field :username, name: 'username' %>
+  </p>
+  <p>
+    <%= label_tag :password %>
+    <%= f.password_field :password, name: 'password' %>
+  </p>
+  <p>
+    <%= submit_tag 'Save my details' %>
+  </p>
+<% end %>
+-->
