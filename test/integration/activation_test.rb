@@ -95,4 +95,14 @@ class ActivationTest < ActiveSupport::IntegrationCase
     email = ActionMailer::Base.deliveries.last
     assert_match Regexp.new('Barbaz'), email.encoded
   end
+
+  test 'data can be passed to invitation email to override :from and :subject' do
+    user = User.new_for_activation :name => 'Bob', :email => 'bob@example.com'
+    assert user.save
+    assert QuoVadis::SessionsController.new.invite_to_activate user,
+      :subject => 'Foo', :from => 'Bar <bar@example.com>'
+    email = ActionMailer::Base.deliveries.last
+    assert_equal ['bar@example.com'], email.from
+    assert_equal 'Foo', email.subject
+  end
 end

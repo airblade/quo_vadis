@@ -13,12 +13,17 @@ module QuoVadis
     # can choose their username and password.
     #
     # `data` - hash of data to pass to view via instance variables.  A key of `:foo`
-    #          will be available via `@foo`.
+    #          will be available via `@foo`.  `:from` and `:subject` are deleted from
+    #          the hash and used to override `QuoVadis#from` and `#subject_invitation`.
     def invite(user, data = {})
       @user = user
       @url = invitation_url user.token
+      
+      from    = data.delete(:from)    || QuoVadis.from
+      subject = data.delete(:subject) || QuoVadis.subject_invitation
+      
       data.each { |k,v| instance_variable_set :"@#{k}", v }
-      mail :to => user.email, :from => QuoVadis.from, :subject => QuoVadis.subject_invitation
+      mail :to => user.email, :from => from, :subject => subject
     end
 
   end

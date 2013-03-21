@@ -161,9 +161,9 @@ Write the mailer view, i.e. the email which will be sent to your new users ([exa
 * be at `app/views/quo_vadis/notifier/invite.text.erb`
 * render `@url` somewhere (this is the link the user clicks to go to the invitation page)
 
-You can also refer to `@user` in the email view, as well as any other data you pass to `invite_to_activate`.
+You can also refer to `@user` in the email view, as well as any other data you pass to `invite_to_activate`.  Note that passing `:from` and/or `:subject` in the hash to `invite_to_activate` overrides the default `QuoVadis.from` and/or `QuoVadis.subject_invitation` respectively.
 
-Configure the email's from address in `config/initializers/quo_vadis.rb`.
+Configure the email's from address in `config/initializers/quo_vadis.rb` (or pass in the data hash to `invite_to_activate`).
 
 Configure the default host so ActionMailer can generate the URL.  In `config/environments/<env>.rb`:
 
