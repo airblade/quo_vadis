@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## 1.2.3 (21 March 2013)
+
+* Ability to override the activation email's from and subject.
+
+
 ## 1.2.2 (20 March 2013)
 
 * Enable form validation errors in activation form.
