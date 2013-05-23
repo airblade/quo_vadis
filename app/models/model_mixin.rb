@@ -19,7 +19,7 @@ module ModelMixin
       attr_reader    :password
       attr_protected :password_digest
 
-      validates :username,        :presence => true, :uniqueness => true, :if => :should_authenticate?
+      validates :username,        :presence => true, :uniqueness => {case_sensitive: false}, :if => :should_authenticate?
       validates :password_digest, :presence => true, :if => :should_authenticate?
 
       scope :valid_token, lambda { |token| where("token = ? AND token_created_at > ?", token, 24.hours.ago) }
