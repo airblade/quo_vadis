@@ -46,14 +46,12 @@ module ModelMixin
           end
         end
 
-        # Instantiates a user suitable for user-activation.
+        # [Deprecated] Instantiates a user suitable for user-activation.
+        #
+        # NOTE: use instance method `#randomise_credentials` instead.
         def new_for_activation(attributes = nil)
           user = new attributes
-          # Satisfy username and password validations by setting to random values.
-          begin
-            user.username = SecureRandom.base64(10)
-          end while exists?(:username => user.username)
-          user.password = SecureRandom.base64(10)
+          user.randomise_credentials
           user
         end
       END
@@ -64,6 +62,16 @@ module ModelMixin
     # Override this in your model if you need to bypass the Quo Vadis validations.
     def should_authenticate?
       true
+    end
+
+    # Sets the `username` and `password` to random values.
+    # Use this for a user who should authenticate where they need to activate
+    # themselves first.
+    def randomise_credentials
+      begin
+        self.username = SecureRandom.base64(10)
+      end while self.class.exists?(:username => username)
+      self.password = SecureRandom.base64(10)
     end
 
     def password=(plain_text_password) # :nodoc:
