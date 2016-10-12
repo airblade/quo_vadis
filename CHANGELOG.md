@@ -1,6 +1,27 @@
 # CHANGELOG
 
 
+## 1.4.0 (12 October 2016)
+
+* Internationalise emails' subject lines.
+
+
+## 1.3.2 (22 July 2015)
+
+* Loosen Rails dependency.
+* Remove unnecessary code from test app.
+
+
+## 1.3.1 (22 July 2015)
+
+* Prefer an instance method to prepare for activation.
+
+
+## 1.3.0 (23 May 2013)
+
+* Validate username's uniqueness case-insensitively.
+
+
 ## 1.2.3 (21 March 2013)
 
 * Ability to override the activation email's from and subject.
