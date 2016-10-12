@@ -20,3 +20,9 @@ en:
         accepted: "Your account is active and you're now signed in."
         invalid_token: "Sorry, this link isn't valid anymore."
         invalid_credentials: "Sorry, we couldn't accept that username and/or password."
+
+    notifier:
+      change_password:
+        subject: Change your password
+      invite:
+        subject: Activate your account

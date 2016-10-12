@@ -101,14 +101,6 @@ module QuoVadis
   mattr_accessor :from
   @@from = 'noreply@example.com'
 
-  # Subject of the forgotten-password email.
-  mattr_accessor :subject_change_password
-  @@subject_change_password = 'Change your password.'
-
-  # Subject of the invitation email.
-  mattr_accessor :subject_invitation
-  @@subject_invitation = 'Activate your account'
-
 
   #
   # Miscellaneous

@@ -115,18 +115,4 @@ class ConfigTest < ActiveSupport::IntegrationCase
     assert_equal ['jim@example.com'], email.from
   end
 
-  test 'change-password mailer subject config' do
-    QuoVadis.subject_change_password = 'You idiot!'
-    (user = User.last).generate_token
-    email = QuoVadis::Notifier.change_password(user)
-    assert_equal 'You idiot!', email.subject
-  end
-
-  test 'invitation mailer subject config' do
-    QuoVadis.subject_invitation = 'Wooha'
-    (user = User.last).generate_token
-    email = QuoVadis::Notifier.invite(user)
-    assert_equal 'Wooha', email.subject
-  end
-
 end

@@ -6,7 +6,7 @@ module QuoVadis
     def change_password(user)
       @username = user.username
       @url = change_password_url user.token
-      mail :to => user.email, :from => QuoVadis.from, :subject => QuoVadis.subject_change_password
+      mail :to => user.email, :from => QuoVadis.from, :subject => I18n.t('quo_vadis.notifier.change_password.subject')
     end
 
     # Sends an email to <tt>user</tt> with a link to a page where they
@@ -20,8 +20,8 @@ module QuoVadis
       @url = invitation_url user.token
       
       from    = data.delete(:from)    || QuoVadis.from
-      subject = data.delete(:subject) || QuoVadis.subject_invitation
-      
+      subject = data.delete(:subject) || I18n.t('quo_vadis.notifier.invite.subject')
+
       data.each { |k,v| instance_variable_set :"@#{k}", v }
       mail :to => user.email, :from => from, :subject => subject
     end
