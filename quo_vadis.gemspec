@@ -1,31 +1,34 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path('../lib', __FILE__)
-require 'quo_vadis/version'
+# frozen_string_literal: true
 
-Gem::Specification.new do |s|
-  s.name        = 'quo_vadis'
-  s.version     = QuoVadis::VERSION
-  s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Andy Stewart']
-  s.email       = ['boss@airbladesoftware.com']
-  s.homepage    = 'https://github.com/airblade/quo_vadis'
-  s.summary     = 'Simple username/password authentication for Rails 3.'
-  s.description = s.summary
+require_relative "lib/quo_vadis/version"
 
-  s.rubyforge_project = 'quo_vadis'
+Gem::Specification.new do |spec|
+  spec.name          = "quo_vadis"
+  spec.version       = QuoVadis::VERSION
+  spec.authors       = ["Andy Stewart"]
+  spec.email         = ["boss@airbladesoftware.com"]
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ['lib']
+  spec.summary       = "Simple authentication for Rails 6."
+  spec.homepage      = "https://github.com/airblade/quo_vadis"
+  spec.license       = "MIT"
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
-  s.add_dependency 'rails',       '> 3.0.4', '< 5'
-  s.add_dependency 'bcrypt', '> 3.1.6'
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/CHANGELOG.md"
 
-  # s.add_development_dependency 'rails', '~> 3.0.4'  # so we can test CSRF protection
-  s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'capybara', '~>1.1'
-  s.add_development_dependency 'launchy'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'test-unit', '~> 3.0'
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
+  end
+  spec.bindir        = "bin"
+  spec.executables   = spec.files.grep(%r{\Abin/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  # Uncomment to register a new dependency of your gem
+  # spec.add_dependency "example-gem", "~> 1.0"
+
+  # For more information and examples about making a new gem, checkout our
+  # guide at: https://bundler.io/guides/creating_gem.html
 end

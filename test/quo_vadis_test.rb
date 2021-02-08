@@ -1,7 +1,13 @@
-require 'test_helper'
+# frozen_string_literal: true
 
-class QuoVadisTest < ActiveSupport::TestCase
-  test 'Sanity test' do
-    assert_kind_of Module, QuoVadis
+require "test_helper"
+
+class QuoVadisTest < Minitest::Test
+  def test_that_it_has_a_version_number
+    refute_nil ::QuoVadis::VERSION
+  end
+
+  def test_it_does_something_useful
+    assert false
   end
 end

@@ -1,8 +1,8 @@
-pkg/*
-*.gem
-Gemfile.lock
-.bundle
-test/dummy/log/*
-test/dummy/tmp/*
-rdoc/*
-NOTES
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
