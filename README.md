@@ -492,7 +492,7 @@ For example, the default login path is at `/login`.  If you set `mount_point` to
 You must also configure the mailer host so URLs are generated correctly in emails:
 
 ```ruby
-config.action_mailer.default_url_options: { host: 'example.com }
+config.action_mailer.default_url_options: { host: 'example.com' }
 ```
 
 Finally, you can set up your post-authentication and post-password-change routes.  If you don't, you must have a root route.  For example:
