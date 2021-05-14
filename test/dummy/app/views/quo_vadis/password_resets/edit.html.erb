@@ -1,0 +1,25 @@
+<h1>Reset password</h1>
+
+<% if @password.errors.any? %>
+  <ul>
+    <% @password.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with url: password_reset_path(params[:token]), method: :put do |f| %>
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: 'new-password' %>
+  </p>
+
+  <p>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, autocomplete: 'new-password' %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

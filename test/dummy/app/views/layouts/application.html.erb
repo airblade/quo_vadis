@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <%= csrf_meta_tags %>
+    <style>
+      nav {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+      nav span {
+        margin: 0 5px;
+      }
+      main {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <% if logged_in? %>
+        <span>Logged in as: <%= authenticated_model.email %></span>
+        <span><%= link_to 'Sessions', quo_vadis.sessions_path %></span>
+        <span><%= link_to 'Change password', quo_vadis.edit_password_path %></span>
+        <span><%= link_to '2FA', quo_vadis.twofa_path %></span>
+        <span><%= link_to 'Logs', quo_vadis.logs_path %></span>
+        <span><%= button_to 'Log out', quo_vadis.logout_path, method: :delete, form: {style: 'display:inline-block'} %></span>
+      <% else %>
+        <span><%= link_to 'Add user (without confirmation)', main_app.new_user_path %></span>
+        <span><%= link_to 'Sign up (with confirmation)', main_app.new_sign_up_path %></span>
+        <span><%= link_to 'Log in', quo_vadis.login_path %></span>
+      <% end %>
+    </nav>
+
+    <main>
+      <section>
+        <% %w[notice alert].select { |k| flash.key? k }.each do |k| %>
+          <div class="flash flash-<%= k %>">
+            <%= flash[k] %>
+          </div>
+        <% end %>
+      </section>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

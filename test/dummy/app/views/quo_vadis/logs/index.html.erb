@@ -1,0 +1,28 @@
+<h1>Logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>IP</th>
+      <th>Metadata</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @logs.each do |log| %>
+      <tr>
+        <td><%= log.action %></td>
+        <td><%= log.ip %></td>
+        <td><%= log.metadata.empty? ? '' : log.metadata.map {|k,v| "#{k}: #{v}"}.join(', ') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @prev_page %>
+  <%= link_to 'Newer', logs_path(page: @prev_page) %>
+<% end %>
+
+<% if @next_page %>
+  <%= link_to 'Older', logs_path(page: @next_page) %>
+<% end %>

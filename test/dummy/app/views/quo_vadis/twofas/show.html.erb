@@ -1,0 +1,20 @@
+<h1>2FA</h1>
+
+<% if authenticated_model.qv_account.has_two_factors? %>
+
+  <p>You have set up 2FA.</p>
+  <p><%= button_to 'Deactivate your 2FA credentials', twofa_path, method: :delete %></p>
+
+<% else %>
+
+  <p>You do not have 2FA set up.</p>
+  <% if QuoVadis.two_factor_authentication_mandatory %>
+    <p>Please <%= link_to 'set it up', new_totp_path %> now.</p>
+  <% else %>
+    <p>You can <%= link_to 'set it up', new_totp_path %> if you like.</p>
+  <% end %>
+
+<% end %>
+
+
+<p> You have <%= link_to pluralize(@recovery_codes_count, 'recovery code'), recovery_codes_path %> left.</p>

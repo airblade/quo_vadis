@@ -1,0 +1,12 @@
+<h1>Reset password</h1>
+
+<%= form_with url: password_resets_path, method: :post do |f| %>
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email, inputmode: 'email', autocomplete: 'email' %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

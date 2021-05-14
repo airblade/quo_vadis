@@ -1,0 +1,25 @@
+<h1>2FA: Recovery codes</h1>
+
+<p>If you lose your authenticator app, you can use recovery codes instead while you set up a new authenticator app.</p>
+
+<p>Each code can only be used once.</p>
+
+<% if @codes.present? %>
+
+  <p>This is the only time these codes can be shown to you!  We recommend you print them out and store them somewhere safely – but not next to your 2FA details in your authenticator app.</p>
+
+  <ul>
+    <% @codes.each do |code| %>
+      <li><tt><%= code %></tt></li>
+    <% end %>
+  </ul>
+
+<% else %>
+
+  <p>You have <%= pluralize @recovery_code_count, 'recovery code' %> left.</p>
+
+<% end %>
+
+<p>You can generate a fresh set of recovery codes whenever you like.</p>
+
+<p><%= button_to 'Generate a fresh set of recovery codes', generate_recovery_codes_path %></p>

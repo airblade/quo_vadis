@@ -1,0 +1,30 @@
+<h1>Change password</h1>
+
+<% if @password.errors.any? %>
+  <ul>
+    <% @password.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with url: password_path, method: :put do |f| %>
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password, autocomplete: 'current-password' %>
+  </p>
+
+  <p>
+    <%= f.label :new_password %>
+    <%= f.password_field :new_password, autocomplete: 'new-password' %>
+  </p>
+
+  <p>
+    <%= f.label :new_password_confirmation %>
+    <%= f.password_field :new_password_confirmation, autocomplete: 'new-password' %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

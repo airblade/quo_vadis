@@ -1,0 +1,55 @@
+en:
+  quo_vadis:
+    flash:
+      login:
+        failed: Sorry, we did not recognise you.
+        success: Welcome back!
+      logout:
+        self: You have logged out.
+        other: You have logged out of the other session.
+      require_authentication: Please log in first.
+      password:
+        update: Your password has been changed.
+      password_reset:
+        create: A link to change your password has been emailed to you.
+        unknown: Either the link has expired or you have already reset your password.
+        reset: Your password has been changed and you are logged in.
+      confirmation:
+        create: A link to confirm your account has been emailed to you.
+        required: Please confirm your account first.
+        identifier: Sorry, your account could not be found.  Please try again.
+        unknown: Either the link has expired or your account has already been confirmed.
+        confirmed: Thanks for confirming your account.  You are now logged in.
+      totp:
+        unverified: Sorry, the code was incorrect. Please check your system clock is correct and try again.
+        setup: Please set up two factor authentication.
+      recovery_code:
+        unverified: Sorry, the code was incorrect. Please try again (you cannot reuse a code you have used before).
+        success:
+          zero: You have used up all your recovery codes now. Please generate a new set.
+          one: You have one recovery code left.
+          other: You have %{count} recovery codes left.
+      2fa:
+        invalidated: You have invalidated your 2FA credentials and recovery codes.
+
+    mailer:
+      password_reset:
+        subject: Change your password
+      confirmation:
+        subject: Please confirm your account
+      notification:
+        email_change: Your email address has been changed
+        identifier_change: Your %{identifier} has been changed
+        password_change: Your password has been changed
+        password_reset: Your password has been reset
+        totp_setup: Two-factor authentication was set up just now
+        totp_reuse: Your two-factor authentication code was reused just now
+        twofa_deactivated: Two-factor authentication was deactivated just now
+        recovery_codes_generation: Recovery codes have been generated for your account
+  activerecord:
+    errors:
+      models:
+        quo_vadis/password:
+          attributes:
+            password:
+              incorrect: is incorrect

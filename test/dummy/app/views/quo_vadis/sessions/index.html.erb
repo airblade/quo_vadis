@@ -1,0 +1,26 @@
+<h1>Sessions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>IP</th>
+      <th>User agent</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @qv_sessions.each do |sess| %>
+      <tr>
+        <td><%= sess.ip %></td>
+        <td><%= sess.user_agent %></td>
+        <td>
+          <% if sess.id == @qv_session.id %>
+            This session
+          <% else %>
+            <%= button_to 'Log out', quo_vadis.session_path(sess), method: :delete %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

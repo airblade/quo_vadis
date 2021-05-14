@@ -1,0 +1,16 @@
+<h1>Resend confirmation instructions</h1>
+
+<%# Note that in this example the User identifier is :email. %>
+
+<p>If you didn't receive the confirmation email, please enter your email address and we'll send you another one.</p>
+
+<%= form_with url: confirmations_path, method: :post do |f| %>
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email, inputmode: 'email', autocomplete: 'email' %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## 2.0.0 (14 May 2021)
+
+* Total rewrite from scratch.
+
+
 ## 1.4.0 (12 October 2016)
 
 * Internationalise emails' subject lines.

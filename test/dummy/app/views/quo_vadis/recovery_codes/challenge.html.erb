@@ -1,0 +1,11 @@
+<h1>2FA: Recovery code</h1>
+
+<p>Enter one of your recovery codes:</p>
+
+<%= form_with url: authenticate_recovery_codes_path, method: :post do |f| %>
+  <%= f.text_field :code, inputmode: 'decimal', autofocus: true, maxlength: '11' %>
+
+  <%= f.submit 'Verify' %>
+<% end %>
+
+<p><%= link_to 'Never mind, I want to use my TOTP verification code!', quo_vadis.challenge_totps_path %></p>
