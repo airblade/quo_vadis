@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quo_vadis (0.1.0)
+    quo_vadis (2.0.0)
       bcrypt (~> 3.1.7)
       rails (>= 6)
 
