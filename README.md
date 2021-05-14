@@ -218,7 +218,7 @@ Here's the workflow:
 4. [Account-confirmation confirmation page] The user clicks a button to confirm their account.  (This step is to prevent any link prefetching in the user's mail client from confirming them unintentionally.)
 5. QuoVadis confirms the user's account and logs them in.
 
-Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/users/new.html.erb)) must include:
+Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/sign_ups/new.html.erb)) must include:
 
 - a `:password` field;
 - optionally a `:password_confirmation` field;
