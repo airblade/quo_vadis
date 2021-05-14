@@ -51,6 +51,12 @@ $ rails db:migrate
 
 All the database tables are prefixed with `qv_`.
 
+Finally, copy the example views across:
+
+```
+$ rails generate quo_vadis:install
+```
+
 
 ## Usage
 
