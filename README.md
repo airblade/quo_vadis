@@ -45,8 +45,7 @@ Then run `bundle install`.
 Next, add the database tables:
 
 ```
-$ rails quo_vadis:install:migrations
-$ rails db:migrate
+rails quo_vadis:install:migrations && rails db:migrate
 ```
 
 All the database tables are prefixed with `qv_`.
@@ -54,7 +53,7 @@ All the database tables are prefixed with `qv_`.
 Finally, copy the example views across:
 
 ```
-$ rails generate quo_vadis:install
+rails generate quo_vadis:install
 ```
 
 
