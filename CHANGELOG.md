@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+## 2.0.1 (18 May 2021)
+
+* Remove Gemfile.lock from repo.
+* Move runtime dependencies into gemspec.
+* Include test files in gem package (so views can be installed).
+
+
 ## 2.0.0 (14 May 2021)
 
 * Total rewrite from scratch.
