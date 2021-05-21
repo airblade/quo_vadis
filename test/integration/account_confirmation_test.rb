@@ -37,7 +37,7 @@ class AccountConfirmationTest < IntegrationTest
 
 
   test 'resend confirmation email: valid identifier' do
-    user = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
 
     get quo_vadis.new_confirmation_path
     assert_response :success
@@ -91,7 +91,7 @@ class AccountConfirmationTest < IntegrationTest
 
 
   test 'accounts requiring confirmation cannot log in' do
-    user = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
     post quo_vadis.login_path(email: 'bob@example.com', password: '123456789abc')
     assert_redirected_to quo_vadis.new_confirmation_path
     assert_equal 'Please confirm your account first.', flash[:notice]
