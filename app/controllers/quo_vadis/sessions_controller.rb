@@ -21,7 +21,7 @@ module QuoVadis
       account = QuoVadis.find_account_by_identifier_in_params params
 
       unless account
-        qv.log nil, Log::LOGIN_UNKNOWN
+        qv.log nil, Log::LOGIN_UNKNOWN, identifier: QuoVadis.identifier_value_in_params(params)
         flash.now[:alert] = QuoVadis.translate 'flash.login.failed'
         render :new
         return

@@ -45,8 +45,12 @@ module QuoVadis
     end
 
     def find_account_by_identifier_in_params(params)
+      Account.find_by identifier: identifier_value_in_params(params)
+    end
+
+    def identifier_value_in_params(params)
       identifier = detect_identifier params.keys
-      Account.find_by identifier: params[identifier]
+      params[identifier]
     end
 
     # model - string class name, e.g. 'User'

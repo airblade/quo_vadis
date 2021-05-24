@@ -43,7 +43,7 @@ class LoggingTest < IntegrationTest
 
 
   test 'login.unknown' do
-    assert_log QuoVadis::Log::LOGIN_UNKNOWN, {}, nil do
+    assert_log QuoVadis::Log::LOGIN_UNKNOWN, {'identifier' => 'wrong'}, nil do
       post quo_vadis.login_path(email: 'wrong', password: 'wrong')
     end
   end
