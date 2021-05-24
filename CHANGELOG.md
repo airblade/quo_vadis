@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## HEAD
+
+* Log unknown identifier in metadata.
+
 
 ## 2.0.1 (18 May 2021)
 
