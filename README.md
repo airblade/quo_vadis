@@ -488,13 +488,32 @@ For example, the default login path is at `/login`.  If you set `mount_point` to
 
 #### Rails configuration
 
+__Mailer URLs__
+
 You must also configure the mailer host so URLs are generated correctly in emails:
 
 ```ruby
 config.action_mailer.default_url_options: { host: 'example.com' }
 ```
 
-Finally, you can set up your post-authentication and post-password-change routes.  If you don't, you must have a root route.  For example:
+__Layouts__
+
+You can specify QuoVadis's controllers' layouts in a `#to_prepare` block in your application configuration.  For example:
+
+```ruby
+# config/application.rb
+module YourApp
+  class Application < Rails::Application
+    config.to_prepare do
+      QuoVadis::ConfirmationsController.layout 'your_layout'
+    end
+  end
+end
+```
+
+__Routes__
+
+You can set up your post-authentication and post-password-change routes.  If you don't, you must have a root route.  For example:
 
 ```ruby
 # config/routes.rb
