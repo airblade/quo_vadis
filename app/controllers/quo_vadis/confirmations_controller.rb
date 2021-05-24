@@ -55,6 +55,31 @@ module QuoVadis
     end
 
 
+    def edit_email
+      account = find_pending_account_from_session
+
+      unless account
+        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
+      end
+
+      @email = account.model.email
+    end
+
+
+    def update_email
+      account = find_pending_account_from_session
+
+      unless account
+        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
+      end
+
+      account.model.update email: params[:email]
+
+      request_confirmation account.model
+      redirect_to confirmations_path
+    end
+
+
     def resend
       account = find_pending_account_from_session
 

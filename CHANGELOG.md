@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* Account confirmation: enable updating of email address.
 * Account confirmation: enable direct resending of email.
 * Log unknown identifier in metadata.
 

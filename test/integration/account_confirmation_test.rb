@@ -40,6 +40,24 @@ class AccountConfirmationTest < IntegrationTest
   end
 
 
+  test 'new signup updates email' do
+    assert_emails 1 do
+      post sign_ups_path(user: {name: 'Bob', email: 'bob@example.com', password: '123456789abc'})
+    end
+
+    get quo_vadis.edit_email_confirmations_path
+    assert_response :success
+
+    # First email: changed-email notifier sent to original address
+    # Second email: confirmation email sent to new address
+    assert_emails 2 do
+      put quo_vadis.update_email_confirmations_path(email: 'bobby@example.com')
+    end
+    assert_equal ['bobby@example.com'], ActionMailer::Base.deliveries.last.to
+    assert_redirected_to quo_vadis.confirmations_path
+  end
+
+
   test 'resend confirmation email in same session' do
     assert_emails 1 do
       post sign_ups_path(user: {name: 'Bob', email: 'bob@example.com', password: '123456789abc'})
