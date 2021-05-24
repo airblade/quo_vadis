@@ -256,6 +256,8 @@ On that page you can show the user the address the email was sent to, enable the
 
 Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/edit.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit.html.:format`.
 
+Next, write the page where the user can amend their email address if they made a mistake when signing up ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/edit_email.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit_email.html.:format`.
+
 Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another confirmation email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format`.
 
 After the user has confirmed their account, they will be logged in and redirected to the first of these that exists:
