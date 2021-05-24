@@ -232,7 +232,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
     if @user.save
       request_confirmation @user
-      redirect_to qv.confirmations_path  # a page where you advise the user to check their email
+      redirect_to quo_vadis.confirmations_path  # a page where you advise the user to check their email
     else
       # ...
     end
