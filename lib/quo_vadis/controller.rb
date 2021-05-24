@@ -89,6 +89,7 @@ module QuoVadis
     def request_confirmation(model)
       token = QuoVadis::AccountConfirmationToken.generate model.qv_account
       QuoVadis.deliver :account_confirmation, email: model.email, url: quo_vadis.edit_confirmation_url(token)
+      session[:account_pending_confirmation] = model.qv_account.id
 
       flash[:notice] = QuoVadis.translate 'flash.confirmation.create'
     end

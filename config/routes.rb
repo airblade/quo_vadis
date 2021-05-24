@@ -15,7 +15,13 @@ QuoVadis::Engine.routes.draw do
   get '/pwd-reset/:token', to: 'password_resets#edit',   as: 'edit_password_reset'
   put '/pwd-reset/:token', to: 'password_resets#update', as: 'password_reset'
 
-  resources :confirmations, only: [:new, :create, :index]
+  resources :confirmations, only: [:new, :create, :index] do
+    collection do
+      get :edit_email
+      put :update_email
+      post :resend
+    end
+  end
   get '/confirm/:token', to: 'confirmations#edit',   as: 'edit_confirmation'
   put '/confirm/:token', to: 'confirmations#update', as: 'confirmation'
 

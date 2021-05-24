@@ -6,6 +6,10 @@ class AccountConfirmationTest < IntegrationTest
     QuoVadis.accounts_require_confirmation true
   end
 
+  teardown do
+    QuoVadis.accounts_require_confirmation false
+  end
+
 
   test 'new signup requiring confirmation' do
     assert_emails 1 do
@@ -33,6 +37,17 @@ class AccountConfirmationTest < IntegrationTest
     assert_equal 'Thanks for confirming your account.  You are now logged in.', flash[:notice]
     assert controller.logged_in?
     assert QuoVadis::Account.last.confirmed?
+  end
+
+
+  test 'resend confirmation email in same session' do
+    assert_emails 1 do
+      post sign_ups_path(user: {name: 'Bob', email: 'bob@example.com', password: '123456789abc'})
+    end
+
+    assert_emails 1 do
+      post quo_vadis.resend_confirmations_path
+    end
   end
 
 

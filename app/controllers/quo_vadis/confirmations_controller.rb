@@ -5,6 +5,7 @@ module QuoVadis
 
     # holding page
     def index
+      @account = find_pending_account_from_session
     end
 
 
@@ -45,11 +46,31 @@ module QuoVadis
       end
 
       account.confirmed!
-
       qv.log account, Log::ACCOUNT_CONFIRMATION
+
+      session.delete :account_pending_confirmation
 
       login account.model, true
       redirect_to qv.path_after_authentication, notice: QuoVadis.translate('flash.confirmation.confirmed')
+    end
+
+
+    def resend
+      account = find_pending_account_from_session
+
+      unless account
+        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
+      end
+
+      request_confirmation account.model
+      redirect_to confirmations_path
+    end
+
+
+    private
+
+    def find_pending_account_from_session
+      Account.find(session[:account_pending_confirmation]) if session[:account_pending_confirmation]
     end
 
   end

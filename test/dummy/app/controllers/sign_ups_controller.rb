@@ -13,7 +13,7 @@ class SignUpsController < ApplicationController
     if @user.save
       if QuoVadis.accounts_require_confirmation
         request_confirmation @user
-        redirect_to sign_up_path(@user)
+        redirect_to quo_vadis.confirmations_path
       else
         redirect_to articles_path
       end
