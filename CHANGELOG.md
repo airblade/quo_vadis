@@ -1,6 +1,10 @@
 # CHANGELOG
 
+
 ## HEAD
+
+
+## 2.0.2 (24 May 2021)
 
 * Account confirmation: enable updating of email address.
 * Account confirmation: enable direct resending of email.
