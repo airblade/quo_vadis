@@ -27,7 +27,7 @@ module QuoVadis
       else
         qv.log account, Log::RECOVERY_CODE_FAILURE
         flash.now[:alert] = QuoVadis.translate('flash.recovery_code.unverified')
-        render :challenge
+        render :challenge, status: :unprocessable_entity
       end
     end
 

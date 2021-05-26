@@ -23,14 +23,14 @@ module QuoVadis
       unless account
         qv.log nil, Log::LOGIN_UNKNOWN, identifier: QuoVadis.identifier_value_in_params(params)
         flash.now[:alert] = QuoVadis.translate 'flash.login.failed'
-        render :new
+        render :new, status: :unprocessable_entity
         return
       end
 
       unless account.password.authenticate params[:password]
         qv.log account, Log::LOGIN_FAILURE
         flash.now[:alert] = QuoVadis.translate 'flash.login.failed'
-        render :new
+        render :new, status: :unprocessable_entity
         return
       end
 

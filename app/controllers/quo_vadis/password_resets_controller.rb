@@ -57,7 +57,7 @@ module QuoVadis
         login @password.account.model, true
         redirect_to qv.path_after_authentication, notice: QuoVadis.translate('flash.password_reset.reset')
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

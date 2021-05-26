@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Use 422 status code for form submission error responses.
 * Make default cookie name depend on Rails environment.
 
 

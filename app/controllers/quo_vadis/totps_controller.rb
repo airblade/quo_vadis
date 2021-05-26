@@ -53,7 +53,7 @@ module QuoVadis
           qv.log authenticated_model.qv_account, Log::TOTP_FAILURE
         end
         flash.now[:alert] = QuoVadis.translate('flash.totp.unverified')
-        render :challenge
+        render :challenge, status: :unprocessable_entity
       end
     end
 

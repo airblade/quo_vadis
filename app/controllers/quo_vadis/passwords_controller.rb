@@ -18,7 +18,7 @@ module QuoVadis
         qv.replace_session
         redirect_to qv.path_after_password_change, notice: QuoVadis.translate('flash.password.update')
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 
