@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Make default cookie name depend on Rails environment.
+
 
 ## 2.0.2 (24 May 2021)
 

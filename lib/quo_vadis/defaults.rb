@@ -3,7 +3,7 @@ require 'active_support/core_ext'
 QuoVadis.configure do
   password_minimum_length               12
   mask_ips                              false
-  cookie_name                           '__Host-qv'
+  cookie_name                           (Rails.env.production? ? '__Host-qv' : 'qv')
   session_lifetime                      :session
   session_lifetime_extend_to_end_of_day false
   session_idle_timeout                  :lifetime

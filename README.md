@@ -407,7 +407,7 @@ This is QuoVadis' [default configuration](https://github.com/airblade/quo_vadis/
 QuoVadis.configure do
   password_minimum_length               12
   mask_ips                              false
-  cookie_name                           '__Host-qv'
+  cookie_name                           (Rails.env.production? ? '__Host-qv' : 'qv')
   session_lifetime                      :session
   session_lifetime_extend_to_end_of_day false
   session_idle_timeout                  :lifetime
@@ -438,7 +438,7 @@ Masking means setting the last octet (IPv4) or the last 80 bits (IPv6) to 0.
 
 __`cookie_name`__ (string)
 
-The name of the cookie QuoVadis uses to store the session identifier.  The `__Host-` prefix is [recommended](https://developer.mozilla.org/en-US/docs/Web/API/document/cookie).
+The name of the cookie QuoVadis uses to store the session identifier.  The `__Host-` prefix is [recommended](https://developer.mozilla.org/en-US/docs/Web/API/document/cookie) in an SSL environment (but cannot be used in a non-SSL environment).
 
 __`session_lifetime`__ (`:session` | `ActiveSupport::Duration` | integer)
 
