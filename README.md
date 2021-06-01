@@ -355,9 +355,9 @@ Now write the page to where the user is redirected while they wait for the email
 
 It's a good idea for that page to link to `new_password_reset_path` where the user can request another email if need be.
 
-Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format`.
+Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@url` variable.
 
-Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another password-reset email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.
+Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format`.
 
 After the user has reset their password, they will be logged in and redirected to the first of these that exists:
 
