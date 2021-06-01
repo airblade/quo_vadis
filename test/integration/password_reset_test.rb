@@ -15,7 +15,7 @@ class PasswordResetTest < IntegrationTest
 
   test 'unknown identifier' do
     post quo_vadis.password_resets_path(email: 'foo@example.com')
-    assert_response :success
+    assert_redirected_to quo_vadis.password_resets_path
     assert_equal 'A link to change your password has been emailed to you.', flash[:notice]
   end
 

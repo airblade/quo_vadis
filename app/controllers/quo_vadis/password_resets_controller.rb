@@ -13,15 +13,14 @@ module QuoVadis
 
 
     def create
-      flash[:notice] = QuoVadis.translate 'flash.password_reset.create'
-
       account = QuoVadis.find_account_by_identifier_in_params params
-      return unless account
 
-      token = QuoVadis::PasswordResetToken.generate account
-      QuoVadis.deliver :reset_password, email: account.model.email, url: quo_vadis.edit_password_reset_url(token)
+      if account
+        token = QuoVadis::PasswordResetToken.generate account
+        QuoVadis.deliver :reset_password, email: account.model.email, url: quo_vadis.edit_password_reset_url(token)
+      end
 
-      redirect_to password_resets_path
+      redirect_to password_resets_path, notice: QuoVadis.translate('flash.password_reset.create')
     end
 
 
