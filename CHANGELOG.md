@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Ensure password-reset flash notice not displayed when emailed link is clicked.
 * Use model instance in password-reset form.
 * Give no indication of unknown account on request of password reset email.
 * Use 422 status code for form submission error responses.

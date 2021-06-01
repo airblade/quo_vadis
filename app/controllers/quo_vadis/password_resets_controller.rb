@@ -32,6 +32,10 @@ module QuoVadis
         redirect_to new_password_reset_path, alert: QuoVadis.translate('flash.password_reset.unknown') and return
       end
 
+      # Ensure the flash notice set in the create action does not appear when the user clicks the
+      # link in the email they were sent.
+      flash.delete :notice
+
       @password = QuoVadis::Password.new
     end
 
