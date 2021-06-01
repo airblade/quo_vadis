@@ -74,7 +74,7 @@ class PasswordResetTest < IntegrationTest
     end
 
     assert_equal digest, @user.qv_account.password.reload.password_digest
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_equal quo_vadis.password_reset_path(extract_token_from_email), path
   end
 

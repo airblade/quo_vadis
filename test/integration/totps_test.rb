@@ -74,7 +74,7 @@ class TotpsTest < IntegrationTest
 
     post quo_vadis.authenticate_totps_path(totp: '123456')
     refute QuoVadis::Session.last.second_factor_authenticated?
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_equal 'Sorry, the code was incorrect. Please check your system clock is correct and try again.', flash[:alert]
   end
 

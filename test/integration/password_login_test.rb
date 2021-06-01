@@ -34,7 +34,7 @@ class PasswordLoginTest < IntegrationTest
     User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
     post quo_vadis.login_path(email: 'bob@example.com', password: 'wrong')
 
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_equal quo_vadis.login_path, path
   end
 
@@ -42,7 +42,7 @@ class PasswordLoginTest < IntegrationTest
   test 'unknown login' do
     post quo_vadis.login_path(email: 'bob@example.com', password: 'wrong')
 
-    assert_response :success
+    assert_response :unprocessable_entity
     assert_equal quo_vadis.login_path, path
   end
 
