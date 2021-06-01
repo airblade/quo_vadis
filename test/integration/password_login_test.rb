@@ -21,12 +21,24 @@ class PasswordLoginTest < IntegrationTest
 
   test 'successful login redirects to original path' do
     get also_secret_articles_path
+    refute_nil session[:qv_bookmark]
 
     User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
     post quo_vadis.login_path(email: 'bob@example.com', password: '123456789abc')
 
     assert_redirected_to also_secret_articles_path
     assert_nil session[:qv_bookmark]
+  end
+
+
+  test 'successful login does not redirect to login path' do
+    get quo_vadis.login_path
+    assert_nil session[:qv_bookmark]
+
+    User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    post quo_vadis.login_path(email: 'bob@example.com', password: '123456789abc')
+
+    assert_redirected_to after_login_path
   end
 
 
