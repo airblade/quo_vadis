@@ -45,7 +45,7 @@ module QuoVadis
       end
 
       @password = account.password
-      if @password.reset params[:password], params[:password_confirmation]
+      if @password.reset params[:password][:password], params[:password][:password_confirmation]
         # Logout account's sessions because password has changed.
         # Note model is not logged in here.
         @password.account.sessions.destroy_all

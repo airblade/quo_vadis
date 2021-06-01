@@ -165,7 +165,7 @@ class LoggingTest < IntegrationTest
   test 'password.reset' do
     assert_difference 'QuoVadis::Log.count', 2 do
       token = QuoVadis::PasswordResetToken.generate @account
-      put quo_vadis.password_reset_path(token, password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx')
+      put quo_vadis.password_reset_path(token, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
     end
     assert_equal QuoVadis::Log::PASSWORD_RESET, QuoVadis::Log.first.action
     assert_equal QuoVadis::Log::LOGIN_SUCCESS, log.action

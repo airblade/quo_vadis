@@ -53,7 +53,7 @@ class PasswordResetTest < IntegrationTest
     assert_emails 1 do
       post quo_vadis.password_resets_path(email: 'bob@example.com')
     end
-    put quo_vadis.password_reset_path(extract_token_from_email, password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx')
+    put quo_vadis.password_reset_path(extract_token_from_email, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
     assert controller.logged_in?
 
     get quo_vadis.edit_password_reset_url(extract_token_from_email)
@@ -70,7 +70,7 @@ class PasswordResetTest < IntegrationTest
     end
 
     assert_no_difference 'QuoVadis::Session.count' do
-      put quo_vadis.password_reset_path(extract_token_from_email, password: '', password_confirmation: '')
+      put quo_vadis.password_reset_path(extract_token_from_email, password: {password: '', password_confirmation: ''})
     end
 
     assert_equal digest, @user.qv_account.password.reload.password_digest
@@ -95,7 +95,7 @@ class PasswordResetTest < IntegrationTest
     end
 
     assert_difference 'QuoVadis::Session.count', (- 2 + 1) do
-      put quo_vadis.password_reset_path(extract_token_from_email, password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx')
+      put quo_vadis.password_reset_path(extract_token_from_email, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
     end
 
     assert controller.logged_in?
