@@ -17,9 +17,8 @@ module QuoVadis
 
     def require_password_authentication
       return if logged_in?
-      flash[:notice] = QuoVadis.translate 'flash.require_authentication'
       session[:qv_bookmark] = request.original_fullpath
-      redirect_to quo_vadis.login_path
+      redirect_to quo_vadis.login_path, notice: QuoVadis.translate('flash.require_authentication')
     end
     alias_method :require_authentication, :require_password_authentication
 
