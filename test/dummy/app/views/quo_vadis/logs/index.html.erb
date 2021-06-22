@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Timestamp</th>
       <th>Action</th>
       <th>IP</th>
       <th>Metadata</th>
@@ -11,6 +12,7 @@
   <tbody>
     <% @logs.each do |log| %>
       <tr>
+        <td><%= log.created_at %></td>
         <td><%= QuoVadis.translate "log.action.#{log.action}" %></td>
         <td><%= log.ip %></td>
         <td><%= log.metadata.empty? ? '' : log.metadata.map {|k,v| "#{k}: #{v}"}.join(', ') %></td>
