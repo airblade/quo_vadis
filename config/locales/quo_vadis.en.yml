@@ -31,7 +31,6 @@ en:
           other: You have %{count} recovery codes left.
       2fa:
         invalidated: You have invalidated your 2FA credentials and recovery codes.
-
     mailer:
       password_reset:
         subject: Change your password
@@ -46,6 +45,35 @@ en:
         totp_reuse: Your two-factor authentication code was reused just now
         twofa_deactivated: Two-factor authentication was deactivated just now
         recovery_codes_generation: Recovery codes have been generated for your account
+    log:
+      action:
+        login:
+          success: Successful login
+          failure: Failed login attempt (incorrect password)
+          unknown: Failed login attempt (unknown identifier)
+        totp:
+          setup: TOTP set up for 2FA
+          success: Successful authentication via TOTP
+          failure: Failed authentication attempt via TOTP
+          reuse: Failed attempt to reuse TOTP code
+        recovery_code:
+          success: Successful authentication via 2FA recovery code
+          failure: Failed authentication attempt via 2FA recovery code
+          generate: New 2FA recovery codes generated
+        2fa:
+          deactivated: 2FA deactivated
+        identifier:
+          change: Identifier changed
+        email:
+          change: Email address changed
+        password:
+          change: Password changed
+          reset: Password reset
+        account:
+          confirmation: Account confirmed
+        logout:
+          self: Logged out
+          other: Session logged out remotely
   activerecord:
     errors:
       models:

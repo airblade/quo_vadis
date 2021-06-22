@@ -21,7 +21,7 @@ module QuoVadis
     PASSWORD_RESET         = 'password.reset'
     ACCOUNT_CONFIRMATION   = 'account.confirmation'
     LOGOUT_OTHER           = 'logout.other'
-    LOGOUT                 = 'logout'
+    LOGOUT                 = 'logout.self'
 
     ACTIONS = [
       LOGIN_SUCCESS,

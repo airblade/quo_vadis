@@ -15,13 +15,13 @@ class LoggingTest < IntegrationTest
     assert_response :success
 
     assert_select 'tbody tr' do
-      assert_select 'td', 'password.change'
+      assert_select 'td', 'Password changed'
       assert_select 'td', '1.2.3.4'
       assert_select 'td', 'foo: bar, baz: qux'
     end
 
     assert_select 'tbody tr' do
-      assert_select 'td', 'login.success'
+      assert_select 'td', 'Successful login'
       assert_select 'td', '127.0.0.1'
       assert_select 'td', ''
     end
