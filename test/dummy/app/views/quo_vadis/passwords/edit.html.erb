@@ -1,14 +1,6 @@
 <h1>Change password</h1>
 
-<% if @password.errors.any? %>
-  <ul>
-    <% @password.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<%= form_with url: password_path, method: :put do |f| %>
+<%= form_with model: @password, url: password_path, method: :put do |f| %>
   <p>
     <%= f.label :password %>
     <%= f.password_field :password, autocomplete: 'current-password' %>

@@ -157,7 +157,7 @@ class LoggingTest < IntegrationTest
   test 'password.change' do
     login
     assert_log QuoVadis::Log::PASSWORD_CHANGE do
-      put quo_vadis.password_path(password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx')
+      put quo_vadis.password_path(password: {password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx'})
     end
   end
 

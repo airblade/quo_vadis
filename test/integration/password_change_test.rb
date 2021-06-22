@@ -18,28 +18,30 @@ class PasswordChangeTest < IntegrationTest
 
 
   test 'incorrect password' do
-    put quo_vadis.password_path(password: 'x')
+    put quo_vadis.password_path(password: {password: 'x'})
     assert_response :unprocessable_entity
     assert_equal ['is incorrect'], password_instance.errors[:password]
   end
 
 
   test 'new password empty' do
-    put quo_vadis.password_path(password: '123456789abc', new_password: '')
+    put quo_vadis.password_path(password: {password: '123456789abc', new_password: ''})
     assert_response :unprocessable_entity
     assert_equal ["can't be blank"], password_instance.errors[:new_password]
   end
 
 
   test 'new password too short' do
-    put quo_vadis.password_path(password: '123456789abc', new_password: 'x')
+    put quo_vadis.password_path(password: {password: '123456789abc', new_password: 'x'})
     assert_response :unprocessable_entity
     assert_equal ["is too short (minimum is #{QuoVadis.password_minimum_length} characters)"], password_instance.errors[:new_password]
   end
 
 
   test 'new password confirmation does not match' do
-    put quo_vadis.password_path(password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'y')
+    put quo_vadis.password_path(password: {
+      password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'y'
+    })
     assert_response :unprocessable_entity
     assert_equal ["doesn't match Password"], password_instance.errors[:new_password_confirmation]
   end
@@ -48,7 +50,9 @@ class PasswordChangeTest < IntegrationTest
   test 'success' do
     assert_emails 1 do
       assert_session_replaced do
-        put quo_vadis.password_path(password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx')
+        put quo_vadis.password_path(password: {
+          password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx'
+        })
         assert_response :redirect
         assert_equal 'Your password has been changed.', flash[:notice]
       end
@@ -60,7 +64,9 @@ class PasswordChangeTest < IntegrationTest
     desktop = session_login
     phone = session_login
 
-    desktop.put quo_vadis.password_path(password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx')
+    desktop.put quo_vadis.password_path(password: {
+      password: '123456789abc', new_password: 'xxxxxxxxxxxx', new_password_confirmation: 'xxxxxxxxxxxx'
+    })
     desktop.follow_redirect!
     assert desktop.controller.logged_in?
 
