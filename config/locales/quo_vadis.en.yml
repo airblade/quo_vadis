@@ -48,32 +48,32 @@ en:
     log:
       action:
         login:
-          success: Successful login
+          success: Logged in
           failure: Failed login attempt (incorrect password)
           unknown: Failed login attempt (unknown identifier)
         totp:
           setup: TOTP set up for 2FA
-          success: Successful authentication via TOTP
+          success: Authenticated via TOTP
           failure: Failed authentication attempt via TOTP
           reuse: Failed attempt to reuse TOTP code
         recovery_code:
-          success: Successful authentication via 2FA recovery code
+          success: Authenticated via 2FA recovery code
           failure: Failed authentication attempt via 2FA recovery code
-          generate: New 2FA recovery codes generated
+          generate: Generated new 2FA recovery codes
         2fa:
-          deactivated: 2FA deactivated
+          deactivated: Deactivated 2FA
         identifier:
-          change: Identifier changed
+          change: Changed identifier
         email:
-          change: Email address changed
+          change: Changed email address
         password:
-          change: Password changed
-          reset: Password reset
+          change: Changed password
+          reset: Reset password
         account:
-          confirmation: Account confirmed
+          confirmation: Confirmed account
         logout:
           self: Logged out
-          other: Session logged out remotely
+          other: Logged out session remotely
   activerecord:
     errors:
       models:
