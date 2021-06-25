@@ -3,6 +3,7 @@
 
 ## 2.1.0 (25 June 2021)
 
+* Do not require password on create.
 * Fix incorrect assignment of built association.
 * Add i18n translations for log actions.
 * Use model instance in change-password form.
