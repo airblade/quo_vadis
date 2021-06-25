@@ -1,7 +1,7 @@
 # CHANGELOG
 
 
-## HEAD
+## 2.1.0 (25 June 2021)
 
 * Fix incorrect assignment of built association.
 * Add i18n translations for log actions.
