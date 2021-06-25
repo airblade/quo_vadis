@@ -44,21 +44,21 @@ module QuoVadis
 
       def password=(val)
         @password = val
-        self.qv_account ||= build_qv_account
+        build_qv_account unless qv_account
         raise PasswordExistsError if qv_account.password&.persisted?
         (qv_account.password || qv_account.build_password).password = val
       end
 
       def password_confirmation=(val)
         @password_confirmation = val
-        self.qv_account ||= build_qv_account
+        build_qv_account unless qv_account
         (qv_account.password || qv_account.build_password).password_confirmation = val
       end
 
       private
 
       def qv_build_account_and_password
-        self.qv_account ||= build_qv_account
+        build_qv_account unless qv_account
         qv_account.password || qv_account.build_password
       end
 

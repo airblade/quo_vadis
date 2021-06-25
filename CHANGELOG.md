@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Fix incorrect assignment of built association.
 * Add i18n translations for log actions.
 * Use model instance in change-password form.
 * Ensure password-reset flash notice not displayed when emailed link is clicked.
