@@ -46,6 +46,9 @@ class PasswordTest < ActiveSupport::TestCase
 
   test 'model passes through password to quo_vadis' do
     user = User.new name: 'bob', email: 'bob@example.com'
+    assert user.valid?
+
+    user = User.new name: 'bob', email: 'bob@example.com', password: ''
     refute user.valid?
     refute_empty user.errors[:password]
 

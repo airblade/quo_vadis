@@ -14,11 +14,9 @@ module QuoVadis
 
         has_one :qv_account, as: :model, class_name: 'QuoVadis::Account', dependent: :destroy, autosave: true
 
-        before_validation :qv_build_account_and_password, on: :create
-        before_validation :qv_copy_identifier_to_account
+        before_validation :qv_copy_identifier_to_account, if: Proc.new { |m| m.qv_account }
 
-        # Enable a new-user form to set a password.
-        validate :qv_copy_password_errors, on: :create
+        validate :qv_copy_password_errors, if: Proc.new { |m| m.qv_account&.password }
 
         unless validators_on(identifier).any? { |v| ActiveRecord::Validations::UniquenessValidator === v }
           raise NotImplementedError, <<~END
@@ -56,11 +54,6 @@ module QuoVadis
       end
 
       private
-
-      def qv_build_account_and_password
-        build_qv_account unless qv_account
-        qv_account.password || qv_account.build_password
-      end
 
       def qv_copy_password_errors
         qv_account.password.valid?  # force qv_account.password to validate

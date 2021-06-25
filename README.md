@@ -86,9 +86,9 @@ class Person < ApplicationRecord
 end
 ```
 
-When __creating__ a model instance, include a `:password` attribute and, optionally, `:password_confirmation` attribute.
+You can create and update your models as before.  When you want to set a password for the first time, just include `:password` and, optionally, `:password_confirmation` in the attributes to `#create` or `#update`.
 
-When __updating__ a model instance, do not include a `:password` attribute.  To change someone's password, use the Change Password feature (see below).
+If you want to change an existing password, use the Change Password feature (see below).  If you update a model (that already has a password) with a `:password` attribute, it will raise a `QuoVadis::PasswordExistsError`.
 
 The minimum password length is configured by `QuoVadis.password_minimum_length` (12 by default).
 
