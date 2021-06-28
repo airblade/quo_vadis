@@ -31,4 +31,20 @@ class AccountTest < ActiveSupport::TestCase
     end
   end
 
+
+  test 'revoke' do
+    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    account = u.qv_account
+    account.create_totp last_used_at: 1.minute.ago
+    account.generate_recovery_codes
+
+    u.revoke_authentication_credentials
+    account.reload
+
+    assert_nil account.password
+    assert_nil account.totp
+    assert_empty account.recovery_codes
+    assert_empty account.sessions
+  end
+
 end

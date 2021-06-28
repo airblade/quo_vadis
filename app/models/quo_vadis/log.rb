@@ -22,6 +22,7 @@ module QuoVadis
     ACCOUNT_CONFIRMATION   = 'account.confirmation'
     LOGOUT_OTHER           = 'logout.other'
     LOGOUT                 = 'logout.self'
+    REVOKE                 = 'revoke'
 
     ACTIONS = [
       LOGIN_SUCCESS,
@@ -41,7 +42,8 @@ module QuoVadis
       PASSWORD_RESET,
       ACCOUNT_CONFIRMATION,
       LOGOUT_OTHER,
-      LOGOUT
+      LOGOUT,
+      REVOKE
     ]
 
     belongs_to :account, optional: true  # optional only for LOGIN_UNKNOWN

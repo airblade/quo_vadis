@@ -35,6 +35,19 @@ module QuoVadis
       Array.new(MAX_NUMBER_OF_RECOVERY_CODES) { recovery_codes.create }.map &:code
     end
 
+    def revoke
+      password&.destroy
+      totp&.destroy
+      recovery_codes.destroy_all
+      sessions.destroy_all
+
+      Log.create(
+        account: self,
+        action: Log::REVOKE,
+        ip: (CurrentRequestDetails.ip || '')
+      )
+    end
+
     private
 
     def log_identifier_change

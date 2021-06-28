@@ -201,6 +201,15 @@ class LoggingTest < IntegrationTest
   end
 
 
+  test 'revoke' do
+    login_new_session
+    assert_log QuoVadis::Log::REVOKE do
+      QuoVadis::CurrentRequestDetails.ip = '127.0.0.1'  # fake out the IP assertion
+      @account.revoke
+    end
+  end
+
+
   private
 
   def assert_log(action, metadata = {}, account = @account, &block)

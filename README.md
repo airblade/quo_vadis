@@ -399,6 +399,11 @@ Write the corresponding mailer views:
 They must be in `app/views/quo_vadis/mailer/NAME.{text,html}.erb`.
 
 
+### Revocation
+
+You can revoke a user's access by calling `#revoke_authentication_credentials` on the model instance.  This deletes the user's password, TOTP credential, recovery codes, and active sessions.  Their authentication logs, or audit trail, are preserved.
+
+
 ## Configuration
 
 This is QuoVadis' [default configuration](https://github.com/airblade/quo_vadis/blob/master/lib/quo_vadis/defaults.rb):

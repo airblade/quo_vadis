@@ -53,6 +53,10 @@ module QuoVadis
         (qv_account.password || qv_account.build_password).password_confirmation = val
       end
 
+      def revoke_authentication_credentials
+        qv_account.revoke
+      end
+
       private
 
       def qv_copy_password_errors

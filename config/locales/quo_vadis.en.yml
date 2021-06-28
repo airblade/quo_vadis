@@ -74,6 +74,7 @@ en:
         logout:
           self: Logged out
           other: Logged out session remotely
+        revoke: Revoked access
   activerecord:
     errors:
       models:
