@@ -246,19 +246,19 @@ class UsersController < ApplicationController
 end
 ```
 
-QuoVadis will send the user an email with a link.  Write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@url` variable.
+QuoVadis will send the user an email with a link.  Write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@url` variable.
 
 See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
 
-Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/index.html.erb)).  It must be in `app/views/quo_vadis/confirmations/index.html.:format`.
+Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/index.html.erb)).  It must be in `app/views/quo_vadis/confirmations/index.html.:format`.
 
 On that page you can show the user the address the email was sent to, enable them to update their email address if they make a mistake on the sign-up form, and provide a button to resend another email directly.  If the sign-up occurred in a different browser session, you can instead link to `new_confirmation_path` where the user can request another email if need be.
 
-Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/edit.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit.html.:format`.
+Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/edit.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit.html.:format`.
 
-Next, write the page where the user can amend their email address if they made a mistake when signing up ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/edit_email.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit_email.html.:format`.
+Next, write the page where the user can amend their email address if they made a mistake when signing up ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/edit_email.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit_email.html.:format`.
 
-Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another confirmation email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format`.
+Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another confirmation email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format`.
 
 After the user has confirmed their account, they will be logged in and redirected to the first of these that exists:
 
@@ -272,7 +272,7 @@ So add whichever works best for you.
 
 Use `before_action :require_password_authentication` or `before_action :require_authentication` in your controllers.
 
-Write the login view ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/sessions/new.html.erb)).  Your login form must be in `app/views/quo_vadis/sessions/new.html.:format`.  Note it must capture the user's identifier (not email, unless the identifier is email).
+Write the login view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/sessions/new.html.erb)).  Your login form must be in `app/views/quo_vadis/sessions/new.html.:format`.  Note it must capture the user's identifier (not email, unless the identifier is email).
 
 If you include a `remember` checkbox in your login form:
 
@@ -312,22 +312,22 @@ In your views, have a link where users can manage their 2FA:
 link_to '2FA', quo_vadis.twofa_path
 ```
 
-Write the 2FA overview page ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/twofas/show.html.erb)).  It must be in `app/views/quo_vadis/twofas/show.html.:format`.  This page allows the user to set up 2FA, deactivate or reset it, and generate new recovery codes.
+Write the 2FA overview page ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/twofas/show.html.erb)).  It must be in `app/views/quo_vadis/twofas/show.html.:format`.  This page allows the user to set up 2FA, deactivate or reset it, and generate new recovery codes.
 
-Next, write the TOTP setup page ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/totps/new.html.erb)).  It must be in `app/views/quo_vadis/totps/new.html.:format`.  This page shows the user a QR code (and the key as text) which they scan with their authenticator.
+Next, write the TOTP setup page ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/totps/new.html.erb)).  It must be in `app/views/quo_vadis/totps/new.html.:format`.  This page shows the user a QR code (and the key as text) which they scan with their authenticator.
 
-Next, write the recovery codes page ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/recovery_codes/index.html.erb)).  It must be in `app/views/quo_vadis/recovery_codes/index.html.:format`.  This shows the recovery codes immediately after TOTP is setup, and immediately after generating fresh recovery codes, but not otherwise.
+Next, write the recovery codes page ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/recovery_codes/index.html.erb)).  It must be in `app/views/quo_vadis/recovery_codes/index.html.:format`.  This shows the recovery codes immediately after TOTP is setup, and immediately after generating fresh recovery codes, but not otherwise.
 
-Next, write the TOTP challenge page where a user inputs their 6-digit TOTP ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/totps/challenge.html.erb)).  It must be in `app/views/quo_vadis/totps/challenge.html.:format`.  It's a good idea to link to the recovery code page (`challenge_recovery_codes_path`) for any user who has lost their authenticator.
+Next, write the TOTP challenge page where a user inputs their 6-digit TOTP ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/totps/challenge.html.erb)).  It must be in `app/views/quo_vadis/totps/challenge.html.:format`.  It's a good idea to link to the recovery code page (`challenge_recovery_codes_path`) for any user who has lost their authenticator.
 
-Finally, write the recovery code challenge page where a user inputs one of their recovery codes ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/recovery_codes/challenge.html.erb)).  It must be in `app/views/quo_vadis/recovery_codes/challenge.html.:format`.  A recovery code can only be used once, and using one deactivates TOTP – so the user will have to set it up again next time.
+Finally, write the recovery code challenge page where a user inputs one of their recovery codes ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/recovery_codes/challenge.html.erb)).  It must be in `app/views/quo_vadis/recovery_codes/challenge.html.:format`.  A recovery code can only be used once, and using one deactivates TOTP – so the user will have to set it up again next time.
 
 
 ### Change password
 
 To change their password, the user must provide their current one as well as the new one.
 
-Write the change-password form ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/passwords/edit.html.erb)).  It must be in `app/views/quo_vadis/passwords/edit.html.:format`.
+Write the change-password form ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/passwords/edit.html.erb)).  It must be in `app/views/quo_vadis/passwords/edit.html.:format`.
 
 After the password has been changed, the user is redirected to the first of:
 
@@ -347,17 +347,17 @@ The user can reset their password if they lose it.  The flow is:
 4. [Password-reset confirmation page] The user enters their new password and clicks a button.
 5. QuoVadis sets the user's password and logs them in.
 
-First, write the page where the user requests a password-reset ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.  Note it must capture the user's identifier (not email, unless the identifier is email).
+First, write the page where the user requests a password-reset ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.  Note it must capture the user's identifier (not email, unless the identifier is email).
 
 See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
 
-Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/index.html.erb)).  It must be in `app/views/quo_vadis/password_resets/index.html.:format`.
+Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/index.html.erb)).  It must be in `app/views/quo_vadis/password_resets/index.html.:format`.
 
 It's a good idea for that page to link to `new_password_reset_path` where the user can request another email if need be.
 
-Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@url` variable.
+Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@url` variable.
 
-Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format`.
+Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format`.
 
 After the user has reset their password, they will be logged in and redirected to the first of these that exists:
 
@@ -371,14 +371,14 @@ A logged-in session lasts for either the browser session or `QuoVadis.session_li
 
 A user can view their active sessions and log out of any of them.
 
-Write the view showing the sessions ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/sessions/index.html.erb)).  It must be in `app/views/quo_vadis/sessions/index.html.:format`.
+Write the view showing the sessions ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/sessions/index.html.erb)).  It must be in `app/views/quo_vadis/sessions/index.html.:format`.
 
 
 ### Audit trail
 
 An audit trail is kept of authentication events.  You can see the full list in the [`Log`](https://github.com/airblade/quo_vadis/blob/master/app/models/quo_vadis/log.rb) class.
 
-Write the view showing the events ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/logs/index.html.erb)).  It must be in `app/views/quo_vadis/logs/index.html.:format`.
+Write the view showing the events ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/logs/index.html.erb)).  It must be in `app/views/quo_vadis/logs/index.html.:format`.
 
 
 ### Notifications
@@ -387,14 +387,14 @@ QuoVadis notifies users by email whenever their authentication details are chang
 
 Write the corresponding mailer views:
 
-- change of email ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/email_change_notification.text.erb))
-- change of identifier (unless the identifier is email) ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/identifier_change_notification.text.erb))
-- change of password ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/password_change_notification.text.erb))
-- reset of password ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/password_reset_notification.text.erb))
-- TOTP setup ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/totp_setup_notification.text.erb))
-- TOTP code used a second time ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/totp_reuse_notification.text.erb))
-- 2FA deactivated ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/twofa_deactivated_notification.text.erb))
-- recovery codes generated ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/quo_vadis/mailer/recovery_codes_generation_notification.text.erb))
+- change of email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/email_change_notification.text.erb))
+- change of identifier (unless the identifier is email) ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/identifier_change_notification.text.erb))
+- change of password ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/password_change_notification.text.erb))
+- reset of password ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/password_reset_notification.text.erb))
+- TOTP setup ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/totp_setup_notification.text.erb))
+- TOTP code used a second time ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/totp_reuse_notification.text.erb))
+- 2FA deactivated ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/twofa_deactivated_notification.text.erb))
+- recovery codes generated ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/recovery_codes_generation_notification.text.erb))
 
 They must be in `app/views/quo_vadis/mailer/NAME.{text,html}.erb`.
 
