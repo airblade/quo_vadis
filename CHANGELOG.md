@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Remove unnecessary route names.
 * Add user revocation.
 * Ensure password is only updated via #change or #reset.
 * Move views into gem's app/views/ directory.

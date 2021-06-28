@@ -17,7 +17,7 @@ module QuoVadis
 
       if account
         token = QuoVadis::PasswordResetToken.generate account
-        QuoVadis.deliver :reset_password, email: account.model.email, url: quo_vadis.edit_password_reset_url(token)
+        QuoVadis.deliver :reset_password, email: account.model.email, url: quo_vadis.password_reset_url(token)
       end
 
       redirect_to password_resets_path, notice: QuoVadis.translate('flash.password_reset.create')

@@ -56,7 +56,7 @@ class PasswordResetTest < IntegrationTest
     put quo_vadis.password_reset_path(extract_token_from_email, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
     assert controller.logged_in?
 
-    get quo_vadis.edit_password_reset_url(extract_token_from_email)
+    get quo_vadis.password_reset_url(extract_token_from_email)
     assert_redirected_to quo_vadis.new_password_reset_path
     assert_equal 'Either the link has expired or you have already reset your password.', flash[:alert]
   end
