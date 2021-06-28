@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## HEAD
+
+* Move views into gem's app/views/ directory.
+
+
 ## 2.1.0 (25 June 2021)
 
 * Do not require password on create.
