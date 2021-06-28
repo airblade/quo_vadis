@@ -120,6 +120,19 @@ class PasswordTest < ActiveSupport::TestCase
   end
 
 
+  test 'passwords can only be updated via #change and #reset' do
+    user = User.create! name: 'bob', email: 'bob@example.com', password: VALID_PASSWORD
+    pw = user.qv_account.password
+
+    refute pw.update password: 'secretsecret'
+    assert_equal ["must be updated via #change or #reset"], pw.errors[:password]
+
+    pw.password = VALID_PASSWORD
+    refute pw.save
+    assert_equal ["must be updated via #change or #reset"], pw.errors[:password]
+  end
+
+
   test 'cascade destroy' do
     user = User.create! name: 'bob', email: 'bob@example.com', password: VALID_PASSWORD
     assert user.qv_account.persisted?

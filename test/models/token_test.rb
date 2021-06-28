@@ -52,7 +52,7 @@ class TokenTest < ActiveSupport::TestCase
 
   test 'password reset already done' do
     token = QuoVadis::PasswordResetToken.generate @account
-    @account.password.update password: 'secretsecret'
+    @account.password.reset 'secretsecret', 'secretsecret'
     assert_nil QuoVadis::PasswordResetToken.find_account(token)
   end
 

@@ -7,6 +7,7 @@ module QuoVadis
     has_secure_password
 
     validates_length_of :password, minimum: QuoVadis.password_minimum_length, allow_blank: true
+    validate :password_updated_legitimately, on: :update
 
     attr_accessor :new_password
 
@@ -48,5 +49,20 @@ module QuoVadis
       save
     end
 
+    private
+
+    def password_updated_legitimately
+      return unless password_digest_changed?
+
+      unless change_or_reset_called?
+        errors.add :password, 'must be updated via #change or #reset'
+      end
+    end
+
+    def change_or_reset_called?
+      caller_locations.any? { |loc|
+        ['change', 'reset'].include?(loc.label) && Pathname.new(loc.path).basename.to_s == 'password.rb'
+      }
+    end
   end
 end
