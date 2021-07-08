@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.1.1 (8 July 2021)
+
 * Remove unnecessary route names.
 * Add user revocation.
 * Ensure password is only updated via #change or #reset.
