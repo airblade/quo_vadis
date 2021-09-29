@@ -292,7 +292,7 @@ After authenticating the user will be redirected to the first of these that exis
 
 If you do not want 2FA at all, set `QuoVadis.two_factor_authentication_mandatory false` in your configuration and skip the rest of this section.
 
-If you do want 2FA, you can choose whether it is optional or mandatory for your users by setting `QuoVadis.two_factor_authentication_mandatory <true|false>` in your configuration.
+If you do want 2FA, you can choose whether it is mandatory or optional for your users by setting `QuoVadis.two_factor_authentication_mandatory <true|false>` in your configuration.
 
 Use `before_action :require_two_factor_authentication` in your controllers (which supersedes `:require_password_authentication`).  This will require the user, after authenticating with their password, to authenticate with 2FA – when 2FA is mandatory, or when it is optional and the user has set up 2FA.
 
