@@ -58,8 +58,11 @@ class ModelTest < ActiveSupport::TestCase
 
 
   test 'notifies on email change' do
+    freeze_time
     u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
-    assert_enqueued_email_with QuoVadis::Mailer, :email_change_notification, args: {email: 'bob@example.com'} do
+    assert_enqueued_email_with QuoVadis::Mailer,
+      :email_change_notification,
+      args: {email: 'bob@example.com', ip: nil, timestamp: Time.now} do
       u.update email: 'robert@example.com'
     end
   end

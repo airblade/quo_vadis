@@ -77,7 +77,9 @@ module QuoVadis
     end
 
     def deliver(action, params, later: QuoVadis.enqueue_transactional_emails)
-      mail = QuoVadis::Mailer.with(params).send(action)
+      mail = QuoVadis::Mailer
+        .with(params.merge(ip: QuoVadis::CurrentRequestDetails.ip, timestamp: Time.now))
+        .send(action)
       later ?
         mail.deliver_later :
         mail.deliver_now

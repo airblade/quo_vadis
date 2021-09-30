@@ -14,52 +14,52 @@ module QuoVadis
     end
 
     def email_change_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.email_change')
     end
 
     def identifier_change_notification
-      @timestamp = Time.now
+      @timestamp = params[:timestamp]
       @identifier = params[:identifier]
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.identifier_change',
                                                identifier: params[:identifier])
     end
 
     def password_change_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.password_change')
     end
 
     def password_reset_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.password_reset')
     end
 
     def totp_setup_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.totp_setup')
     end
 
     def totp_reuse_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.totp_reuse')
     end
 
     def twofa_deactivated_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.twofa_deactivated')
     end
 
     def recovery_codes_generation_notification
-      @timestamp = Time.now
-      @ip = QuoVadis::CurrentRequestDetails.ip
+      @timestamp = params[:timestamp]
+      @ip = params[:ip]
       _mail params[:email], QuoVadis.translate('mailer.notification.recovery_codes_generation')
     end
 

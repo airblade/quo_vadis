@@ -44,14 +44,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'email change notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').email_change_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).email_change_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -62,14 +64,17 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'identifier change notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>', identifier: 'email').identifier_change_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      identifier: 'email',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).identifier_change_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -80,14 +85,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'password change notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').password_change_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).password_change_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -98,14 +105,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'password reset notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').password_reset_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).password_reset_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -116,14 +125,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'totp setup notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').totp_setup_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).totp_setup_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -134,14 +145,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'totp reuse notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').totp_reuse_notification
+    email = QuoVadis::Mailer.with(
+      email:     'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).totp_reuse_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -152,14 +165,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test '2fa deactivated notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').twofa_deactivated_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).twofa_deactivated_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
@@ -170,14 +185,16 @@ class MailerTest < ActionMailer::TestCase
 
 
   test 'recovery codes generation notification' do
-    email = QuoVadis::Mailer.with(email: 'Foo <foo@example.com>').recovery_codes_generation_notification
+    email = QuoVadis::Mailer.with(
+      email: 'Foo <foo@example.com>',
+      ip:        '1.2.3.4',
+      timestamp: Time.now
+    ).recovery_codes_generation_notification
 
     # freeze_time
 
     assert_emails 1 do
-      QuoVadis::CurrentRequestDetails.set(ip: '1.2.3.4') do
-        email.deliver_now
-      end
+      email.deliver_now
     end
 
     assert_equal ['foo@example.com'], email.to
