@@ -73,12 +73,12 @@ module QuoVadis
     end
 
     def notify(action, params)
-      QuoVadis::Mailer.with(params).send(action).deliver_later
+      deliver(action, params, later: true)
     end
 
-    def deliver(action, params)
+    def deliver(action, params, later: QuoVadis.enqueue_transactional_emails)
       mail = QuoVadis::Mailer.with(params).send(action)
-      QuoVadis.enqueue_transactional_emails ?
+      later ?
         mail.deliver_later :
         mail.deliver_now
     end
