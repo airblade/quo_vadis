@@ -4,7 +4,12 @@
 ## HEAD
 
 
-## 2.1.2 (30 Septembe 2021)
+## 2.1.3 (30 September 2021)
+
+* Pass IP and timestamp as paramenters to mailer.
+
+
+## 2.1.2 (30 September 2021)
 
 * Delete existing recovery codes when generating new ones.
 
