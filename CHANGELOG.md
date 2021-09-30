@@ -4,6 +4,11 @@
 ## HEAD
 
 
+## 2.1.2 (30 Septembe 2021)
+
+* Delete existing recovery codes when generating new ones.
+
+
 ## 2.1.1 (8 July 2021)
 
 * Remove unnecessary route names.
