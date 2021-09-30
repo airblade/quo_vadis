@@ -42,13 +42,19 @@ class RecoveryCodeTest < ActiveSupport::TestCase
   test 'generate a fresh set of codes' do
     account = @user.qv_account
     codes = []
-    assert_difference 'QuoVadis::RecoveryCode.count', 5 do
+    assert_difference 'QuoVadis::RecoveryCode.count', (-1 + 5) do
       codes = account.generate_recovery_codes
     end
     assert_equal 5, codes.length
+    assert_equal 5, account.recovery_codes.count
     codes.each do |code|
       assert_instance_of String, code
     end
+
+    new_codes = account.generate_recovery_codes
+    assert_equal 5, new_codes.length
+    assert_equal 5, account.recovery_codes.count
+    refute_equal new_codes, codes
   end
 
 end

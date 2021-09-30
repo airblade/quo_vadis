@@ -32,6 +32,7 @@ module QuoVadis
 
     # Returns an array of the recovery codes' codes.
     def generate_recovery_codes
+      recovery_codes.delete_all
       Array.new(MAX_NUMBER_OF_RECOVERY_CODES) { recovery_codes.create }.map &:code
     end
 
