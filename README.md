@@ -119,7 +119,7 @@ end
 
 __`login(model, browser_session = true)`__
 
-To log in a user who has authenticated with a password, call `#login(model, browser_session = true)`.  For the `browser_session` argument, optionally pass `true` to log in for the duration of the browser session, or `false` to log in for `QuoVadis.session_lifetime` (which could be the browser session anyway).
+To log in a user who has authenticated with a password, call `#login(model, browser_session = true, metadata: {})`.  For the `browser_session` argument, optionally pass `true` to log in for the duration of the browser session, or `false` to log in for `QuoVadis.session_lifetime` (which could be the browser session anyway).  Any metadata are stored in the log entry for the login.
 
 __`request_confirmation(model)`__
 

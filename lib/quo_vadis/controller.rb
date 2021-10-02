@@ -36,8 +36,8 @@ module QuoVadis
     #
     # browser_session - true: login only for duration of browser session
     #                   false: login for QuoVadis.session_lifetime (which may be browser session anyway)
-    def login(model, browser_session = true)
-      qv.log model.qv_account, Log::LOGIN_SUCCESS
+    def login(model, browser_session = true, metadata: {})
+      qv.log model.qv_account, Log::LOGIN_SUCCESS, metadata
 
       qv.prevent_rails_session_fixation
 
