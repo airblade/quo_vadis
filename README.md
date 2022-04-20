@@ -37,10 +37,8 @@ Simple to integrate into your application.  The main task is customising the exa
 Add the gem to your Gemfile:
 
 ```ruby
-gem 'quo_vadis', '~> 2.0'
+bundle add 'quo_vadis'
 ```
-
-Then run `bundle install`.
 
 Next, add the database tables:
 
