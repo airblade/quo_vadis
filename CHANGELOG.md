@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.1.5 (27 May 2022)
+
 * Order sessions list and display more information.
 * Set status 303 See Other on destroy redirects.
 * Streamline bundler instructions.
