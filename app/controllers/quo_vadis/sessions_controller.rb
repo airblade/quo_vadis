@@ -58,12 +58,12 @@ module QuoVadis
         current_qv_session.account.sessions.destroy params[:id]
         qv.log current_qv_session.account, Log::LOGOUT_OTHER
         flash[:notice] = QuoVadis.translate 'flash.logout.other'
-        redirect_to action: :index
+        redirect_to action: :index, status: :see_other
       else  # this session
         qv.log authenticated_model.qv_account, Log::LOGOUT
         qv.logout
         flash[:notice] = QuoVadis.translate 'flash.logout.self'
-        redirect_to main_app.root_path
+        redirect_to main_app.root_path, status: :see_other
       end
     end
 

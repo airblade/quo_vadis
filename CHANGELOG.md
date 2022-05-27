@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Set status 303 See Other on destroy redirects.
 * Streamline bundler instructions.
 
 
