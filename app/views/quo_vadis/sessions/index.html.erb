@@ -13,8 +13,8 @@
   <tbody>
     <% @qv_sessions.each do |sess| %>
       <tr>
-        <td><time datetime="<%= sess.created_at.to_formatted_s(:iso_8601) %>"><%= sess.created_at %></time></td>
-        <td><time datetime="<%= sess.last_seen_at.to_formatted_s(:iso_8601) %>"><%= sess.last_seen_at %></time></td>
+        <td><time datetime="<%= sess.created_at.to_formatted_s(:iso_8601) %>"><%= sess.created_at.to_formatted_s('%-d %B %Y') %></time></td>
+        <td><time datetime="<%= sess.last_seen_at.to_formatted_s(:iso_8601) %>"><%= sess.last_seen_at.to_formatted_s('%-d %B %Y') %></time></td>
         <td><%= sess.ip %></td>
         <td><%= sess.user_agent %></td>
         <td>
