@@ -5,6 +5,7 @@
     <tr>
       <th>Signed in</th>
       <th>Last seen</th>
+      <th>2FA used</th>
       <th>IP</th>
       <th>User agent</th>
       <th></th>
@@ -15,6 +16,7 @@
       <tr>
         <td><time datetime="<%= sess.created_at.to_formatted_s(:iso_8601) %>"><%= sess.created_at.to_formatted_s('%-d %B %Y') %></time></td>
         <td><time datetime="<%= sess.last_seen_at.to_formatted_s(:iso_8601) %>"><%= sess.last_seen_at.to_formatted_s('%-d %B %Y') %></time></td>
+        <td><%= sess.second_factor_authenticated? ? 'Yes' : 'No' %></td>
         <td><%= sess.ip %></td>
         <td><%= sess.user_agent %></td>
         <td>
