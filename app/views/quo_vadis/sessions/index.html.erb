@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>Signed in</th>
       <th>Last seen</th>
       <th>IP</th>
       <th>User agent</th>
@@ -12,6 +13,7 @@
   <tbody>
     <% @qv_sessions.each do |sess| %>
       <tr>
+        <td><time datetime="<%= sess.created_at.to_formatted_s(:iso_8601) %>"><%= sess.created_at %></time></td>
         <td><time datetime="<%= sess.last_seen_at.to_formatted_s(:iso_8601) %>"><%= sess.last_seen_at %></time></td>
         <td><%= sess.ip %></td>
         <td><%= sess.user_agent %></td>
