@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Order sessions list and display more information.
 * Set status 303 See Other on destroy redirects.
 * Streamline bundler instructions.
 
