@@ -9,7 +9,7 @@ module QuoVadis
 
     def index
       @qv_session = qv.session
-      @qv_sessions = @qv_session.account.sessions
+      @qv_sessions = @qv_session.account.sessions.new_to_old
     end
 
 
