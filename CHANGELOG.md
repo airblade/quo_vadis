@@ -3,6 +3,13 @@
 
 ## HEAD
 
+* Streamline bundler instructions.
+
+
+## 2.1.4 (2 October 2021)
+
+* Allow metadata for login log.
+
 
 ## 2.1.3 (30 September 2021)
 
