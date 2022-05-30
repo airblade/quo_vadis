@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.1.6 (30 May 2022)
+
 * Fix typo in session scope.
 
 
