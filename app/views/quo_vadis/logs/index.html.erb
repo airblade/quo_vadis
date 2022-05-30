@@ -12,7 +12,7 @@
   <tbody>
     <% @logs.each do |log| %>
       <tr>
-        <td><%= log.created_at %></td>
+        <td><time datetime="<%= log.created_at.to_formatted_s(:iso8601) %>"><%= log.created_at.to_formatted_s('%-d %B %Y') %></time></td>
         <td><%= QuoVadis.translate "log.action.#{log.action}" %></td>
         <td><%= log.ip %></td>
         <td><%= log.metadata.empty? ? '' : log.metadata.map {|k,v| "#{k}: #{v}"}.join(', ') %></td>
