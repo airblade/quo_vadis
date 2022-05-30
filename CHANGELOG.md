@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.1.7 (30 May 2022)
+
 * Use SHA256 digest for encryption.
 * Use <time> element in logs view.
 
