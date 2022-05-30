@@ -54,7 +54,7 @@ class SessionsTest < IntegrationTest
     phone.get quo_vadis.sessions_path
     phone.assert_response :success
     phone.assert_select 'td', 'This session'
-    phone.assert_select 'td input[type=submit][value="Log out"]', 1
+    phone.assert_select 'td button[type=submit]', text: 'Log out', count: 1
 
     # on phone, log out the desktop session
     phone.delete quo_vadis.session_path(QuoVadis::Session.first.id)
