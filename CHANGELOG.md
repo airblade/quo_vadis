@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Use SHA256 digest for encryption.
 * Use <time> element in logs view.
 
 

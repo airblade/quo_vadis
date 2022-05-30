@@ -8,7 +8,7 @@ module QuoVadis
       return '' if value == ''
 
       salt = SecureRandom.hex KEY_LENGTH
-      crypt = encryptor key(salt)
+      crypt = encryptor salt
       ciphertext = crypt.encrypt_and_sign value
       [salt, ciphertext].join SEPARATOR
     end
@@ -18,7 +18,7 @@ module QuoVadis
       return '' if value == ''
 
       salt, data = value.split SEPARATOR
-      crypt = encryptor key(salt)
+      crypt = encryptor salt
       crypt.decrypt_and_verify(data)
     end
 
@@ -27,12 +27,18 @@ module QuoVadis
     KEY_LENGTH = ActiveSupport::MessageEncryptor.key_len
     SEPARATOR = '$$'
 
-    def self.encryptor(key)
-      ActiveSupport::MessageEncryptor.new(key)
+    def self.encryptor(salt)
+      key_sha256 = key salt, OpenSSL::Digest::SHA256
+      key_sha1   = key salt, OpenSSL::Digest::SHA1
+      ActiveSupport::MessageEncryptor.new(key_sha256).tap { |crypt|
+        crypt.rotate key_sha1
+      }
     end
 
-    def self.key(salt)
-      ActiveSupport::KeyGenerator.new(secret).generate_key(salt, KEY_LENGTH)
+    def self.key(salt, hash_digest_class)
+      ActiveSupport::KeyGenerator
+        .new(secret, hash_digest_class: hash_digest_class)
+        .generate_key(salt, KEY_LENGTH)
     end
 
     def self.secret
