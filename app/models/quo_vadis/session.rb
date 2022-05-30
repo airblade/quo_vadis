@@ -9,7 +9,7 @@ module QuoVadis
 
     belongs_to :account
     validates :ip, presence: true
-    scope :new_to_old, -> { order create_at: :desc }
+    scope :new_to_old, -> { order created_at: :desc }
 
     attribute :last_seen_at, :datetime, default: -> { Time.now.utc }
 
