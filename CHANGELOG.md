@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Extract convenience method for has authentication account.
+
 
 ## 2.1.7 (30 May 2022)
 

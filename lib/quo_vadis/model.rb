@@ -14,7 +14,7 @@ module QuoVadis
 
         has_one :qv_account, as: :model, class_name: 'QuoVadis::Account', dependent: :destroy, autosave: true
 
-        before_validation :qv_copy_identifier_to_account, if: Proc.new { |m| m.qv_account }
+        before_validation :qv_copy_identifier_to_account, if: :has_authentication_account?
 
         validate :qv_copy_password_errors, if: Proc.new { |m| m.qv_account&.password }
 
@@ -55,6 +55,10 @@ module QuoVadis
 
       def revoke_authentication_credentials
         qv_account.revoke
+      end
+
+      def has_authentication_account?
+        !!qv_account
       end
 
       private
