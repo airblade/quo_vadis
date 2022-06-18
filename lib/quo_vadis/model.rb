@@ -29,8 +29,8 @@ module QuoVadis
           qv_account.identifier = send identifier
         end
 
-        after_update :qv_log_email_change, if: :saved_change_to_email?
-        after_update :qv_notify_email_change, if: :saved_change_to_email?
+        after_update :qv_log_email_change,    if: [:has_authentication_account?, :saved_change_to_email?]
+        after_update :qv_notify_email_change, if: [:has_authentication_account?, :saved_change_to_email?]
 
         QuoVadis.register_model self.name, identifier
       end

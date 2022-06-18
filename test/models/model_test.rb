@@ -70,9 +70,10 @@ class ModelTest < ActiveSupport::TestCase
 
   test 'does not notify or log on email change when no account' do
     u = User.create! name: 'bob', email: 'bob@example.com'
-    assert_no_enqueued_emails do
-      u.update email: 'robert@example.com'
+    assert_no_difference 'QuoVadis::Log.count' do
+      assert_no_enqueued_emails do
+        u.update email: 'robert@example.com'
+      end
     end
-
   end
 end

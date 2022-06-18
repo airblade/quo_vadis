@@ -4,6 +4,7 @@
 ## HEAD
 
 * Extract convenience method for has authentication account.
+* Only authenticating models react to email change.
 
 
 ## 2.1.7 (30 May 2022)
