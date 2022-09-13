@@ -33,6 +33,8 @@ class AccountConfirmationTest < IntegrationTest
     put action_path
 
     # verify logged in
+    assert_redirected_to '/sign_ups/confirmed'
+    follow_redirect!
     assert_redirected_to '/articles/secret'
     assert_equal 'Thanks for confirming your account.  You are now logged in.', flash[:notice]
     assert controller.logged_in?
@@ -101,6 +103,8 @@ class AccountConfirmationTest < IntegrationTest
 
     put extract_path_from_email
 
+    assert_redirected_to '/sign_ups/confirmed'
+    follow_redirect!
     assert_redirected_to '/articles/secret'
     assert_equal 'Thanks for confirming your account.  You are now logged in.', flash[:notice]
 

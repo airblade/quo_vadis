@@ -26,6 +26,11 @@ class SignUpsController < ApplicationController
     @user = User.find params[:id]
   end
 
+  def confirmed
+    # Here we could send an email.
+    redirect_to after_login_path
+  end
+
   private
 
   def user_params

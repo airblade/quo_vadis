@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Enable code to be run after sign up.
+
 
 ## 2.1.8 (18 June 2022)
 

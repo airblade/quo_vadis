@@ -177,7 +177,7 @@ Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob
 
 In your controller, use the `#login` method to log in your new user.  The optional second argument sets the length of the session (defaults to the browser session) - see the description above in the Controllers section).
 
-After logging in the user, redirect them to `qv.path_after_authentication` which resolves to a route named `:after_login`, if you have one, or your root route.
+After logging in the user, redirect them wherever you like.  You can use `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
 
 ```ruby
 class UsersController < ApplicationController
@@ -185,7 +185,7 @@ class UsersController < ApplicationController
     @user = User.new user_params
     if @user.save
       login @user
-      redirect_to qv.path_after_authentication
+      redirect_to qv.path_after_signup
     else
       # ...
     end
@@ -258,10 +258,7 @@ Next, write the page where the user can amend their email address if they made a
 
 Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another confirmation email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format`.
 
-After the user has confirmed their account, they will be logged in and redirected to the first of these that exists:
-
-- a route named `:after_login`;
-- your root route.
+After the user has confirmed their account, they will be logged in and redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
 
 So add whichever works best for you.
 
@@ -518,12 +515,13 @@ end
 
 __Routes__
 
-You can set up your post-authentication and post-password-change routes.  If you don't, you must have a root route.  For example:
+You can set up your post-signup, post-authentication, and post-password-change routes.  If you don't, you must have a root route.  For example:
 
 ```ruby
 # config/routes.rb
-get '/dashboard', to: 'dashboards#show', as: 'after_login'
-get '/profile',   to: 'profiles#show',   as: 'after_password_change'
+get '/signups/confirmed', to: 'dashboards#show', as: 'after_signup'
+get '/dashboard',         to: 'dashboards#show', as: 'after_login'
+get '/profile',           to: 'profiles#show',   as: 'after_password_change'
 ```
 
 ### I18n

@@ -51,7 +51,7 @@ module QuoVadis
       session.delete :account_pending_confirmation
 
       login account.model, true
-      redirect_to qv.path_after_authentication, notice: QuoVadis.translate('flash.confirmation.confirmed')
+      redirect_to qv.path_after_signup, notice: QuoVadis.translate('flash.confirmation.confirmed')
     end
 
 
