@@ -37,7 +37,7 @@
 
 ## 2.1.3 (30 September 2021)
 
-* Pass IP and timestamp as paramenters to mailer.
+* Pass IP and timestamp as parameters to mailer.
 
 
 ## 2.1.2 (30 September 2021)
