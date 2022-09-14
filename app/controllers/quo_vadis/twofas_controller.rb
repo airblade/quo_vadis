@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class TwofasController < ApplicationController
+  class TwofasController < QuoVadisController
     before_action :require_password_authentication
 
     def show

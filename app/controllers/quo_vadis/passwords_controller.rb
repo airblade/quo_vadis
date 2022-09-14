@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class PasswordsController < ApplicationController
+  class PasswordsController < QuoVadisController
 
     before_action :require_authentication
 

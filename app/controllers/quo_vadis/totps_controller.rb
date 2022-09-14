@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class TotpsController < ApplicationController
+  class TotpsController < QuoVadisController
     before_action :require_password_authentication
 
 

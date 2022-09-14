@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Introduce common controller superclass.
+
 
 ## 2.1.10 (14 September 2022)
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class RecoveryCodesController < ApplicationController
+  class RecoveryCodesController < QuoVadisController
     before_action :require_password_authentication
 
 

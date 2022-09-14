@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class LogsController < ApplicationController
+  class LogsController < QuoVadisController
     before_action :require_password_authentication
 
     PER_PAGE = 25

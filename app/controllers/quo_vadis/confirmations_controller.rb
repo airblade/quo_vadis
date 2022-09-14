@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class ConfirmationsController < ApplicationController
+  class ConfirmationsController < QuoVadisController
 
     # holding page
     def index

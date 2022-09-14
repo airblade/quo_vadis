@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class PasswordResetsController < ApplicationController
+  class PasswordResetsController < QuoVadisController
 
     # holding page for after the create action
     def index

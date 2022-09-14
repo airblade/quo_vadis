@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class SessionsController < ApplicationController
+  class SessionsController < QuoVadisController
 
     # Don't require authentication for the :destroy action so that someone
     # who has logged in via password but not completed 2fa can still log out.
