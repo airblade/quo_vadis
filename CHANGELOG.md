@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.1.10 (14 September 2022)
+
 * Enable configuration of mailer superclass.
 
 
