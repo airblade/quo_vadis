@@ -466,6 +466,10 @@ __`account_confirmation_token_lifetime`__ (`ActiveSupport::Duration` | integer)
 
 The `Duration` or number of seconds for which an account-confirmation token is valid.
 
+__`mailer_superclass`__ (string)
+
+The class from which QuoVadis's mailer inherits.
+
 __`mail_headers`__ (hash)
 
 Mail headers which QuoVadis' emails should have.

@@ -10,6 +10,7 @@ QuoVadis.configure do
   password_reset_token_lifetime         10.minutes
   accounts_require_confirmation         false
   account_confirmation_token_lifetime   10.minutes
+  mailer_superclass                     'ApplicationMailer'
   mail_headers                          ({ from: 'Example App <support@example.com>' })
   enqueue_transactional_emails          true
   app_name                              Rails.app_class.to_s.deconstantize  # for the TOTP QR code

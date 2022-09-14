@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module QuoVadis
-  class Mailer < ::ActionMailer::Base
+  class Mailer < QuoVadis.mailer_superclass.constantize
 
     def reset_password
       @url = params[:url]
