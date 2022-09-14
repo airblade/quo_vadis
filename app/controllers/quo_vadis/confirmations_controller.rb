@@ -50,6 +50,11 @@ module QuoVadis
 
       session.delete :account_pending_confirmation
 
+      # Log in for the duration of the browser session instead of
+      # QuoVadis.session_lifetime.  This is because the application might
+      # offer a remember-me? checkbox on the login page; and since there
+      # is no remember-me checkbox on the confirmation page we act as if
+      # there was but it wasn't ticked.
       login account.model, true
       redirect_to qv.path_after_signup, notice: QuoVadis.translate('flash.confirmation.confirmed')
     end
