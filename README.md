@@ -137,6 +137,23 @@ Call this to find out whether a user has authenticated with a password.
 Available in controllers and views.
 
 
+### Routes
+
+You can use routing constraints to restrict routes to logged-in or logged-out users.  For example:
+
+```ruby
+Rails.application.routes.draw do
+  constraints(QuoVadis::Constraints::LoggedOut) do
+    root "pages#index"
+  end
+
+  constraints(QuoVadis::Constraints::LoggedIn) do
+    root "dashboard#show", as: :dashboard
+  end
+end
+```
+
+
 ### Views
 
 You can use `authenticated_model` and `logged_in?` in your views.  For example:

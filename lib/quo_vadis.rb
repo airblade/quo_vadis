@@ -117,6 +117,8 @@ require_relative 'quo_vadis/ip_masking'
 require_relative 'quo_vadis/model'
 require_relative 'quo_vadis/current_request_details'
 require_relative 'quo_vadis/controller'
+require_relative 'quo_vadis/constraints/logged_in'
+require_relative 'quo_vadis/constraints/logged_out'
 
 ActiveSupport.on_load(:action_controller) do
   include QuoVadis::Controller
