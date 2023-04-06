@@ -250,7 +250,7 @@ See the Configuration section below for how to set QuoVadis's emails' from addre
 
 Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/index.html.erb)).  It must be in `app/views/quo_vadis/confirmations/index.html.:format`.
 
-On that page you can show the user the address the email was sent to, enable them to update their email address if they make a mistake on the sign-up form, and provide a button to resend another email directly.  If the sign-up occurred in a different browser session, you can instead link to `new_confirmation_path` where the user can request another email if need be.
+On that page you can show the user the address the email was sent to, enable them to update their email address if they made a mistake on the sign-up form, and provide a button to resend another email directly.  If the sign-up occurred in a different browser session, you can instead link to `new_confirmation_path` where the user can request another email if need be.
 
 Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/edit.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit.html.:format`.
 
