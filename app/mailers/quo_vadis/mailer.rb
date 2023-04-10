@@ -9,7 +9,7 @@ module QuoVadis
     end
 
     def account_confirmation
-      @url = params[:url]
+      @otp = params[:otp]
       _mail params[:email], QuoVadis.translate('mailer.confirmation.subject')
     end
 

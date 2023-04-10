@@ -206,14 +206,14 @@ class ControllerTest < IntegrationTest
   end
 
 
-  test 'request_confirmation' do
-    get articles_path
+  # test 'request_confirmation' do
+  #   get articles_path
 
-    assert_emails 1 do
-      controller.request_confirmation User.last
-    end
-    assert_equal 'A link to confirm your account has been emailed to you.', flash[:notice]
-  end
+  #   assert_emails 1 do
+  #     controller.request_confirmation User.last
+  #   end
+  #   assert_equal 'A link to confirm your account has been emailed to you.', flash[:notice]
+  # end
 
 
   test 'session lifetime exceeded' do

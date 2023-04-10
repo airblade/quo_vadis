@@ -1,16 +1,28 @@
-<h1>Resend confirmation instructions</h1>
+<h1>Account confirmation</h1>
 
-<%# Note that in this example the User identifier is :email. %>
+<p>We have sent a confirmation code to <%= @account.model.email %>.</p>
 
-<p>If you didn't receive the confirmation email, please enter your email address and we'll send you another one.</p>
+<!-- flash could go here -->
 
-<%= form_with url: confirmations_path, method: :post do |f| %>
+<%= form_with url: confirm_path, method: :post do %>
   <p>
-    <%= f.label :email %>
-    <%= f.text_field :email, inputmode: 'email', autocomplete: 'email' %>
+    <label for="otp">Your confirmation code:</label>
+    <input
+        name="otp"
+        id="otp"
+        type="text"
+        inputmode="numeric"
+        pattern="\d*"
+        autofocus="true"
+        autocomplete="one-time-password"
+        maxlength="6">
   </p>
 
   <p>
-    <%= f.submit %>
+    <button type="submit">Confirm me!</button>
   </p>
 <% end %>
+
+<p>
+  <%= button_to "Send me a new confirmation code", send_confirmation_path %>
+</p>

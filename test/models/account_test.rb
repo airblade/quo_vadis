@@ -53,4 +53,27 @@ class AccountTest < ActiveSupport::TestCase
     assert_empty account.sessions
   end
 
+
+  test 'otp_for_confirmation' do
+    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    account = u.qv_account
+
+    otp = account.otp_for_confirmation(1)
+    assert_match /^\d{6}$/, otp
+    refute_equal otp, account.otp_for_confirmation(2)
+  end
+
+
+  test 'confirm' do
+    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    account = u.qv_account
+
+    otp = account.otp_for_confirmation(1)
+    refute account.confirm('000000', 1)
+    refute account.confirm(otp, 2)
+
+    assert account.confirm(otp, 1)
+    assert account.confirmed?
+  end
+
 end

@@ -34,11 +34,6 @@ module QuoVadis
         return
       end
 
-      if QuoVadis.accounts_require_confirmation && !account.confirmed?
-        redirect_to new_confirmation_path, notice: QuoVadis.translate('flash.confirmation.required')
-        return
-      end
-
       # no params[:remember]      => use QuoVadis.session_lifetime
       #    params[:remember] == 0 => use :session
       #    params[:remember] == 1 => use QuoVadis.session_lifetime

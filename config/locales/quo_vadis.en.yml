@@ -15,11 +15,11 @@ en:
         unknown: Either the link has expired or you have already reset your password.
         reset: Your password has been changed and you are logged in.
       confirmation:
-        create: A link to confirm your account has been emailed to you.
-        required: Please confirm your account first.
-        identifier: Sorry, your account could not be found.  Please try again.
-        unknown: Either the link has expired or your account has already been confirmed.
-        confirmed: Thanks for confirming your account.  You are now logged in.
+        unknown: You have already confirmed your account.
+        sent: Please check your email for your confirmation code.
+        expired: Your confirmation code has expired.  Please request another one.
+        invalid: Sorry, the code was incorrect.  Please try again.
+        confirmed: Thanks for confirming your account.
       totp:
         unverified: Sorry, the code was incorrect. Please check your system clock is correct and try again.
         setup: Please set up two factor authentication.

@@ -16,7 +16,13 @@ module QuoVadis
 
 
     def require_password_authentication
-      return if logged_in?
+      if logged_in?
+        if QuoVadis.accounts_require_confirmation && !authenticated_model.qv_account.confirmed?
+          qv.request_confirmation authenticated_model
+          redirect_to quo_vadis.confirm_path
+        end
+        return
+      end
       session[:qv_bookmark] = request.original_fullpath
       redirect_to quo_vadis.login_path, notice: QuoVadis.translate('flash.require_authentication')
     end
@@ -85,15 +91,6 @@ module QuoVadis
     end
 
 
-    def request_confirmation(model)
-      token = QuoVadis::AccountConfirmationToken.generate model.qv_account
-      QuoVadis.deliver :account_confirmation, {email: model.email, url: quo_vadis.confirmation_url(token)}
-      session[:account_pending_confirmation] = model.qv_account.id
-
-      flash[:notice] = QuoVadis.translate 'flash.confirmation.create'
-    end
-
-
     def qv
       @qv_wrapper ||= QuoVadisWrapper.new self
     end
@@ -141,6 +138,19 @@ module QuoVadis
         old_session = rails_session.to_hash
         reset_session
         old_session.each { |k,v| rails_session[k] = v }
+      end
+
+      def request_confirmation(model)
+        rails_session[:account_pending_confirmation] = model.qv_account.id
+
+        expiration = QuoVadis.account_confirmation_token_lifetime.from_now.to_i
+        rails_session[:account_confirmation_expires_at] = expiration
+
+        otp = model.qv_account.otp_for_confirmation(expiration)
+
+        QuoVadis.deliver :account_confirmation, {email: model.email, otp: otp}
+
+        controller.flash[:notice] = QuoVadis.translate 'flash.confirmation.sent'
       end
 
       # Assumes user is logged in.

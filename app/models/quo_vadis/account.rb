@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rotp'
+
 module QuoVadis
   class Account < ActiveRecord::Base
 
@@ -17,6 +19,18 @@ module QuoVadis
 
     after_update :log_identifier_change, if: :saved_change_to_identifier?
     after_update :notify_identifier_change, if: :saved_change_to_identifier?
+
+    scope :unconfirmed, -> { where confirmed_at: nil }
+
+    def otp_for_confirmation(counter)
+      hotp_for_confirmation.at(counter)
+    end
+
+    # If the `otp` is valid for the `counter`, confirms the account and returns truthy.
+    # Otherwise returns falsey.
+    def confirm(otp, counter)
+      hotp_for_confirmation.verify(otp, counter) && confirmed!
+    end
 
     def confirmed?
       confirmed_at.present?
@@ -50,6 +64,11 @@ module QuoVadis
     end
 
     private
+
+    def hotp_for_confirmation
+      key = ROTP::Base32.encode("#{id}-#{Rails.application.secret_key_base}")
+      ROTP::HOTP.new(key)
+    end
 
     def log_identifier_change
       from, to = saved_change_to_identifier

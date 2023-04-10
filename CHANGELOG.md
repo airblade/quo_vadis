@@ -4,6 +4,11 @@
 ## HEAD
 
 
+## Unrelease
+
+* Use OTP instead of link for account confirmation.
+
+
 ## 2.1.11 (14 September 2022)
 
 * Introduce common controller superclass.

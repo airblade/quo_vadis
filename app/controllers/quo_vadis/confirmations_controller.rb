@@ -3,104 +3,64 @@
 module QuoVadis
   class ConfirmationsController < QuoVadisController
 
-    # holding page
-    def index
-      @account = find_pending_account_from_session
-    end
-
-
-    # form for requesting new confirmation email
     def new
+      @account = find_pending_account_from_session
+
+      unless @account
+        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
+      end
     end
 
 
-    # send new confirmation email form submits here
     def create
-      account = QuoVadis.find_account_by_identifier_in_params params
+      @account = find_pending_account_from_session
 
-      unless account
-        redirect_to new_confirmation_path, alert: QuoVadis.translate('flash.confirmation.identifier') and return
+      unless @account
+        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
+        return
       end
 
-      request_confirmation account.model
-      redirect_to confirmations_path
-    end
+      expiry = session[:account_confirmation_expires_at]
 
-
-    # emailed confirmation link points here
-    def edit
-      account = AccountConfirmationToken.find_account params[:token]
-
-      unless account  # expired or already confirmed
-        redirect_to new_confirmation_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
-      end
-    end
-
-
-    # confirm the account (and login)
-    def update
-      account = AccountConfirmationToken.find_account params[:token]
-
-      unless account  # expired or already confirmed
-        redirect_to new_confirmation_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
+      if Time.current.to_i > expiry
+        redirect_to confirm_path, alert: QuoVadis.translate('flash.confirmation.expired')
+        return
       end
 
-      account.confirmed!
-      qv.log account, Log::ACCOUNT_CONFIRMATION
+      confirmed = @account.confirm(params[:otp], expiry)
+
+      if !confirmed
+        redirect_to confirm_path, alert: QuoVadis.translate('flash.confirmation.invalid')
+        return
+      end
+
+      qv.log @account, Log::ACCOUNT_CONFIRMATION
 
       session.delete :account_pending_confirmation
+      session.delete :account_confirmation_expires_at
 
-      # Log in for the duration of the browser session instead of
-      # QuoVadis.session_lifetime.  This is because the application might
-      # offer a remember-me? checkbox on the login page; and since there
-      # is no remember-me checkbox on the confirmation page we act as if
-      # there was but it wasn't ticked.
-      login account.model, true
       redirect_to qv.path_after_signup, notice: QuoVadis.translate('flash.confirmation.confirmed')
     end
 
 
-    def edit_email
-      account = find_pending_account_from_session
-
-      unless account
-        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
-      end
-
-      @email = account.model.email
-    end
-
-
-    def update_email
-      account = find_pending_account_from_session
-
-      unless account
-        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
-      end
-
-      account.model.update email: params[:email]
-
-      request_confirmation account.model
-      redirect_to confirmations_path
-    end
-
-
     def resend
-      account = find_pending_account_from_session
+      @account = find_pending_account_from_session
 
-      unless account
-        redirect_to confirmations_path, alert: QuoVadis.translate('flash.confirmation.unknown') and return
+      unless @account
+        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
       end
 
-      request_confirmation account.model
-      redirect_to confirmations_path
+      qv.request_confirmation @account.model
+      redirect_to confirm_path, notice: QuoVadis.translate('flash.confirmation.sent')
     end
 
 
     private
 
     def find_pending_account_from_session
-      Account.find(session[:account_pending_confirmation]) if session[:account_pending_confirmation]
+      if session[:account_pending_confirmation]
+        Account.unconfirmed.find(session[:account_pending_confirmation])
+      end
     end
 
   end

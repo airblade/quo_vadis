@@ -29,7 +29,7 @@ class MailerTest < ActionMailer::TestCase
   test 'account_confirmation' do
     email = QuoVadis::Mailer.with(
       email: 'Foo <foo@example.com>',
-      url: 'http://example.com/confirm/123abc'
+      otp: 271828
     ).account_confirmation
 
     assert_emails 1 do

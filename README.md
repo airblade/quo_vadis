@@ -23,7 +23,7 @@ Simple to integrate into your application.  The main task is customising the exa
 - Two-factor authentication (2FA) by TOTP with recovery codes as a backup factor.  Can be optional or mandatory.
 - Change password.
 - Reset password.
-- Account confirmation (optional).
+- Account confirmation (a.k.a. email verification) (optional).
 - Tokens (account confirmation, password reset), TOTPs, and recovery codes are all one-time-only.
 - Sessions expired after lifetime or idle time exceeded.
 - Session replaced after any privilege change.
@@ -119,10 +119,6 @@ __`login(model, browser_session = true)`__
 
 To log in a user who has authenticated with a password, call `#login(model, browser_session = true, metadata: {})`.  For the `browser_session` argument, optionally pass `true` to log in for the duration of the browser session, or `false` to log in for `QuoVadis.session_lifetime` (which could be the browser session anyway).  Any metadata are stored in the log entry for the login.
 
-__`request_confirmation(model)`__
-
-This is used to sent an account confirmation email to the user.  See the Account Confirmation feature below for details.
-
 __`authenticated_model`__
 
 Call this to get the authenticated user.  Feel free to alias this to `:current_user` or set it into an `ActiveSupport::CurrentAttributes` class.
@@ -207,60 +203,19 @@ get '/dashboard', as: 'after_login'
 
 ### Sign up with account confirmation
 
-Here's the workflow:
+Follow the steps above for sign-up.
 
-1. [Sign up page] The user fills in their details.
-2. [Your controller] Your code tells QuoVadis to email the user a confirmation link.  The link is valid for `QuoVadis.account_confirmation_token_lifetime`.
-3. [The email] The user clicks the link.
-4. [Account-confirmation confirmation page] The user clicks a button to confirm their account.  (This step is to prevent any link prefetching in the user's mail client from confirming them unintentionally.)
-5. QuoVadis confirms the user's account and logs them in.
+After you have logged in the user and redirected them (to any page which requires being logged in), QuoVadis detects that they need to confirm their account.  QuoVadis emails them a 6-digit confirmation code and redirects them to the confirmation page where they can enter that code.
 
-Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob/master/test/dummy/app/views/sign_ups/new.html.erb)) must include:
+The confirmation code is valid for `QuoVadis.account_confirmation_token_lifetime`.
 
-- a `:password` field;
-- optionally a `:password_confirmation` field;
-- a field for their identifier;
-- an `:email` field if the identifier is not their email.
+Once the user has confirmed their account, they will be redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.  Add whichever works best for you.
 
-In your controller, call `#request_confirmation`:
+You need to write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@otp` variable.  See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
 
-```ruby
-class UsersController < ApplicationController
-  def create
-    @user = User.new user_params
-    if @user.save
-      request_confirmation @user
-      redirect_to quo_vadis.confirmations_path  # a page where you advise the user to check their email
-    else
-      # ...
-    end
-  end
+Now write the confirmation page where the user types in the confirmation code from the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format` and must POST the `otp` field to `confirm_path`.  You can provide a button to send a new confirmation code (perhaps the original email didn't arrive, or the user didn't have time to act on it before it expired) – it should POST to `send_confirmation_path`.
 
-  private
-
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  end
-end
-```
-
-QuoVadis will send the user an email with a link.  Write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@url` variable.
-
-See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
-
-Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/index.html.erb)).  It must be in `app/views/quo_vadis/confirmations/index.html.:format`.
-
-On that page you can show the user the address the email was sent to, enable them to update their email address if they made a mistake on the sign-up form, and provide a button to resend another email directly.  If the sign-up occurred in a different browser session, you can instead link to `new_confirmation_path` where the user can request another email if need be.
-
-Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/edit.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit.html.:format`.
-
-Next, write the page where the user can amend their email address if they made a mistake when signing up ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/edit_email.html.erb)).  It must be in `app/views/quo_vadis/confirmations/edit_email.html.:format`.
-
-Finally, write the page where people can put in their identifier (not their email, unless the identifier is email) again to request another confirmation email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format`.
-
-After the user has confirmed their account, they will be logged in and redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
-
-So add whichever works best for you.
+If the user closes their browser after signing up but before they have confirmed their account, when they next access a logged-in page they will be sent a new confirmation code and redirected to the confirmation page, as if they had just signed up.
 
 
 ### Login

@@ -173,12 +173,25 @@ class LoggingTest < IntegrationTest
 
 
   test 'account.confirmation' do
-    assert_difference 'QuoVadis::Log.count', 2 do
-      token = QuoVadis::AccountConfirmationToken.generate @account
-      put quo_vadis.confirmation_path(token)
+    QuoVadis.accounts_require_confirmation true
+
+    assert_emails 1 do
+      login
+      assert_redirected_to '/articles/secret'
+      follow_redirect!
+      assert_redirected_to '/confirm'
+      follow_redirect!
     end
-    assert_equal QuoVadis::Log::ACCOUNT_CONFIRMATION, QuoVadis::Log.first.action
-    assert_equal QuoVadis::Log::LOGIN_SUCCESS, log.action
+
+    code = ActionMailer::Base.deliveries.last.decoded[%r{\d{6}}, 0]
+
+    assert_difference 'QuoVadis::Log.count' do
+      post quo_vadis.confirm_path(otp: code)
+    end
+
+    assert_equal QuoVadis::Log::ACCOUNT_CONFIRMATION, log.action
+  ensure
+    QuoVadis.accounts_require_confirmation false
   end
 
 
