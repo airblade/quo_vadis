@@ -9,7 +9,7 @@ QuoVadis.configure do
   session_idle_timeout                  :lifetime
   password_reset_token_lifetime         10.minutes
   accounts_require_confirmation         false
-  account_confirmation_token_lifetime   10.minutes
+  account_confirmation_otp_lifetime     10.minutes
   mailer_superclass                     'ApplicationMailer'
   mail_headers                          ({ from: 'Example App <support@example.com>' })
   enqueue_transactional_emails          true

@@ -143,7 +143,7 @@ module QuoVadis
       def request_confirmation(model)
         rails_session[:account_pending_confirmation] = model.qv_account.id
 
-        expiration = QuoVadis.account_confirmation_token_lifetime.from_now.to_i
+        expiration = QuoVadis.account_confirmation_otp_lifetime.from_now.to_i
         rails_session[:account_confirmation_expires_at] = expiration
 
         otp = model.qv_account.otp_for_confirmation(expiration)

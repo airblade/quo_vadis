@@ -74,7 +74,7 @@ class AccountConfirmationTest < IntegrationTest
       follow_redirect!
     end
 
-    travel QuoVadis.account_confirmation_token_lifetime + 1.minute
+    travel QuoVadis.account_confirmation_otp_lifetime + 1.minute
 
     code = extract_code_from_email
     post quo_vadis.confirm_path(otp: code)

@@ -28,7 +28,7 @@ module QuoVadis
     :mailer_superclass,                    # string
     :mail_headers,                         # hash
     :accounts_require_confirmation,        # true | false
-    :account_confirmation_token_lifetime,  # ActiveSupport::Duration | [integer] seconds
+    :account_confirmation_otp_lifetime,    # ActiveSupport::Duration | [integer] seconds
     :enqueue_transactional_emails,         # true | false
     :app_name,                             # string
     :two_factor_authentication_mandatory,  # true | false

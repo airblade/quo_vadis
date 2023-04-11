@@ -207,7 +207,7 @@ Follow the steps above for sign-up.
 
 After you have logged in the user and redirected them (to any page which requires being logged in), QuoVadis detects that they need to confirm their account.  QuoVadis emails them a 6-digit confirmation code and redirects them to the confirmation page where they can enter that code.
 
-The confirmation code is valid for `QuoVadis.account_confirmation_token_lifetime`.
+The confirmation code is valid for `QuoVadis.account_confirmation_otp_lifetime`.
 
 Once the user has confirmed their account, they will be redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.  Add whichever works best for you.
 
@@ -368,7 +368,7 @@ QuoVadis.configure do
   session_idle_timeout                  :lifetime
   password_reset_token_lifetime         10.minutes
   accounts_require_confirmation         false
-  account_confirmation_token_lifetime   10.minutes
+  account_confirmation_otp_lifetime     10.minutes
   mail_headers                          ({ from: 'Example App <support@example.com>' })
   enqueue_transactional_emails          true
   app_name                              Rails.app_class.to_s.deconstantize  # for the TOTP QR code
@@ -417,9 +417,9 @@ __`accounts_require_confirmation`__ (boolean)
 
 Whether new users must confirm their account before they can log in.
 
-__`account_confirmation_token_lifetime`__ (`ActiveSupport::Duration` | integer)
+__`account_confirmation_otp_lifetime`__ (`ActiveSupport::Duration` | integer)
 
-The `Duration` or number of seconds for which an account-confirmation token is valid.
+The `Duration` or number of seconds for which an account-confirmation code is valid.
 
 __`mailer_superclass`__ (string)
 
