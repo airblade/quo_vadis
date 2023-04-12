@@ -24,7 +24,7 @@ Simple to integrate into your application.  The main task is customising the exa
 - Change password.
 - Reset password.
 - Account confirmation (a.k.a. email verification) (optional).
-- Tokens (account confirmation, password reset), TOTPs, and recovery codes are all one-time-only.
+- OTPs (account confirmation, password reset), TOTPs, and recovery codes are all one-time-only.
 - Sessions expired after lifetime or idle time exceeded.
 - Session replaced after any privilege change.
 - View active sessions, log out of any of them.
@@ -215,7 +215,7 @@ You need to write the email view ([example](https://github.com/airblade/quo_vadi
 
 Now write the confirmation page where the user types in the confirmation code from the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format` and must POST the `otp` field to `confirm_path`.  You can provide a button to send a new confirmation code (perhaps the original email didn't arrive, or the user didn't have time to act on it before it expired) – it should POST to `send_confirmation_path`.
 
-If the user closes their browser after signing up but before they have confirmed their account, when they next access a logged-in page they will be sent a new confirmation code and redirected to the confirmation page, as if they had just signed up.
+If the user closes their browser after signing up but before they have confirmed their account, when they next access a page which requires being logged in they will be sent a new confirmation code and redirected to the confirmation page, as if they had just signed up.
 
 
 ### Login
