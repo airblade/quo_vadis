@@ -4,7 +4,7 @@
 ## HEAD
 
 
-## Unreleased
+## 2.2.0 (17 April 2023)
 
 * Improve the readme with internal links and more section headings.
 * Rename `password_reset_token_lifetime` to `password_reset_otp_lifetime`.
