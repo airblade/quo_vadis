@@ -490,6 +490,6 @@ If you don't want a specific flash message at all, give the key an empty value i
 
 ## Intellectual Property
 
-Copyright 2011-2022 Andrew Stewart (boss@airbladesoftware.com).
+Copyright Andrew Stewart (boss@airbladesoftware.com).
 
 Released under the MIT licence.
