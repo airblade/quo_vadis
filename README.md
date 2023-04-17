@@ -86,7 +86,7 @@ end
 
 You can create and update your models as before.  When you want to set a password for the first time, just include `:password` and, optionally, `:password_confirmation` in the attributes to `#create` or `#update`.
 
-If you want to change an existing password, use the Change Password feature (see below).  If you update a model (that already has a password) with a `:password` attribute, it will raise a `QuoVadis::PasswordExistsError`.
+If you want to change an existing password, use the [Change Password](#change-password) feature.  If you update a model (that already has a password) with a `:password` attribute, it will raise a `QuoVadis::PasswordExistsError`.
 
 The minimum password length is configured by `QuoVadis.password_minimum_length` (12 by default).
 
@@ -95,7 +95,7 @@ The minimum password length is configured by `QuoVadis.password_minimum_length` 
 
 You can use these methods in your controllers.
 
-__`require_password_authentication`__
+#### `require_password_authentication`
 
 Use this to restrict actions to password-authenticated users.  It is aliased to `:require_authentication` for convenience.
 
@@ -105,7 +105,7 @@ class FoosController < ApplicationController
 end
 ```
 
-__`require_two_factor_authentication`__
+#### `require_two_factor_authentication`
 
 Use this to restrict actions to users authenticated with both a password and a second factor.  (You do not need to use `:require_password_authentication` for these actions.)
 
@@ -115,17 +115,17 @@ class BarsController < ApplicationController
 end
 ```
 
-__`login(model, browser_session = true)`__
+#### `login(model, browser_session = true, metadata: {})`
 
-To log in a user who has authenticated with a password, call `#login(model, browser_session = true, metadata: {})`.  For the `browser_session` argument, optionally pass `true` to log in for the duration of the browser session, or `false` to log in for `QuoVadis.session_lifetime` (which could be the browser session anyway).  Any metadata are stored in the log entry for the login.
+Use this to log in a user who has authenticated with a password.  For the optional `browser_session` argument, pass `true` to log in for the duration of the browser session, or `false` to log in for `QuoVadis.session_lifetime` (which could be the browser session anyway).  Any metadata are stored in the log entry for the login.
 
-__`authenticated_model`__
+#### `authenticated_model`
 
 Call this to get the authenticated user.  Feel free to alias this to `:current_user` or set it into an `ActiveSupport::CurrentAttributes` class.
 
 Available in controllers and views.
 
-__`logged_in?`__
+#### `logged_in?`
 
 Call this to find out whether a user has authenticated with a password.
 
@@ -171,7 +171,7 @@ Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob
 - a field for their identifier;
 - an `:email` field if the identifier is not their email.
 
-In your controller, use the `#login` method to log in your new user.  The optional second argument sets the length of the session (defaults to the browser session) - see the description above in the Controllers section).
+In your controller, use the [`#login`](#loginmodel-browser_session-%3D-true) method to log in your new user.  The optional second argument specifies for how long the user should be logged in, and any metadata you supply is logged in the audit log.
 
 After logging in the user, redirect them wherever you like.  You can use `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
 
@@ -211,7 +211,7 @@ The confirmation code is valid for `QuoVadis.account_confirmation_otp_lifetime`.
 
 Once the user has confirmed their account, they will be redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.  Add whichever works best for you.
 
-You need to write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@otp` variable.  See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
+You need to write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@otp` variable.  See the [Configuration](#configuration) section for how to set QuoVadis's emails' from addresses, headers, etc.
 
 Now write the confirmation page where the user types in the confirmation code from the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/confirmations/new.html.erb)).  It must be in `app/views/quo_vadis/confirmations/new.html.:format` and must POST the `otp` field to `confirm_path`.  You can provide a button to send a new confirmation code (perhaps the original email didn't arrive, or the user didn't have time to act on it before it expired) – it should POST to `send_confirmation_path`.
 
@@ -299,7 +299,7 @@ The user can reset their password if they lose it and cannot log in.  The flow i
 
 First, write the page where the user requests a password-reset ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.  It must POST the user's identifier (not email, unless the identifier is email) to `password_reset_path`.
 
-Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@otp` variable.  See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
+Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@otp` variable.  See the [Configuration](#configuration) section for how to set QuoVadis's emails' from addresses, headers, etc.
 
 Now write the page where the user types in the reset code from the email and their new password ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format` and must PUT the `otp`, `password`, and `password_confirmation` fields to `password_reset_path`.
 
@@ -377,75 +377,75 @@ You can override any of it with a similarly structured file in `config/initializ
 
 Here are the options in detail:
 
-__`password_minimum_length`__ (integer)
+#### `password_minimum_length` (integer)
 
 The minimum number of characters for a password.
 
-__`mask_ips`__ (boolean)
+#### `mask_ips` (boolean)
 
 Whether to mask the IP address in the sessions list and the audit trail.
 
 Masking means setting the last octet (IPv4) or the last 80 bits (IPv6) to 0.
 
-__`cookie_name`__ (string)
+#### `cookie_name` (string)
 
 The name of the cookie QuoVadis uses to store the session identifier.  The `__Host-` prefix is [recommended](https://developer.mozilla.org/en-US/docs/Web/API/document/cookie) in an SSL environment (but cannot be used in a non-SSL environment).
 
-__`session_lifetime`__ (`:session` | `ActiveSupport::Duration` | integer)
+#### `session_lifetime` (`:session` | `ActiveSupport::Duration` | integer)
 
 The lifetime of a logged-in session.  Use `:session` for the browser session, or a `Duration` or number of seconds.
 
-__`session_lifetime_extend_to_end_of_day`__ (boolean)
+#### `session_lifetime_extend_to_end_of_day` (boolean)
 
 Whether to extend the session's lifetime to the end of the day it will expire on.
 
 Set `true` to reduce the chance of a user being logged out while actively using your application.
 
-__`session_idle_timeout`__ (`:lifetime` | `ActiveSupport::Duration` | integer)
+#### `session_idle_timeout` (`:lifetime` | `ActiveSupport::Duration` | integer)
 
 The logged-in session is expired if the user isn't seen for this `Duration` or number of seconds.  Use `:lifetime` to set the idle timeout to the session's lifetime (i.e. to turn off the idle timeout).
 
-__`password_reset_otp_lifetime`__ (`ActiveSupport::Duration` | integer)
+#### `password_reset_otp_lifetime` (`ActiveSupport::Duration` | integer)
 
 The `Duration` or number of seconds for which a password-reset code is valid.
 
-__`accounts_require_confirmation`__ (boolean)
+#### `accounts_require_confirmation` (boolean)
 
 Whether new users must confirm their account before they can log in.
 
-__`account_confirmation_otp_lifetime`__ (`ActiveSupport::Duration` | integer)
+#### `account_confirmation_otp_lifetime` (`ActiveSupport::Duration` | integer)
 
 The `Duration` or number of seconds for which an account-confirmation code is valid.
 
-__`mailer_superclass`__ (string)
+#### `mailer_superclass` (string)
 
 The class from which QuoVadis's mailer inherits.
 
-__`mail_headers`__ (hash)
+#### `mail_headers` (hash)
 
 Mail headers which QuoVadis' emails should have.
 
-__`enqueue_transactional_emails`__ (boolean)
+#### `enqueue_transactional_emails` (boolean)
 
 Set `true` if account-confirmation and password-reset emails should be queued for later delivery (`#deliver_later`) or `false` if they should be sent inline (`#deliver_now`).
 
-__`app_name`__ (string)
+#### `app_name` (string)
 
 Used in the provisioning URI for the TOTP QR code.
 
-__`two_factor_authentication_mandatory`__ (boolean)
+#### `two_factor_authentication_mandatory` (boolean)
 
 Whether users must set up and use a second authentication factor.
 
-__`mount_point`__ (string)
+#### `mount_point` (string)
 
 The path prefix for QuoVadis's routes.
 
 For example, the default login path is at `/login`.  If you set `mount_point` to `/auth`, the login path would be `/auth/login`.
 
-#### Rails configuration
+### Rails configuration
 
-__Mailer URLs__
+#### Mailer URLs
 
 You must also configure the mailer host so URLs are generated correctly in emails:
 
@@ -453,7 +453,7 @@ You must also configure the mailer host so URLs are generated correctly in email
 config.action_mailer.default_url_options: { host: 'example.com' }
 ```
 
-__Layouts__
+#### Layouts
 
 You can specify QuoVadis's controllers' layouts in a `#to_prepare` block in your application configuration.  For example:
 
@@ -468,7 +468,7 @@ module YourApp
 end
 ```
 
-__Routes__
+#### Routes
 
 You can set up your post-signup, post-authentication, and post-password-change routes.  If you don't, you must have a root route.  For example:
 
