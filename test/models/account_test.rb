@@ -76,4 +76,29 @@ class AccountTest < ActiveSupport::TestCase
     assert account.confirmed?
   end
 
+
+  test 'otp_for_password_reset' do
+    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    account = u.qv_account
+
+    otp = account.otp_for_password_reset(1)
+    assert_match /^\d{6}$/, otp
+    refute_equal otp, account.otp_for_password_reset(2)
+
+    account.password.change('123456789abc', 'secretsecret', 'secretsecret')
+    refute_equal otp, account.otp_for_password_reset(1)
+  end
+
+
+  test 'verify_password_reset' do
+    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    account = u.qv_account
+
+    otp = account.otp_for_password_reset(1)
+    refute account.verify_password_reset('000000', 1)
+    refute account.verify_password_reset(otp, 2)
+
+    assert account.verify_password_reset(otp, 1)
+  end
+
 end

@@ -163,10 +163,19 @@ class LoggingTest < IntegrationTest
 
 
   test 'password.reset' do
-    assert_difference 'QuoVadis::Log.count', 2 do
-      token = QuoVadis::PasswordResetToken.generate @account
-      put quo_vadis.password_reset_path(token, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
+    assert_emails 1 do
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
     end
+
+    assert_difference 'QuoVadis::Log.count', 2 do
+      put quo_vadis.password_reset_path(password: {
+        otp: extract_code_from_email,
+        password: 'secretsecret',
+        password_confirmation: 'secretsecret',
+      })
+    end
+
     assert_equal QuoVadis::Log::PASSWORD_RESET, QuoVadis::Log.first.action
     assert_equal QuoVadis::Log::LOGIN_SUCCESS, log.action
   end
@@ -183,10 +192,8 @@ class LoggingTest < IntegrationTest
       follow_redirect!
     end
 
-    code = ActionMailer::Base.deliveries.last.decoded[%r{\d{6}}, 0]
-
     assert_difference 'QuoVadis::Log.count' do
-      post quo_vadis.confirm_path(otp: code)
+      post quo_vadis.confirm_path(otp: extract_code_from_email)
     end
 
     assert_equal QuoVadis::Log::ACCOUNT_CONFIRMATION, log.action
@@ -252,6 +259,10 @@ class LoggingTest < IntegrationTest
     open_session do |sess|
       sess.post quo_vadis.login_path(email: 'bob@example.com', password: '123456789abc')
     end
+  end
+
+  def extract_code_from_email
+    ActionMailer::Base.deliveries.last.decoded[%r{\d{6}}, 0]
   end
 
 end

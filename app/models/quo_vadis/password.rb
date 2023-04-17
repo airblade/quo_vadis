@@ -46,7 +46,12 @@ module QuoVadis
 
       self.password = new_plaintext
       self.password_confirmation = new_plaintext_confirmation
-      save
+      if save
+        # Logout account's sessions because password has changed.
+        # Assumes model is not logged in.
+        account.sessions.destroy_all
+        true
+      end
     end
 
     private

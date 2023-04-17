@@ -12,7 +12,7 @@ class MailerTest < ActionMailer::TestCase
   test 'reset_password' do
     email = QuoVadis::Mailer.with(
       email: 'Foo <foo@example.com>',
-      url: 'http://example.com/pwd-reset/123abc'
+      otp: '314159'
     ).reset_password
 
     assert_emails 1 do

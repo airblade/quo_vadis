@@ -4,8 +4,9 @@
 ## HEAD
 
 
-## Unrelease
+## Unreleased
 
+* Use OTP instead of link for password reset.
 * Rename `account_confirmation_token_lifetime` to `account_confirmation_otp_lifetime`.
 * Use OTP instead of link for account confirmation.
 

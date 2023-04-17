@@ -4,7 +4,7 @@ module QuoVadis
   class Mailer < QuoVadis.mailer_superclass.constantize
 
     def reset_password
-      @url = params[:url]
+      @otp = params[:otp]
       _mail params[:email], QuoVadis.translate('mailer.password_reset.subject')
     end
 

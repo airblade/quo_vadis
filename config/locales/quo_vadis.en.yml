@@ -11,8 +11,10 @@ en:
       password:
         update: Your password has been changed.
       password_reset:
-        create: A link to change your password has been emailed to you.
-        unknown: Either the link has expired or you have already reset your password.
+        create: Please check your email for your reset code.
+        unknown: Please check your email for your reset code.
+        expired: Your reset code has expired.  Please request another one.
+        invalid: Sorry, the code was incorrect.  Please try again.
         reset: Your password has been changed and you are logged in.
       confirmation:
         unknown: You have already confirmed your account.

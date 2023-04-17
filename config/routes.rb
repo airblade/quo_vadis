@@ -11,9 +11,7 @@ QuoVadis::Engine.routes.draw do
 
   resource  :password, only: [:edit, :update]
 
-  resources :password_resets, only: [:new, :create, :index]
-  get '/pwd-reset/:token', to: 'password_resets#edit', as: 'password_reset'
-  put '/pwd-reset/:token', to: 'password_resets#update'
+  resource :password_reset, only: [:new, :create, :edit, :update]
 
   get  '/confirm', to: 'confirmations#new'
   post '/confirm', to: 'confirmations#create'

@@ -32,6 +32,14 @@ module QuoVadis
       hotp_for_confirmation.verify(otp, counter) && confirmed!
     end
 
+    def otp_for_password_reset(counter)
+      hotp_for_password_reset.at(counter)
+    end
+
+    def verify_password_reset(otp, counter)
+      hotp_for_password_reset.verify(otp, counter)
+    end
+
     def confirmed?
       confirmed_at.present?
     end
@@ -67,6 +75,11 @@ module QuoVadis
 
     def hotp_for_confirmation
       key = ROTP::Base32.encode("#{id}-#{Rails.application.secret_key_base}")
+      ROTP::HOTP.new(key)
+    end
+
+    def hotp_for_password_reset
+      key = ROTP::Base32.encode("#{id}-#{password.password_digest}")
       ROTP::HOTP.new(key)
     end
 

@@ -1,6 +1,18 @@
 <h1>Reset password</h1>
 
-<%= form_with model: @password, url: password_reset_path(params[:token]), method: :put do |f| %>
+<%= form_with model: @password, url: password_reset_path, method: :put do |f| %>
+  <p>
+    <%= f.label :otp, 'Your password reset code' %>
+    <%= f.text_field :otp,
+      value: params.dig(:password, :otp),
+      inputmode: 'numeric',
+      pattern: '\d*',
+      autofocus: true,
+      autocomplete: 'one-time-password',
+      maxlength: 6 %>
+  </p>
+
+
   <p>
     <%= f.label :password %>
     <%= f.password_field :password, autocomplete: 'new-password' %>

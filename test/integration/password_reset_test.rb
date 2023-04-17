@@ -14,102 +14,144 @@ class PasswordResetTest < IntegrationTest
 
 
   test 'unknown identifier' do
-    post quo_vadis.password_resets_path(email: 'foo@example.com')
-    assert_redirected_to quo_vadis.password_resets_path
-    assert_equal 'A link to change your password has been emailed to you.', flash[:notice]
+    post quo_vadis.password_reset_path(email: 'foo@example.com')
+    assert_redirected_to quo_vadis.edit_password_reset_path
+    assert_equal 'Please check your email for your reset code.', flash[:notice]
   end
 
 
   test 'known identifier' do
     assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
     end
-    assert_redirected_to quo_vadis.password_resets_path
-    assert_equal 'A link to change your password has been emailed to you.', flash[:notice]
+    assert_redirected_to quo_vadis.edit_password_reset_path
+    assert_equal 'Please check your email for your reset code.', flash[:notice]
   end
 
 
-  test 'click link in email' do
+  test 'reset code expired' do
     assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
     end
-    get extract_url_from_email
-    assert_response :success
-  end
 
-
-  test 'expired link' do
-    assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
-    end
     travel QuoVadis.password_reset_token_lifetime + 1.minute
-    get extract_url_from_email
+
+    # type in reset code from email
+    code = extract_code_from_email
+    put quo_vadis.password_reset_path(password: {
+      otp: code,
+      password: 'secretsecret',
+      password_confirmation: 'secretsecret',
+    })
+
+    assert_equal 'Your reset code has expired.  Please request another one.', flash[:alert]
     assert_redirected_to quo_vadis.new_password_reset_path
-    assert_equal 'Either the link has expired or you have already reset your password.', flash[:alert]
   end
 
 
-  test 'link cannot be reused' do
+  test 'reset code incorrect' do
     assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
     end
-    put quo_vadis.password_reset_path(extract_token_from_email, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
-    assert controller.logged_in?
 
-    get quo_vadis.password_reset_url(extract_token_from_email)
+    # type in reset code from email
+    put quo_vadis.password_reset_path(password: {
+      otp: '000000',
+      password: 'secretsecret',
+      password_confirmation: 'secretsecret',
+    })
+
     assert_redirected_to quo_vadis.new_password_reset_path
-    assert_equal 'Either the link has expired or you have already reset your password.', flash[:alert]
+    assert_equal 'Sorry, the code was incorrect.  Please try again.', flash[:alert]
   end
 
 
   test 'new password invalid' do
-    digest = @user.qv_account.password.password_digest
-
     assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
     end
 
+    # type in reset code from email
+    code = extract_code_from_email
     assert_no_difference 'QuoVadis::Session.count' do
-      put quo_vadis.password_reset_path(extract_token_from_email, password: {password: '', password_confirmation: ''})
+      put quo_vadis.password_reset_path(password: {
+        otp: code,
+        password: 'secret',
+        password_confirmation: 'secret',
+      })
     end
 
-    assert_equal digest, @user.qv_account.password.reload.password_digest
-    assert_response :unprocessable_entity
-    assert_equal quo_vadis.password_reset_path(extract_token_from_email), path
+    assert_response 422
+    assert_nil flash[:notice]
+    refute controller.logged_in?
   end
 
 
   test 'new password valid' do
-    QuoVadis.two_factor_authentication_mandatory false
-
-    digest = @user.qv_account.password.password_digest
-
-    desktop = session_login
     phone = session_login
+    tablet = session_login
 
     get articles_url
     refute controller.logged_in?
 
     assert_emails 1 do
-      post quo_vadis.password_resets_path(email: 'bob@example.com')
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
     end
 
-    assert_difference 'QuoVadis::Session.count', (- 2 + 1) do
-      put quo_vadis.password_reset_path(extract_token_from_email, password: {password: 'xxxxxxxxxxxx', password_confirmation: 'xxxxxxxxxxxx'})
+    # type in reset code from email
+    code = extract_code_from_email
+    # deletes phone and tablet sessions and creates new session
+    assert_difference 'QuoVadis::Session.count', -1 do
+      put quo_vadis.password_reset_path(password: {
+        otp: code,
+        password: 'secretsecret',
+        password_confirmation: 'secretsecret',
+      })
     end
 
+    assert_equal 'Your password has been changed and you are logged in.', flash[:notice]
     assert controller.logged_in?
-
-    desktop.get articles_url
-    refute desktop.controller.logged_in?  # NOTE: flaky; if this fails, re-migrate the database.
+    assert_redirected_to '/articles/secret'
 
     phone.get articles_url
     refute phone.controller.logged_in?
 
-    refute_equal digest, @user.qv_account.password.reload.password_digest
+    tablet.get articles_url
+    refute tablet.controller.logged_in?
+  end
 
-    assert_redirected_to '/articles/secret'
-    assert_equal 'Your password has been changed and you are logged in.', flash[:notice]
+
+  test 'reset code cannot be reused' do
+    assert_emails 1 do
+      post quo_vadis.password_reset_path(email: 'bob@example.com')
+      follow_redirect!
+    end
+
+    # type in reset code from email
+    code = extract_code_from_email
+    put quo_vadis.password_reset_path(password: {
+      otp: code,
+      password: 'secretsecret',
+      password_confirmation: 'secretsecret',
+    })
+
+    # The password-reset process is now finished.
+    # Test what happens if reset code is resubmitted with a different password.
+
+    put quo_vadis.password_reset_path(password: {
+      otp: code,
+      password: 'foobarfoobar',
+      password_confirmation: 'foobarfoobar',
+    })
+
+    assert_redirected_to quo_vadis.new_password_reset_path
+    assert_nil flash[:alert]
+    refute @user.qv_account.password.authenticate('foobarfoobar')
+    assert @user.qv_account.password.authenticate('123456789abc')
   end
 
 
@@ -121,16 +163,9 @@ class PasswordResetTest < IntegrationTest
     end
   end
 
-  def extract_url_from_email
-    ActionMailer::Base.deliveries.last.decoded[%r{^http://.*$}, 0]
-  end
 
-  def extract_path_from_email
-    extract_url_from_email.sub 'http://www.example.com', ''
-  end
-
-  def extract_token_from_email
-    extract_url_from_email[%r{/([^/]*)$}, 1]
+  def extract_code_from_email
+    ActionMailer::Base.deliveries.last.decoded[%r{\d{6}}, 0]
   end
 
 end

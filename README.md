@@ -289,30 +289,26 @@ A successful password change logs out any other sessions the user has (e.g. on o
 
 ### Reset password
 
-The user can reset their password if they lose it.  The flow is:
+The user can reset their password if they lose it and cannot log in.  The flow is:
 
 1. [Request password-reset page] User enters their identifier (not their email unless the identifier is email).
-2. QuoVadis emails the user a link.  The link is valid for `QuoVadis.password_reset_token_lifetime`.
-3. [The email] The user clicks the link.
-4. [Password-reset confirmation page] The user enters their new password and clicks a button.
+2. QuoVadis emails the user a 6-digit reset code, which is valid for `QuoVadis.password_reset_token_lifetime`, and redirects to the password-reset page.
+3. [The email] The user reads the code.
+4. [Password-reset page] The user enters the 6-digt code and their new password and clicks the save button.
 5. QuoVadis sets the user's password and logs them in.
 
-First, write the page where the user requests a password-reset ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.  Note it must capture the user's identifier (not email, unless the identifier is email).
+First, write the page where the user requests a password-reset ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/new.html.erb)).  It must be in `app/views/quo_vadis/password_resets/new.html.:format`.  It must POST the user's identifier (not email, unless the identifier is email) to `password_reset_path`.
 
-See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
+Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@otp` variable.  See the Configuration section below for how to set QuoVadis's emails' from addresses, headers, etc.
 
-Now write the page to where the user is redirected while they wait for the email ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/index.html.erb)).  It must be in `app/views/quo_vadis/password_resets/index.html.:format`.
-
-It's a good idea for that page to link to `new_password_reset_path` where the user can request another email if need be.
-
-Now write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/reset_password.text.erb)).  It must be in `app/views/quo_vadis/mailer/reset_password.{text,html}.erb` and output the `@url` variable.
-
-Next, write the page to which the link in the email points ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format`.
+Now write the page where the user types in the reset code from the email and their new password ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/password_resets/edit.html.erb)).  It must be in `app/views/quo_vadis/password_resets/edit.html.:format` and must PUT the `otp`, `password`, and `password_confirmation` fields to `password_reset_path`.
 
 After the user has reset their password, they will be logged in and redirected to the first of these that exists:
 
 - a route named `:after_login`;
 - your root route.
+
+When the user resets their password, they are logged out of any other sessions they may have, for example on other devices.
 
 
 ### Sessions
