@@ -171,7 +171,7 @@ Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob
 - a field for their identifier;
 - an `:email` field if the identifier is not their email.
 
-In your controller, use the [`#login`](#loginmodel-browser_session-%3D-true) method to log in your new user.  The optional second argument specifies for how long the user should be logged in, and any metadata you supply is logged in the audit log.
+In your controller, use the [`#login`](#loginmodel-browser_session--true-metadata-) method to log in your new user.  The optional second argument specifies for how long the user should be logged in, and any metadata you supply is logged in the audit log.
 
 After logging in the user, redirect them wherever you like.  You can use `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
 
