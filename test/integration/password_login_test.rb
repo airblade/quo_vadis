@@ -105,7 +105,7 @@ class PasswordLoginTest < IntegrationTest
     travel 5.days
 
     get articles_path
-    assert controller.logged_in?  # flakey
+    assert controller.logged_in?
 
     travel 3.days
 

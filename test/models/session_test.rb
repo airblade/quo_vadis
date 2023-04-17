@@ -2,6 +2,10 @@ require 'test_helper'
 
 class SessionTest < ActiveSupport::TestCase
 
+  teardown do
+    QuoVadis.session_idle_timeout :lifetime
+  end
+
   test 'expired?' do
     refute QuoVadis::Session.new.expired?
     assert QuoVadis::Session.new(lifetime_expires_at: 1.day.ago).expired?
