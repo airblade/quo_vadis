@@ -35,7 +35,7 @@ class PasswordResetTest < IntegrationTest
       follow_redirect!
     end
 
-    travel QuoVadis.password_reset_token_lifetime + 1.minute
+    travel QuoVadis.password_reset_otp_lifetime + 1.minute
 
     # type in reset code from email
     code = extract_code_from_email

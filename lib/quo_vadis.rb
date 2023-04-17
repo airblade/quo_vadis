@@ -24,7 +24,7 @@ module QuoVadis
     :session_lifetime,                     # :session | ActiveSupport::Duration | [integer] seconds
     :session_lifetime_extend_to_end_of_day,# true | false
     :session_idle_timeout,                 # :lifetime | ActiveSupport::Duration | [integer] seconds
-    :password_reset_token_lifetime,        # ActiveSupport::Duration | [integer] seconds
+    :password_reset_otp_lifetime,          # ActiveSupport::Duration | [integer] seconds
     :mailer_superclass,                    # string
     :mail_headers,                         # hash
     :accounts_require_confirmation,        # true | false

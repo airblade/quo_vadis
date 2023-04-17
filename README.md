@@ -292,7 +292,7 @@ A successful password change logs out any other sessions the user has (e.g. on o
 The user can reset their password if they lose it and cannot log in.  The flow is:
 
 1. [Request password-reset page] User enters their identifier (not their email unless the identifier is email).
-2. QuoVadis emails the user a 6-digit reset code, which is valid for `QuoVadis.password_reset_token_lifetime`, and redirects to the password-reset page.
+2. QuoVadis emails the user a 6-digit reset code, which is valid for `QuoVadis.password_reset_otp_lifetime`, and redirects to the password-reset page.
 3. [The email] The user reads the code.
 4. [Password-reset page] The user enters the 6-digt code and their new password and clicks the save button.
 5. QuoVadis sets the user's password and logs them in.
@@ -362,7 +362,7 @@ QuoVadis.configure do
   session_lifetime                      :session
   session_lifetime_extend_to_end_of_day false
   session_idle_timeout                  :lifetime
-  password_reset_token_lifetime         10.minutes
+  password_reset_otp_lifetime           10.minutes
   accounts_require_confirmation         false
   account_confirmation_otp_lifetime     10.minutes
   mail_headers                          ({ from: 'Example App <support@example.com>' })
@@ -405,9 +405,9 @@ __`session_idle_timeout`__ (`:lifetime` | `ActiveSupport::Duration` | integer)
 
 The logged-in session is expired if the user isn't seen for this `Duration` or number of seconds.  Use `:lifetime` to set the idle timeout to the session's lifetime (i.e. to turn off the idle timeout).
 
-__`password_reset_token_lifetime`__ (`ActiveSupport::Duration` | integer)
+__`password_reset_otp_lifetime`__ (`ActiveSupport::Duration` | integer)
 
-The `Duration` or number of seconds for which a password-reset token is valid.
+The `Duration` or number of seconds for which a password-reset code is valid.
 
 __`accounts_require_confirmation`__ (boolean)
 

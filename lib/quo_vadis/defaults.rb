@@ -7,7 +7,7 @@ QuoVadis.configure do
   session_lifetime                      :session
   session_lifetime_extend_to_end_of_day false
   session_idle_timeout                  :lifetime
-  password_reset_token_lifetime         10.minutes
+  password_reset_otp_lifetime           10.minutes
   accounts_require_confirmation         false
   account_confirmation_otp_lifetime     10.minutes
   mailer_superclass                     'ApplicationMailer'

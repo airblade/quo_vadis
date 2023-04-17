@@ -33,7 +33,7 @@ module QuoVadis
       if account
         session[:account_resetting_password] = account.id
 
-        expiration = QuoVadis.password_reset_token_lifetime.from_now.to_i
+        expiration = QuoVadis.password_reset_otp_lifetime.from_now.to_i
         session[:password_reset_expires_at] = expiration
 
         otp = account.otp_for_password_reset(expiration)
