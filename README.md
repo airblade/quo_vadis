@@ -238,6 +238,15 @@ After authenticating the user will be redirected to the first of these that exis
 - your root route.
 
 
+### Logout
+
+Send a DELETE request to `quo_vadis.logout_path`.  For example:
+
+```ruby
+button_to 'Log out', quo_vadis.logout_path, method: :delete
+```
+
+
 ### Two-factor authentication (2FA) or Two-step verification (2SV)
 
 If you do not want 2FA at all, set `QuoVadis.two_factor_authentication_mandatory false` in your configuration and skip the rest of this section.

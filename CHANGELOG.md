@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Document how to log out.
+
 
 ## 2.2.0 (17 April 2023)
 
