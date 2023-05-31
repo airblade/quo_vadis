@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Use 'email' type for email input fields.
 * Document how to log out.
 
 
