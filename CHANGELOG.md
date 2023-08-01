@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.2.1 (1 August 2023)
+
 * Do not clear application session data on logout.
 * Use 'email' type for email input fields.
 * Document how to log out.
