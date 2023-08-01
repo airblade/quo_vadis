@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Do not clear application session data on logout.
 * Use 'email' type for email input fields.
 * Document how to log out.
 

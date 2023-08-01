@@ -246,6 +246,31 @@ Send a DELETE request to `quo_vadis.logout_path`.  For example:
 button_to 'Log out', quo_vadis.logout_path, method: :delete
 ```
 
+Note you are responsible for removing any application session data you want removed.  To do so, subclass `QuoVadis::SessionsController` and override the `destroy` method:
+
+````ruby
+# app/controllers/custom_sessions_controller.rb
+class CustomSessionsController < QuoVadis::SessionsController
+  def destroy
+    reset_session
+    super
+  end
+end
+```
+
+Add a route:
+
+```ruby
+# config/routes.rb
+delete 'logout', to: 'custom_sessions#destroy'
+```
+
+And then point your log out button at your custom action:
+
+```ruby
+button_to 'Log out', main_app.logout_path, method: :delete
+```
+
 
 ### Two-factor authentication (2FA) or Two-step verification (2SV)
 

@@ -190,7 +190,7 @@ module QuoVadis
       def logout
         session&.destroy
         clear_session_id
-        reset_session
+        prevent_rails_session_fixation
         controller.instance_variable_set :@authenticated_model, nil
       end
 

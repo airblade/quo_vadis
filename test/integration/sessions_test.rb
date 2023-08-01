@@ -69,6 +69,22 @@ class SessionsTest < IntegrationTest
   end
 
 
+  test 'non-authentication session data is not removed on logout' do
+    desktop = login
+    session_id = desktop.session.id
+
+    desktop.get secret_articles_path
+    assert_equal 'bar', desktop.session[:foo]
+
+    desktop.delete quo_vadis.logout_path
+    refute desktop.controller.logged_in?
+
+    desktop.get articles_path
+    assert_equal 'bar', desktop.session[:foo]
+    refute_equal session_id, desktop.session.id
+  end
+
+
   private
 
   # starts a new rails session and logs in

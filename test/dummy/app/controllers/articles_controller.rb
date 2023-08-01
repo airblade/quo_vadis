@@ -6,6 +6,7 @@ class ArticlesController < ApplicationController
   end
 
   def secret
+    session[:foo] = 'bar'
   end
 
   def also_secret
