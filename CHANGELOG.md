@@ -3,10 +3,12 @@
 
 ## HEAD
 
+* Add issue numbers to changelog entries.
+
 
 ## 2.2.1 (1 August 2023)
 
-* Do not clear application session data on logout.
+* Do not clear application session data on logout (#34).
 * Use 'email' type for email input fields.
 * Document how to log out.
 
@@ -14,10 +16,10 @@
 ## 2.2.0 (17 April 2023)
 
 * Improve the readme with internal links and more section headings.
-* Rename `password_reset_token_lifetime` to `password_reset_otp_lifetime`.
-* Use OTP instead of link for password reset.
-* Rename `account_confirmation_token_lifetime` to `account_confirmation_otp_lifetime`.
-* Use OTP instead of link for account confirmation.
+* Rename `password_reset_token_lifetime` to `password_reset_otp_lifetime` (#28).
+* Use OTP instead of link for password reset (#28).
+* Rename `account_confirmation_token_lifetime` to `account_confirmation_otp_lifetime` (#28).
+* Use OTP instead of link for account confirmation (#28).
 
 
 ## 2.1.11 (14 September 2022)
@@ -27,18 +29,18 @@
 
 ## 2.1.10 (14 September 2022)
 
-* Enable configuration of mailer superclass.
+* Enable configuration of mailer superclass (#30).
 
 
 ## 2.1.9 (13 September 2022)
 
-* Enable code to be run after sign up.
+* Enable code to be run after sign up (#29).
 
 
 ## 2.1.8 (18 June 2022)
 
-* Extract convenience method for has authentication account.
-* Only authenticating models react to email change.
+* Extract convenience method for has authentication account (#26).
+* Only authenticating models react to email change (#26).
 
 
 ## 2.1.7 (30 May 2022)
@@ -54,7 +56,7 @@
 
 ## 2.1.5 (27 May 2022)
 
-* Order sessions list and display more information.
+* Order sessions list and display more information (#25).
 * Set status 303 See Other on destroy redirects.
 * Streamline bundler instructions.
 
@@ -66,7 +68,7 @@
 
 ## 2.1.3 (30 September 2021)
 
-* Pass IP and timestamp as parameters to mailer.
+* Pass IP and timestamp as parameters to mailer (#24).
 
 
 ## 2.1.2 (30 September 2021)
@@ -78,8 +80,8 @@
 
 * Remove unnecessary route names.
 * Add user revocation.
-* Ensure password is only updated via #change or #reset.
-* Move views into gem's app/views/ directory.
+* Ensure password is only updated via #change or #reset (#15).
+* Move views into gem's app/views/ directory (#22).
 
 
 ## 2.1.0 (25 June 2021)
@@ -97,8 +99,8 @@
 
 ## 2.0.2 (24 May 2021)
 
-* Account confirmation: enable updating of email address.
-* Account confirmation: enable direct resending of email.
+* Account confirmation: enable updating of email address (#21).
+* Account confirmation: enable direct resending of email (#21).
 * Log unknown identifier in metadata.
 
 
