@@ -248,7 +248,7 @@ button_to 'Log out', quo_vadis.logout_path, method: :delete
 
 Note you are responsible for removing any application session data you want removed.  To do so, subclass `QuoVadis::SessionsController` and override the `destroy` method:
 
-````ruby
+```ruby
 # app/controllers/custom_sessions_controller.rb
 class CustomSessionsController < QuoVadis::SessionsController
   def destroy
