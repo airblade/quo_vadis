@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Fix login success-flash to not be reset (37).
 * Add issue numbers to changelog entries.
 
 

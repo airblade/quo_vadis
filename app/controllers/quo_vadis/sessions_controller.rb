@@ -39,9 +39,9 @@ module QuoVadis
       #    params[:remember] == 1 => use QuoVadis.session_lifetime
       browser_session = params[:remember] == '0'
 
-      flash[:notice] = QuoVadis.translate 'flash.login.success'
-
       login account.model, browser_session
+
+      flash[:notice] = QuoVadis.translate 'flash.login.success'
 
       redirect_to qv.path_after_authentication
     end
