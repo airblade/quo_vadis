@@ -3,7 +3,8 @@
 
 ## HEAD
 
-* Fix login success-flash to not be reset (37).
+* Do not update last activity time for ActiveStorage (#23).
+* Fix login success-flash to not be reset (#37).
 * Add issue numbers to changelog entries.
 
 

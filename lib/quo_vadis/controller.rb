@@ -11,7 +11,13 @@ module QuoVadis
       # Remember the last activity time so we can timeout idle sessions.
       # This has to be done after that timestamp is checked (in `#authenticated_model`)
       # otherwise sessions could never look idle.
-      base.after_action { |controller| controller.qv.touch_session_last_seen_at }
+      #
+      # Ignores ActiveStorage requests.
+      base.after_action { |controller|
+        if !defined?(::ActiveStorage) || !controller.class.module_parents.include?(::ActiveStorage)
+          controller.qv.touch_session_last_seen_at
+        end
+      }
     end
 
 
