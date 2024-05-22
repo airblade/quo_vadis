@@ -12,6 +12,7 @@ Simple to integrate into your application.  The main task is customising the exa
 ### General features
 
 - Works with any model, e.g. `User` or `Person`.
+- Works with multiple models, e.g. `User` and `Admin`.
 - Works with any identifier, e.g. `:username` or `:email`.
 - Minimal footprint in your models and controllers.
 - Does not touch your existing database tables.
