@@ -4,6 +4,15 @@ module QuoVadis
   module Controller
 
     def self.included(base)
+      if Rails.env.test?
+        base.before_action {
+          if params[:login]
+            model = GlobalID::Locator.locate(params.delete(:login))
+            login model
+          end
+        }
+      end
+
       base.before_action { CurrentRequestDetails.request = request }
 
       base.helper_method :authenticated_model, :logged_in?

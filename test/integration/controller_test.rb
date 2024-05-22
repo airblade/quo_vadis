@@ -14,6 +14,14 @@ class ControllerTest < IntegrationTest
   end
 
 
+  test 'shortcut login' do
+    get secret_articles_path(login: User.first.to_global_id)
+
+    assert_response :success
+    assert_equal secret_articles_path, path
+  end
+
+
   test 'require_authentication when not logged in' do
     get secret_articles_path
 

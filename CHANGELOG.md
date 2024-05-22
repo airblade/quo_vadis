@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Add login shortcut for speedier tests.
+
 
 ## 2.2.2 (30 April 2024)
 

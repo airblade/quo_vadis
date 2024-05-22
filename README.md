@@ -32,6 +32,10 @@ Simple to integrate into your application.  The main task is customising the exa
 - Email-notifications of updates to authentication details.
 - Audit trail.
 
+### Testing
+
+- Can shortcut logging in for speedier tests.
+
 
 ## Installation
 
@@ -383,6 +387,22 @@ They must be in `app/views/quo_vadis/mailer/NAME.{text,html}.erb`.
 ### Revocation
 
 You can revoke a user's access by calling `#revoke_authentication_credentials` on the model instance.  This deletes the user's password, TOTP credential, recovery codes, and active sessions.  Their authentication logs, or audit trail, are preserved.
+
+
+## Shortcut logging in for functional, integration, and system tests
+
+Instead of going through your login page to log in before every test, you can tell QuoVadis which model to authenticate as when visiting the first URL in your test.
+
+Use a `login` param pointing to your model's global ID.  Note that the model must be able to log in normally, i.e. it must have a password (and therefore a `qv_account`).
+
+For example:
+
+```ruby
+@user = User.create(email: '...', password: '...')
+visit dashboard_path(login: @user.to_global_id)
+```
+
+This only works in the test environment.
 
 
 ## Configuration
