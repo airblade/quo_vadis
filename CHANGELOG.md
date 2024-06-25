@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.2.4 (25 June 2024)
+
 * Add logged-{in, out} routing constraints.
 
 
