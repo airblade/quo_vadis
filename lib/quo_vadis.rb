@@ -51,7 +51,12 @@ module QuoVadis
 
     def identifier_value_in_params(params)
       identifier = detect_identifier params.keys
-      params[identifier]
+      value = params[identifier]
+
+      return value unless defined?(ActiveRecord::Normalization)
+
+      klass = model_of(identifier.to_sym).constantize
+      klass.normalize_value_for(identifier.to_sym, value)
     end
 
     # model - string class name, e.g. 'User'
@@ -94,8 +99,14 @@ module QuoVadis
 
     private
 
+    # key - model name, e.g. "User"
+    # value - identifier, e.g. :email
     def models
       @models ||= {}
+    end
+
+    def model_of(identifier)
+      models.rassoc(identifier).first
     end
 
     def detect_identifier(candidates)

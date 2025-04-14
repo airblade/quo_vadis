@@ -29,14 +29,15 @@ class ModelTest < ActiveSupport::TestCase
 
 
   test 'copies model identifier to account' do
-    email = 'bob@example.com'
+    email = ' Bob@example.com  '
     u = User.create! name: 'bob', email: email, password: '123456789abc'
-    assert_equal email, u.qv_account.identifier
+    # email is normalized
+    assert_equal "bob@example.com", u.qv_account.identifier
 
-    email = 'b@foo.com'
+    email = 'b@FOO.com  '
     u.update email: email
     u.qv_account.reload
-    assert_equal email, u.qv_account.identifier
+    assert_equal "b@foo.com", u.qv_account.identifier
 
     u.update name: nil, email: 'xyz'  # nil name is invalid
     u.qv_account.reload

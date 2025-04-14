@@ -35,9 +35,9 @@ class QuoVadisTest < ActiveSupport::TestCase
 
 
   test 'find_account_by_identifier_in_params' do
-    u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    u = User.create! name: 'bob', email: ' Bob@example.com ', password: '123456789abc'
     assert_equal u.qv_account,
-      QuoVadis.find_account_by_identifier_in_params({'foo' => 'bar', 'email' => 'bob@example.com', 'commit' => 'Save'})
+      QuoVadis.find_account_by_identifier_in_params({'foo' => 'bar', 'email' => '  BOB@example.com ', 'commit' => 'Save'})
   end
 
 end
