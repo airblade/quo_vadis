@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.2.5 (14 April 2025)
+
 * Normalise identifier value for lookup.
 * Tweak summary of project.
 
