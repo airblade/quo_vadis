@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Andy Stewart']
   spec.email         = ['boss@airbladesoftware.com']
 
-  spec.summary       = 'Multifactor authentication for Rails 6 and 7.'
+  spec.summary       = 'Multifactor authentication for Rails.'
   spec.homepage      = 'https://github.com/airblade/quo_vadis'
   spec.license       = 'MIT'
 

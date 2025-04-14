@@ -4,6 +4,7 @@
 ## HEAD
 
 * Normalise identifier value for lookup.
+* Tweak summary of project.
 
 
 ## 2.2.4 (25 June 2024)

@@ -1,6 +1,6 @@
 # Quo Vadis
 
-Multifactor authentication for your Rails app (Rails 7 and Rails 6).
+Multifactor authentication for your Rails app (backwards-compatible to Rails 6).
 
 Designed in accordance with the [OWASP Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) and relevant [OWASP Cheatsheets](https://cheatsheetseries.owasp.org).
 
