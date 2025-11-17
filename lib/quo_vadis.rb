@@ -53,7 +53,7 @@ module QuoVadis
       identifier = detect_identifier params.keys
       value = params[identifier]
 
-      return value unless defined?(ActiveRecord::Normalization)
+      return value unless ApplicationRecord.respond_to? :normalize_value_for
 
       klass = model_of(identifier.to_sym).constantize
       klass.normalize_value_for(identifier.to_sym, value)

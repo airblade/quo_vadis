@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Feature-detect method rather than module for normalisation.
 * Fix Password#change_or_reset_called? for Ruby 3.4.
 
 
