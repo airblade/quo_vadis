@@ -7,12 +7,14 @@ module QuoVadis
     has_secure_password
 
     validates_length_of :password, minimum: QuoVadis.password_minimum_length, allow_blank: true
-    validate :password_updated_legitimately, on: :update
+    validate :permitted_update, on: :update
 
     attr_accessor :new_password
 
 
     def change(current_plaintext, new_plaintext, new_plaintext_confirmation)
+      permit_password_update
+
       unless authenticate current_plaintext
         errors.add :password, :incorrect
         return false
@@ -38,6 +40,8 @@ module QuoVadis
 
 
     def reset(new_plaintext, new_plaintext_confirmation)
+      permit_password_update
+
       # has_secure_password ignores empty passwords ("") on update so reject them here.
       if new_plaintext.empty?
         errors.add :password, :blank
@@ -56,23 +60,19 @@ module QuoVadis
 
     private
 
-    def password_updated_legitimately
-      return unless password_digest_changed?
-
-      unless change_or_reset_called?
-        errors.add :password, 'must be updated via #change or #reset'
-      end
+    def permit_password_update
+      @permit_password_update = true
     end
 
-    def change_or_reset_called?
-      # Thread::Backtrace::Location#label changed in Ruby 3.4
-      caller_locations.any? { |loc|
-        if loc.respond_to? :base_label
-          ["QuoVadis::Password#change", "QuoVadis::Password#reset"].include?(loc.label)
-        else
-          ['change', 'reset'].include?(loc.label) && Pathname.new(loc.path).basename.to_s == 'password.rb'
-        end
-      }
+    def permit_password_update?
+      @permit_password_update
+    end
+
+    def permitted_update
+      return unless password_digest_changed?
+      return if permit_password_update?
+
+      errors.add :password, 'must be updated via #change or #reset'
     end
   end
 end
