@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.2.6 (17 November 2025)
+
 * Make permitting of password updates explicit.
 * Feature-detect method rather than module for normalisation.
 
