@@ -17,7 +17,7 @@ class AccountTest < ActiveSupport::TestCase
     p = Person.create! username: 'bob', email: 'bob@example.com', password: 'secretsecret'
     assert_enqueued_email_with QuoVadis::Mailer,
       :identifier_change_notification,
-      args: {email: 'bob@example.com', identifier: 'username', ip: nil, timestamp: Time.now} do
+      params: {email: 'bob@example.com', identifier: 'username', ip: nil, timestamp: Time.now} do
       assert_enqueued_emails 1 do
         p.update username: 'robert@example.com'
       end
@@ -30,7 +30,7 @@ class AccountTest < ActiveSupport::TestCase
     u = User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
     assert_enqueued_email_with QuoVadis::Mailer,
       :email_change_notification,
-      args: {email: 'bob@example.com', ip: nil, timestamp: Time.now} do
+      params: {email: 'bob@example.com', ip: nil, timestamp: Time.now} do
       assert_enqueued_emails 1 do
         u.update email: 'robert@example.com'
       end
