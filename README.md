@@ -59,6 +59,8 @@ Finally, copy the example views across:
 rails generate quo_vadis:install
 ```
 
+You may find that you need to eager load your code in development so that your model's / models' `#authenticates` call(s) executes straightaway.  This method registers your model(s) with QuoVadis, which needs to happen before you can do any authentication-related things such as reset your password.
+
 
 ## Usage
 
