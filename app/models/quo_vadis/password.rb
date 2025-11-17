@@ -65,8 +65,13 @@ module QuoVadis
     end
 
     def change_or_reset_called?
+      # Thread::Backtrace::Location#label changed in Ruby 3.4
       caller_locations.any? { |loc|
-        ['change', 'reset'].include?(loc.label) && Pathname.new(loc.path).basename.to_s == 'password.rb'
+        if loc.respond_to? :base_label
+          ["QuoVadis::Password#change", "QuoVadis::Password#reset"].include?(loc.label)
+        else
+          ['change', 'reset'].include?(loc.label) && Pathname.new(loc.path).basename.to_s == 'password.rb'
+        end
       }
     end
   end

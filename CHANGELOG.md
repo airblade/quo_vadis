@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Fix Password#change_or_reset_called? for Ruby 3.4.
+
 
 ## 2.2.5 (14 April 2025)
 
