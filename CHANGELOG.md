@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Enable OTP to be given in i18n mailer subject.
+
 
 ## 2.2.6 (17 November 2025)
 

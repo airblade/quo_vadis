@@ -5,12 +5,12 @@ module QuoVadis
 
     def reset_password
       @otp = params[:otp]
-      _mail params[:email], QuoVadis.translate('mailer.password_reset.subject')
+      _mail params[:email], QuoVadis.translate('mailer.password_reset.subject', otp: params[:otp])
     end
 
     def account_confirmation
       @otp = params[:otp]
-      _mail params[:email], QuoVadis.translate('mailer.confirmation.subject')
+      _mail params[:email], QuoVadis.translate('mailer.confirmation.subject', otp: params[:otp])
     end
 
     def email_change_notification

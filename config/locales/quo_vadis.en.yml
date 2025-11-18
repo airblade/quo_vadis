@@ -35,9 +35,9 @@ en:
         invalidated: You have invalidated your 2FA credentials and recovery codes.
     mailer:
       password_reset:
-        subject: Change your password
+        subject: Your password reset code is %{otp}
       confirmation:
-        subject: Please confirm your account
+        subject: Your account confirmation code is %{otp}
       notification:
         email_change: Your email address has been changed
         identifier_change: Your %{identifier} has been changed

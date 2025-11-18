@@ -21,7 +21,7 @@ class MailerTest < ActionMailer::TestCase
 
     assert_equal ['foo@example.com'], email.to
     assert_equal ['bar@example.com'], email.from
-    assert_equal 'Change your password', email.subject
+    assert_equal 'Your password reset code is 314159', email.subject
     assert_equal read_fixture('reset_password.text').join, email.body.to_s
   end
 
@@ -38,7 +38,7 @@ class MailerTest < ActionMailer::TestCase
 
     assert_equal ['foo@example.com'], email.to
     assert_equal ['bar@example.com'], email.from
-    assert_equal 'Please confirm your account', email.subject
+    assert_equal 'Your account confirmation code is 271828', email.subject
     assert_equal read_fixture('account_confirmation.text').join, email.body.to_s
   end
 
