@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.3.0 (18 November 2025)
+
 * Upon confirmation redirect to original path.
 * Remove concept of after_signup route.
 * Enable OTP to be given in i18n mailer subject.
