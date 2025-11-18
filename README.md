@@ -197,15 +197,15 @@ Your new user sign-up form ([example](https://github.com/airblade/quo_vadis/blob
 
 In your controller, use the [`#login`](#loginmodel-browser_session--true-metadata-) method to log in your new user.  The optional second argument specifies for how long the user should be logged in, and any metadata you supply is logged in the audit log.
 
-After logging in the user, redirect them wherever you like.  You can use `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.
+After logging in the user, redirect them wherever you like as normal.
 
 ```ruby
 class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      login @user
-      redirect_to qv.path_after_signup
+      login @user  # <-- add this
+      redirect_to dashboard_path
     else
       # ...
     end
@@ -219,21 +219,15 @@ class UsersController < ApplicationController
 end
 ```
 
-```ruby
-# config/routes.rb
-get '/dashboard', as: 'after_login'
-```
-
-
 ### Sign up with account confirmation
 
 Follow the steps above for sign-up.
 
-After you have logged in the user and redirected them (to any page which requires being logged in), QuoVadis detects that they need to confirm their account.  QuoVadis emails them a 6-digit confirmation code and redirects them to the confirmation page where they can enter that code.
+After you have logged in the user and redirected them, QuoVadis detects that they need to confirm their account.  QuoVadis emails them a 6-digit confirmation code and redirects them to the confirmation page where they can enter that code.
 
 The confirmation code is valid for `QuoVadis.account_confirmation_otp_lifetime`.
 
-Once the user has confirmed their account, they will be redirected to `qv.path_after_signup` which resolves to the first of these routes that exists: `:after_signup`, `:after_login`, the root route.  Add whichever works best for you.
+Once the user has confirmed their account, they will be redirected to the page they requested before they were redirected to the confirmation page.
 
 You need to write the email view ([example](https://github.com/airblade/quo_vadis/blob/master/app/views/quo_vadis/mailer/account_confirmation.text.erb)).  It must be in `app/views/quo_vadis/mailer/account_confirmation.{text,html}.erb` and output the `@otp` variable.  See the [Configuration](#configuration) section for how to set QuoVadis's emails' from addresses, headers, etc.
 

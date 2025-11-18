@@ -34,6 +34,7 @@ module QuoVadis
       if logged_in?
         if QuoVadis.accounts_require_confirmation && !authenticated_model.qv_account.confirmed?
           qv.request_confirmation authenticated_model
+          session[:qv_bookmark] = request.original_fullpath
           redirect_to quo_vadis.confirm_path
         end
         return
@@ -215,13 +216,6 @@ module QuoVadis
 
       def log(account, action, metadata = {})
         Log.create account: account, action: action, ip: request.remote_ip, metadata: metadata
-      end
-
-      def path_after_signup
-        return main_app.after_signup_path if main_app.respond_to?(:after_signup_path)
-        return main_app.after_login_path  if main_app.respond_to?(:after_login_path)
-        return main_app.root_path         if main_app.respond_to?(:root_path)
-        raise RuntimeError, 'Missing routes: after_signup_path, after_login_path, root_path; define at least one of them.'
       end
 
       def path_after_authentication

@@ -30,8 +30,6 @@ class AccountConfirmationTest < IntegrationTest
     post quo_vadis.confirm_path(otp: code)
 
     # verify logged in
-    assert_redirected_to '/sign_ups/confirmed'
-    follow_redirect!
     assert_redirected_to '/articles/secret'
     assert_equal 'Thanks for confirming your account.', flash[:notice]
     assert QuoVadis::Account.last.confirmed?
@@ -64,7 +62,7 @@ class AccountConfirmationTest < IntegrationTest
 
     post quo_vadis.confirm_path(otp: code)
     assert_equal 'You have already confirmed your account.', flash[:alert]
-    assert_redirected_to '/sign_ups/confirmed'
+    assert_redirected_to '/articles/secret'
   end
 
 

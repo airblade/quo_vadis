@@ -7,7 +7,7 @@ module QuoVadis
       @account = find_pending_account_from_session
 
       unless @account
-        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
+        redirect_to qv.path_after_authentication, alert: QuoVadis.translate('flash.confirmation.unknown')
       end
     end
 
@@ -16,7 +16,7 @@ module QuoVadis
       @account = find_pending_account_from_session
 
       unless @account
-        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
+        redirect_to qv.path_after_authentication, alert: QuoVadis.translate('flash.confirmation.unknown')
         return
       end
 
@@ -39,7 +39,7 @@ module QuoVadis
       session.delete :account_pending_confirmation
       session.delete :account_confirmation_expires_at
 
-      redirect_to qv.path_after_signup, notice: QuoVadis.translate('flash.confirmation.confirmed')
+      redirect_to qv.path_after_authentication, notice: QuoVadis.translate('flash.confirmation.confirmed')
     end
 
 
@@ -47,7 +47,7 @@ module QuoVadis
       @account = find_pending_account_from_session
 
       unless @account
-        redirect_to qv.path_after_signup, alert: QuoVadis.translate('flash.confirmation.unknown')
+        redirect_to qv.path_after_authentication, alert: QuoVadis.translate('flash.confirmation.unknown')
       end
 
       qv.request_confirmation @account.model
