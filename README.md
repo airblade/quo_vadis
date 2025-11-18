@@ -555,7 +555,7 @@ get '/profile',           to: 'profiles#show',   as: 'after_password_change'
 
 ### I18n
 
-All QuoVadis' flash messages are set via [i18n](https://github.com/airblade/quo_vadis/blob/master/config/locales/quo_vadis.en.yml).
+All QuoVadis' text (flash messages, mail subjects, and log messages) is set via [i18n](https://github.com/airblade/quo_vadis/blob/master/config/locales/quo_vadis.en.yml).
 
 You can override any of the messages with your own locale file at `config/locales/quo_vadis.en.yml`.
 
