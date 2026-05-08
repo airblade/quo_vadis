@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails',   '>= 6'
   spec.add_dependency 'bcrypt',  '~> 3.1.7'
   spec.add_dependency 'rotp',    '>= 6'
-  spec.add_dependency 'rqrcode', '~> 2.0'
+  spec.add_dependency 'rqrcode', '>= 2'
 end

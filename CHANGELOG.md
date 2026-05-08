@@ -4,6 +4,11 @@
 ## HEAD
 
 
+## 2.3.1 (8 May 2026)
+
+* Remove upper bound on rqrcode version.
+
+
 ## 2.3.0 (18 November 2025)
 
 * Upon confirmation redirect to original path.
