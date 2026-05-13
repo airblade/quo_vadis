@@ -3,6 +3,7 @@
 
 ## HEAD
 
+* Enable post-login redirect to be specified in login URL param.
 * Separate confirmation check from login check.
 
 

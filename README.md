@@ -251,7 +251,8 @@ If you do not include a `remember` checkbox, the user will be logged in for `Quo
 
 After authenticating the user will be redirected to the first of these that exists:
 
-- the page they tried to view before they were redirected to the login page;
+- the page specified in the `return` URL parameter when requesting the login page;
+- the page (requiring authentication) they tried to view before they were redirected to the login page;
 - a route named `after_login`, if any;
 - your root route.
 

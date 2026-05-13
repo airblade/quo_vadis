@@ -14,6 +14,9 @@ module QuoVadis
 
 
     def new
+      if (ret = params.delete(:return))
+        session[:qv_bookmark] = ret
+      end
     end
 
 

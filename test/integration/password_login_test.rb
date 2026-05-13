@@ -42,6 +42,18 @@ class PasswordLoginTest < IntegrationTest
   end
 
 
+  test 'successful login redirect page can be overridden' do
+    get quo_vadis.login_path(return: "/articles")
+    refute_nil session[:qv_bookmark]
+
+    User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
+    post quo_vadis.login_path(email: 'bob@example.com', password: '123456789abc')
+
+    assert_redirected_to articles_path
+    assert_nil session[:qv_bookmark]
+  end
+
+
   test 'failed login' do
     User.create! name: 'bob', email: 'bob@example.com', password: '123456789abc'
     post quo_vadis.login_path(email: 'bob@example.com', password: 'wrong')
