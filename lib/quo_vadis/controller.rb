@@ -16,6 +16,8 @@ module QuoVadis
       base.before_action { CurrentRequestDetails.request = request }
 
       base.before_action { |controller|
+        # TODO: should conditional be `controller.is_a?(QuoVadisController)`?
+        # Then confirmation wouldn't insert itself into a 2FA flow.
         controller.qv.require_confirmation unless controller.class == QuoVadis::ConfirmationsController
       }
 
