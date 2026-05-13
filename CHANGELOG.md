@@ -3,6 +3,9 @@
 
 ## HEAD
 
+
+## 2.4.0 (13 May 2026)
+
 * Enable post-login redirect to be specified in login URL param.
 * Separate confirmation check from login check.
 
