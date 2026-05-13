@@ -3,6 +3,8 @@
 
 ## HEAD
 
+* Separate confirmation check from login check.
+
 
 ## 2.3.1 (8 May 2026)
 

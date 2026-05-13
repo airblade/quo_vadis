@@ -15,6 +15,10 @@ module QuoVadis
 
       base.before_action { CurrentRequestDetails.request = request }
 
+      base.before_action { |controller|
+        controller.qv.require_confirmation unless controller.class == QuoVadis::ConfirmationsController
+      }
+
       base.helper_method :authenticated_model, :logged_in?
 
       # Remember the last activity time so we can timeout idle sessions.
@@ -31,14 +35,7 @@ module QuoVadis
 
 
     def require_password_authentication
-      if logged_in?
-        if QuoVadis.accounts_require_confirmation && !authenticated_model.qv_account.confirmed?
-          qv.request_confirmation authenticated_model
-          session[:qv_bookmark] = request.original_fullpath
-          redirect_to quo_vadis.confirm_path
-        end
-        return
-      end
+      return if logged_in?
       session[:qv_bookmark] = request.original_fullpath
       redirect_to quo_vadis.login_path, notice: QuoVadis.translate('flash.require_authentication')
     end
@@ -154,6 +151,16 @@ module QuoVadis
         old_session = rails_session.to_hash
         reset_session
         old_session.each { |k,v| rails_session[k] = v }
+      end
+
+      def require_confirmation
+        return if ! QuoVadis.accounts_require_confirmation
+        return if ! controller.logged_in?
+        return if controller.authenticated_model.qv_account.confirmed?
+
+        request_confirmation controller.authenticated_model
+        rails_session[:qv_bookmark] = controller.request.original_fullpath
+        controller.redirect_to controller.quo_vadis.confirm_path
       end
 
       def request_confirmation(model)
